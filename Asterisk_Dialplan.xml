@@ -1,0 +1,3380 @@
+<?xml version="1.0" encoding="Windows-1252" ?>
+<!--
+@author www.xilitium.com
+@version 1.0
+-->
+<NotepadPlus>
+	<AutoComplete language="Asterisk_Dialplan" >
+		<Environment ignoreCase="no" startFunc="(" stopFunc=")" paramSeparator="," additionalWordChar = "." />
+		<KeyWord name="3K1AUDIO" />
+		<KeyWord name="3WAY_END" />
+		<KeyWord name="3WAY_START" />
+		<KeyWord name="ABORT" />
+		<KeyWord name="AbsoluteTimeout" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use TIMEOUT function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ABSOLUTETIMEOUT" />
+		<KeyWord name="ACCOUNTCODE" />
+		<KeyWord name="ADDED" />
+		<KeyWord name="AddQueueMember" func="yes">
+			<Overload retVal="VARIABLE" descr="
+				[Synopsis]
+				Dynamically adds queue members
+
+				[Description]
+				Dynamically adds interface to an existing queue. If the interface is already in the queue it will return an error.
+				
+				This application sets the following channel variable upon completion:
+				&#x20;&#x2022; AQMSTATUS - The status of the attempt to add a queue member as a text string.
+					&#x20;&#x20;&#x20;&#x2022; ADDED
+					&#x20;&#x20;&#x20;&#x2022; MEMBERALREADY
+					&#x20;&#x20;&#x20;&#x2022; NOSUCHQUEUE
+				
+				[Asterisk Version]
+				1.0+
+				
+				[Syntax]
+				AddQueueMember(queuename,[interface,[penalty,[options,[membername,[stateinterface]]]]])
+				
+				[Usage]		
+				AddQueueMember(queuename[|interface[|penalty]]): (1.0)
+				AddQueueMember(queuename[|interface[|penalty[|options]]]): (1.2)
+				AddQueueMember(queuename[|interface[|penalty[|options[|membername]]]]): (1.4)
+				AddQueueMember(queuename[,interface[,penalty[,options[,membername[,stateinterface]]]]])): (1.6+)
+				
+				[Arguments]
+				&#x20;&#x2022; queuename
+				&#x20;&#x2022; interface
+				&#x20;&#x2022; penalty
+				&#x20;&#x2022; options
+				&#x20;&#x2022; membername
+				&#x20;&#x2022; stateinterface">
+				<Param name="STRING queuename" />
+				<Param name="[STRING interface" />
+				<Param name="[STRING penalty" />
+				<Param name="[STRING options" />
+				<Param name="[STRING membername" />
+				<Param name="[STRING stateinterface ]]]]]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ADSIProg" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				
+				[Description]
+					
+				[Asterisk Version]
+				1.0+
+				
+				[Syntax]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AELSub" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AES_DECRYPT" func="yes">
+			<Overload retVal="STRING" descr="
+				[Synopsis]
+				Decrypt a string encoded in base64 with AES given a 16 character key.
+				
+				[Description]
+				Returns the plain text string.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				AES_DECRYPT(key,string)
+				
+				[Arguments]
+				&#x20;&#x2022; key - AES Key
+				&#x20;&#x2022; string - Input string">
+				<Param name="STRING key"/>
+				<Param name="STRING string"/>
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AES_ENCRYPT" func="yes">
+			<Overload retVal="STRING" descr="
+				[Synopsis]
+				Encrypt a string with AES given a 16 character key.
+				
+				[Description]
+				Returns an AES encrypted string encoded in base64.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				AES_ENCRYPT(key,string)
+
+				[Arguments]
+				&#x20;&#x20;&#x2022; key - AES Key
+				&#x20;&#x20;&#x2022; string - Input string">
+				<Param name="STRING key"/>
+				<Param name="STRING string"/>
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AGC" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				Apply automatic gain control to audio on a channel.
+				
+				[Description]
+				The AGC function will apply automatic gain control to audio on the channel
+				that this function is executed on.  Use rx for audio received from the channel
+				and tx to apply AGC to the audio being sent to the channel. When using this
+				function, you set a target audio level. It is primarily intended for use with
+				analog lines, but could be useful for other channels, as well. The target volume
+				is set with a number between 1 and 32768. Larger numbers are louder.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				AGC(channeldirection)
+				
+				[Example]
+				exten => 1,1,Set(AGC(rx)=8000)
+				exten => 1,2,Set(AGC(tx)=off)
+				
+				[Arguments]
+				&#x20;&#x20;&#x2022; channeldirection - This can be either rx or tx">
+				<Param name="STRING (rx|tx)"/>
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Agent" />
+		<KeyWord name="AGENT" func="yes">
+			<Overload retVal="STRING" descr="
+				[Synopsis]
+				Gets information about an Agent.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				AGENT(AgentId[:item])
+				
+				[Example]
+				exten => 123,1,Set(foo=${AGENT(42:name)})
+				
+				[Arguments]
+				&#x20;&#x2022; AgentId
+				&#x20;&#x2022; item - The valid items to retrieve are:
+				&#x20;&#x20;&#x20;&#x2022; status - (default) The status of the agent (LOGGEDIN | LOGGEDOUT)
+				&#x20;&#x20;&#x20;&#x2022; password - Deprecated. The dialplan handles any agent authentication.
+				&#x20;&#x20;&#x20;&#x2022; name - The name of the agent
+				&#x20;&#x20;&#x20;&#x2022; mohclass - MusicOnHold class
+				&#x20;&#x20;&#x20;&#x2022; channel - The name of the active channel for the Agent (AgentLogin)
+				&#x20;&#x20;&#x20;&#x2022; fullchannel - The untruncated name of the active channel for the Agent (AgentLogin)">
+				<Param name="STRING AgentId[:item]"/>
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AGENTACCEPTDTMF" />
+		<KeyWord name="AGENTACKCALL" />
+		<KeyWord name="AGENTAUTOLOGOFF" />
+		<KeyWord name="AgentCallBackLogin" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AGENTEXTEN" />
+		<KeyWord name="AGENTGOODBYE" />
+		<KeyWord name="AgentLogin" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AGENTMAXLOGINTRIES" />
+		<KeyWord name="AgentMonitorOutgoing" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AGENTNUMBER" />
+		<KeyWord name="AgentRequest" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AGENTSTATUS" />
+		<KeyWord name="AGENTUPDATECDR" />
+		<KeyWord name="AGENTWRAPUPTIME" />
+		<KeyWord name="AGENT_STATUS" />
+		<KeyWord name="AGI" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AGIEXITONHANGUP" />
+		<KeyWord name="AGISTATUS" />
+		<KeyWord name="AlarmReceiver" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ALARMRECEIVER_CALL_LIMIT" />
+		<KeyWord name="ALARMRECEIVER_RETRIES_LIMIT" />
+		<KeyWord name="ALERT_INFO" />
+		<KeyWord name="ALREADY_LOGGED_IN" />
+		<KeyWord name="ALSAMonitor" func="yes">
+			<Overload retVal="" descr="
+				[Description]
+				Allows the user to monitor the ALSA console bi directionally. Monitoring is performed regardless of the state of any call that might be on the channel.
+				
+				[Syntax]
+				ALSAMonitor(password)
+				
+				[Help]
+				See: ftp://ftp.digium.com/pub/asterisk/misc/alsa-monitor.h">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AMD" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AMDCAUSE" />
+		<KeyWord name="AMDSTATUS" />
+		<KeyWord name="AMI_CLIENT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ANI2" />
+		<KeyWord name="ANSWER" />
+		<KeyWord name="Answer" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ANSWERED" />
+		<KeyWord name="ANSWEREDTIME" />
+		<KeyWord name="AppendCDRUserField" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="APPERROR" />
+		<KeyWord name="APP_END" />
+		<KeyWord name="APP_START" />
+		<KeyWord name="AQMSTATUS" />
+		<KeyWord name="ARG1" />
+		<KeyWord name="ARG2" />
+		<KeyWord name="ARG3" />
+		<KeyWord name="ARG4" />
+		<KeyWord name="ARG5" />
+		<KeyWord name="ARRAY" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				Allows setting multiple variables at once
+
+				[Description]
+				The comma-separated list passed as a value to which the function is set will
+				be interpreted as a set of values to which the comma-separated list of
+				variable names in the argument should be set.
+				Hence, Set(ARRAY(var1|var2)=1\,2) will set var1 to 1 and var2 to 2
+				Note: remember to either backslash your commas in extensions.conf or quote the
+				entire argument, since Set can take multiple arguments itself.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				ARRAY(var1[|var2[...][|varN]]): (1.4-)
+				ARRAY(var1[,var2[...][,varN]]): (1.6+)
+				
+				[Example]
+				Set(ARRAY(var1,var2)=1,2)
+				
+				[Arguments]
+				&#x20;&#x2022; var1
+				&#x20;&#x2022; var2
+				&#x20;&#x2022; varN">
+				<Param name="STRING var1" />
+				<Param name="[STRING var2" />
+				<Param name="[STRING varN]]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ASSISTANT" />
+		<KeyWord name="ASTERISK_VERSION_NUM" />
+		<KeyWord name="AST_CONFIG" func="yes">
+			<Overload retVal="VARIABLE" descr="
+				[Synopsis]
+				Retrieve a variable from a configuration file.
+				
+				[Description]
+				This function reads a variable from an Asterisk configuration file.
+				
+				[Asterisk Version]
+				(1.6)+
+				
+				[Syntax]
+				AST_CONFIG(config_file,category,variable_name)
+				
+				[Example]
+				;Goto current ${EXTEN} in SIP channel's default context
+				exten => _XXXX,1,Goto(${AST_CONFIG(sip.conf,${CALLERID(num)},context)},${EXTEN},1)
+				
+				[Arguments]
+				&#x20;&#x2022; config_file
+				&#x20;&#x2022; category
+				&#x20;&#x2022; variable_name">
+				<Param name="STRING config_file" />
+				<Param name="STRING category" />
+				<Param name="STRING variable_name" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AST_DEVICE_BUSY" />
+		<KeyWord name="AST_DEVICE_INUSE" />
+		<KeyWord name="AST_DEVICE_INVALID" />
+		<KeyWord name="AST_DEVICE_NOT_INUSE" />
+		<KeyWord name="AST_DEVICE_ONHOLD" />
+		<KeyWord name="AST_DEVICE_RINGING" />
+		<KeyWord name="AST_DEVICE_RINGINUSE" />
+		<KeyWord name="AST_DEVICE_UNAVAILABLE" />
+		<KeyWord name="AST_DEVICE_UNKNOWN" />
+		<KeyWord name="AST_SORCERY" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				Get a field from a sorcery object
+				
+				[Description]
+				
+				[Syntax]
+				AST_SORCERY(module_name,object_type,object_id,field_name[,retrieval_method[,retrieval_details]])
+				
+				[Arguments]
+				&#x20;&#x2022; module_name - The name of the module owning the sorcery instance.
+				&#x20;&#x2022; object_type - The type of object to query.
+				&#x20;&#x2022; object_id - The id of the object to query.
+				&#x20;&#x2022; field_name - The name of the field.
+				&#x20;&#x2022; retrieval_method - Fields that have multiple occurrences may be retrieved in two ways.
+				&#x20;&#x20;&#x20;&#x2022; concat - Returns all matching fields concatenated in a single string separated by separator which defaults to ,.
+				&#x20;&#x20;&#x20;&#x2022; single - Returns the nth occurrence of the field as specified by occurrence_number which defaults to 1.
+				&#x20;&#x2022; retrieval_details - Specifies either the separator for concat or the occurrence number for single.">
+				<Param name="STRING module_name" />
+				<Param name="STRING object_type" />
+				<Param name="INTEGER object_id" />
+				<Param name="STRING field_name" />
+				<Param name="[STRING retrieval_method" />
+				<Param name="[STRING retrieval_details]]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ATTENDEDTRANSFER" />
+		<KeyWord name="AUDIOHOOK_INHERIT" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Used to set whether an audiohook may be inherited to another channel. Due to architectural changes in Asterisk 12, 
+				audiohook inheritance is performed automatically and this function now lacks function.
+				
+				[Description]
+				Prior to Asterisk 12, masquerades would occur under all sorts of situations which were hard to predict. 
+				In Asterisk 12, masquerades only occur as a result of a small set of operations for which inheriting all 
+				audiohooks from the original channel is now safe. So in Asterisk 12.5+, all audiohooks are inherited 
+				without needing other controls expressing which audiohooks should be inherited under which conditions.
+				
+				[Syntax]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Authenticate" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Syntax]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Autoanswer" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AutoanswerLogin" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AUTH_CONTEXT" />
+		<KeyWord name="AUTH_MAILBOX" />
+		<KeyWord name="AVAILCAUSECODE" />
+		<KeyWord name="AVAILCHAN" />
+		<KeyWord name="AVAILORIGCHAN" />
+		<KeyWord name="AVAILSTATUS" />
+		<KeyWord name="BackGround" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Syntax]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="BackgroundDetect" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Syntax]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="BACKGROUNDSTATUS" />
+		<KeyWord name="BASE64_DECODE" func="yes">
+			<Overload retVal="STRING" descr="
+				[Synopsis]
+				Decode a base64 string
+				
+				[Description]
+				Returns the plain text string
+				
+				[Syntax]
+				BASE64_DECODE(string)
+				
+				[Arguments]
+				&#x20;&#x2022; string - Input string.">
+				<Param name="STRING string" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="BASE64_ENCODE" func="yes">
+			<Overload retVal="STRING" descr="
+				[Synopsis]
+				Encode a string in base64.
+				
+				[Description]
+				Returns the base64 string
+				
+				[Syntax]
+				BASE64_ENCODE(string)
+				
+				[Arguments]
+				&#x20;&#x2022; string - Input string.">
+				<Param name="STRING string" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="BILLING" />
+		<KeyWord name="BLACKLIST" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				Check if the callerid is on the blacklist.
+				
+				[Description]
+				Uses astdb to check if the Caller*ID is in family blacklist. Returns 1 or 0.
+				
+				[Syntax]
+				BLACKLIST()
+				
+				[Example]
+				exten => 123,1,GotoIf(${BLACKLIST()}?black,1)
+				exten => 123,n,Dial(SIP/200)
+				exten => 123,n,Hangup()
+				exten => black,1,Playback(tt-monkeys)
+				exten => black,n,Hangup()">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="BLINDTRANSFER" />
+		<KeyWord name="Bridge" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="BRIDGEPEER" />
+		<KeyWord name="BRIDGEPVTCALLID" />
+		<KeyWord name="BRIDGERESULT" />
+		<KeyWord name="BridgeWait" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Syntax]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="BRIDGE_END" />
+		<KeyWord name="BRIDGE_ENTER" />
+		<KeyWord name="BRIDGE_EXIT" />
+		<KeyWord name="BRIDGE_START" />
+		<KeyWord name="BRIDGE_UPDATE" />
+		<KeyWord name="BUILD_DATE" />
+		<KeyWord name="BUILD_HOSTNAME" />
+		<KeyWord name="BUILD_KERNEL" />
+		<KeyWord name="BUILD_MACHINE" />
+		<KeyWord name="BUILD_OS" />
+		<KeyWord name="BUILD_USER" />
+		<KeyWord name="Busy" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="BUSY" />
+		<KeyWord name="CALENDAR_BUSY" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				Determine if the calendar is marked busy at this time.
+				
+				[Description]
+				Check the specified calendar's current busy status.
+
+				[Syntax]
+				CALENDAR_BUSY(calendar)
+				
+				[Arguments]
+				&#x20;&#x2022; calendar">
+				<Param name="STRING calendar" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CALENDAR_EVENT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CALENDAR_QUERY" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CALENDAR_QUERY_RESULT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CALENDAR_SUCCESS" />
+		<KeyWord name="CALENDAR_WRITE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CALLCOMPLETION" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CallCompletionCancel" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CallCompletionRequest" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CALLEDTON" />
+		<KeyWord name="CALLERANI" />
+		<KeyWord name="CALLERID" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				Gets or sets Caller*ID data on the channel.
+				
+				[Description]
+				Gets or sets Caller*ID data on the channel. Uses channel callerid by default or optional callerid, if specified.
+				
+				[Syntax]
+				CALLERID(datatype,CID)
+				
+				[Arguments]
+				&#x20;&#x2022; datatype - The allowable datatypes are:
+				&#x20;&#x20;&#x20;&#x2022; [ all, name, name-valid, name-charset, name-pres, num, num-valid, num-plan, num-pres, subaddr, subaddr-valid, subaddr-type,
+				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; subaddr-odd, tag, priv-all, priv-name, priv-name-valid, priv-name-charset, priv-name-pres, priv-num, priv-num-valid, 
+				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; priv-num-plan, priv-num-pres, priv-subaddr, priv-subaddr-valid, priv-subaddr-type, priv-subaddr-odd, priv-tag, ANI-all, 
+				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; ANI-name, ANI-name-valid, ANI-name-charset, ANI-name-pres, ANI-num, ANI-num-valid, ANI-num-plan, ANI-num-pres, ANI-tag,
+				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; RDNIS, DNID, dnid-num-plan, dnid-subaddr, dnid-subaddr-valid, dnid-subaddr-type, dnid-subaddr-odd ]
+				&#x20;&#x2022; CID - Optional Caller*ID to parse instead of using the Caller*ID from the channel. This parameter is only optional when reading the Caller*ID.">
+				<Param name="STRING datatype" />
+				<Param name="[STRING CID]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CALLERIDNAME" />
+		<KeyWord name="CALLERIDNUM" />
+		<KeyWord name="CALLERPRES" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CALLINGANI2" />
+		<KeyWord name="CALLINGPRES" />
+		<KeyWord name="CallingPres" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CALLINGSUBADDR" />
+		<KeyWord name="CALLINGTNS" />
+		<KeyWord name="CALLINGTON" />
+		<KeyWord name="CALLTYPE" />
+		<KeyWord name="CANCEL" />
+		<KeyWord name="capiCommand" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CAPI" />
+		<KeyWord name="CAUSECODE" />
+		<KeyWord name="CC_CANCEL_REASON" />
+		<KeyWord name="CC_CANCEL_RESULT" />
+		<KeyWord name="CC_REQUEST_REASON" />
+		<KeyWord name="CC_REQUEST_RESULT" />
+		<KeyWord name="CDR" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CDR_PROP" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CELGenUserEvent" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ChangeMonitor" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ChanIsAvail" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CHANNEL" func="yes">
+			<Overload retVal="STRING" descr="
+				[Synopsis]
+				Gets/sets various pieces of information about the channel.
+				
+				[Description]
+				Gets/sets various pieces of information about the channel, additional item may be available from the channel driver;
+				see its documentation for details. Any item requested that is not available on the current channel will return an empty string.
+
+				[Syntax]
+				CHANNEL(item)
+				
+				[Example]
+				exten => s,1,Set(foo=${CHANNEL(channeltype)})
+				exten => s,1,Set(CHANNEL(callgroup)=g3)
+				
+				[Arguments]
+				&#x20;&#x2022; item - Standard items (provided by all channel technologies) are:
+				&#x20;&#x20;&#x20;&#x2022; [ amaflags, accountcode, audioreadformat, audionativeformat, audiowriteformat, dtmf_features, callgroup, pickupgroup,
+				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; namedcallgroup, namedpickupgroup, channeltype, checkhangup, after_bridge_goto, hangup_handler_pop, 
+				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; hangup_handler_push, hangup_handler_wipe, language, musicclass, name, parkinglot, rxgain, secure_bridge_signaling, 
+				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; secure_bridge_media, state, tonezone, transfercapability, txgain, videonativeformat, trace, peerip, recvip,
+				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; recvport, from,	uri, useragent, peername, t38passthrough, rtpqos, rtpdest, rtpsource ]
+				&#x20;&#x20;&#x20; [Technology: PJSIP]
+				&#x20;&#x20;&#x20;&#x2022; [ rtp, rtcp, endpoint, contact, aor, pjsip, osptoken, peerip, peername, secure_signaling, secure_media, 
+				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; dahdi_channel, dahdi_span, dahdi_type, keypad_digits, reversecharge, no_media_path, buffers, echocan_mode, 
+				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; faxdetect, t38support, h323id_url, caller_h323id, caller_dialeddigits, caller_email, callee_email, 
+				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; callee_dialeddigits, caller_url ]">
+				<Param name="STRING item" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ChannelRedirect" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CHANNELREDIRECT_STATUS" />
+		<KeyWord name="CHANNELS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CHANNEL_END" />
+		<KeyWord name="CHANNEL_START" />
+		<KeyWord name="ChanSpy" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CHANUNAVAIL" />
+		<KeyWord name="CHAN_END" />
+		<KeyWord name="CHAN_START" />
+		<KeyWord name="CheckGroup" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CHECKGROUPSTATUS" />
+		<KeyWord name="CHECKMD5STATUS" />
+		<KeyWord name="CHECKSIPDOMAIN" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CHECK_MD5" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use MD5 function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ClearHash" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CNG" />
+		<KeyWord name="ConfBridge" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CONFBRIDGE" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				Set a custom dynamic bridge, user, or menu profile on a channel for the ConfBridge application using the same options defined in confbridge.conf.
+				Returns the resulting value.
+				
+				[Syntax]
+				CONFBRIDGE_INFO(type,option)
+				
+				[Example]
+				In this example the custom set user profile on this channel will automatically be used by the ConfBridge app.
+				exten => 1,1,Answer()
+				exten => 1,n,Set(CONFBRIDGE(user,announce_join_leave)=yes)
+				exten => 1,n,Set(CONFBRIDGE(user,startmuted)=yes)
+				exten => 1,n,ConfBridge(1)
+				
+				This example shows how to use a predefined user or bridge profile in confbridge.conf as a template for a dynamic profile. Here we make a admin/marked 
+				user out of the default_user profile that is already defined in confbridge.conf.
+				exten => 1,1,Answer()
+				exten => 1,n,Set(CONFBRIDGE(user,template)=default_user)
+				exten => 1,n,Set(CONFBRIDGE(user,admin)=yes)
+				exten => 1,n,Set(CONFBRIDGE(user,marked)=yes)
+				exten => 1,n,ConfBridge(1)
+				
+				[Arguments]
+				&#x20;&#x2022; type - Type refers to which type of profile the option belongs too. Type can be bridge, user, or menu.
+				&#x20;&#x2022; option - Option refers to confbridge.conf option that is being set dynamically on this channel, or clear to remove already applied options from the channel.">
+				<Param name="STRING type" />
+				<Param name="STRING option" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CONFBRIDGE_INFO" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CONFBRIDGE_RESULT" />
+		<KeyWord name="CONFNO" />
+		<KeyWord name="CONF_END" />
+		<KeyWord name="CONF_ENTER" />
+		<KeyWord name="CONF_EXIT" />
+		<KeyWord name="CONF_LIMIT_TIMEOUT_FILE" />
+		<KeyWord name="CONF_LIMIT_WARNING_FILE" />
+		<KeyWord name="CONF_START" />
+		<KeyWord name="CONGESTION" />
+		<KeyWord name="Congestion" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CONNECTEDLINE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CONNECTED_LINE_CALLEE_SEND_MACRO" />
+		<KeyWord name="CONNECTED_LINE_CALLEE_SEND_MACRO_ARGS" />
+		<KeyWord name="CONNECTED_LINE_CALLER_SEND_MACRO" />
+		<KeyWord name="CONNECTED_LINE_CALLER_SEND_MACRO_ARGS" />
+		<KeyWord name="Console" />
+		<KeyWord name="CONTEXT" />
+		<KeyWord name="CONTINUE" />
+		<KeyWord name="ContinueWhile" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CONTROL" />
+		<KeyWord name="ControlPlayback" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CPLAYBACKOFFSET" />
+		<KeyWord name="CPLAYBACKSTATUS" />
+		<KeyWord name="CPLAYBACKSTOPKEY" />
+		<KeyWord name="CSV_QUOTE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CURL" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CURLOPT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CURRENTCHANNEL" />
+		<KeyWord name="CUT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DAHDI" />
+		<KeyWord name="DAHDIAcceptR2Call" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DAHDIBarge" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DAHDIRAS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DAHDIScan" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DAHDISendCallreroutingFacility" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DAHDISendKeypadFacility" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DateTime" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DATETIME" />
+		<KeyWord name="DB" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DBdel" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DBdeltree" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DBget" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DBGETSTATUS" />
+		<KeyWord name="DBput" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DBQuery" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DBRewrite" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DB_DELETE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DB_EXISTS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DB_KEYS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DB_RESULT" />
+		<KeyWord name="DeadAGI" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DEC" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DENOISE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DEVICE_STATE" func="yes">
+			<Overload retVal="STRING" descr="
+				[Synopsis]
+				Get or Set a device state.
+
+				[Description]
+				The DEVICE_STATE function can be used to retrieve the device state from any device state provider.
+				For example:
+				NoOp(SIP/mypeer has state ${DEVICE_STATE(SIP/mypeer)})
+				NoOp(Conference number 1234 has state ${DEVICE_STATE(MeetMe:1234)})
+				The DEVICE_STATE function can also be used to set custom device state from the dialplan.
+				
+				The Custom: prefix must be used. For example:
+				Set(DEVICE_STATE(Custom:lamp1)=BUSY)
+				Set(DEVICE_STATE(Custom:lamp2)=NOT_INUSE)
+				You can subscribe to the status of a custom device state using a hint in the dialplan:
+				exten => 1234,hint,Custom:lamp1
+				
+				The possible values for both uses of this function are:
+				UNKNOWN | NOT_INUSE | INUSE | BUSY | INVALID | UNAVAILABLE | RINGING | RINGINUSE | ONHOLD
+
+				[Syntax]
+				DEVICE_STATE(device)
+
+				[Arguments]
+				&#x20;&#x2022; device">
+				<Param name="STRING device" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DEVSTATE" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use DEVICE_STATE function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Dial" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				Attempt to connect to another device or endpoint and bridge the call.
+				
+				[Description]
+				This application will place calls to one or more specified channels.
+				As soon as one of the requested channels answers, the originating channel 
+				will be answered, if it has not already been answered. These two channels 
+				will then be active in a bridged call. All other channels that were 
+				requested will then be hung up.
+				
+				[Syntax]
+				Dial(Technology/Resource&#x26;[Technology2/Resource2[&#x26;...]],[timeout,[options,[URL]]])
+				
+				[Example]
+				exten => _NXXXXXX,5,Dial(DAHDI/g0/${EXTEN},30)
+				exten => _3XXXXXXXXX,5,Dial(SIP/${EXTEN},30)
+				
+				[Arguments]
+				&#x20;&#x2022; Technology/Resource
+				&#x20;&#x2022; timeout
+				&#x20;&#x2022; options (A,a,B,b,C,c,D,d,e,F,f,g,G,H,h,I,i,K,k,L,M,m,N,n,O,o,P,p,R,r,S,s,T,t,U,u,W,w,X,x,z)
+				&#x20;&#x2022; URL">
+				<Param name="STRING Technology/Resource" />
+				<Param name="[INTEGER timeout" />
+				<Param name="[STRING options" />
+				<Param name="[STRING URL]]]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DIALEDPEERNAME" />
+		<KeyWord name="DIALEDPEERNUMBER" />
+		<KeyWord name="DIALEDTIME" />
+		<KeyWord name="DIALGROUP" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DIALPLAN_EXISTS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DIALSTATUS" />
+		<KeyWord name="Dictate" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DIGITAL" />
+		<KeyWord name="DIGITAL_W_TONES" />
+		<KeyWord name="DigitTimeout" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Directory" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DIRECTORY_RESULT" />
+		<KeyWord name="DISA" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DISABLED" />
+		<KeyWord name="DISPLAY_NAME" />
+		<KeyWord name="DOCUMENTATION" />
+		<KeyWord name="DONTCALL" />
+		<KeyWord name="DTMF" />
+		<KeyWord name="DTMFToText" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DTMF_BEGIN" />
+		<KeyWord name="DTMF_END" />
+		<KeyWord name="DumpChan" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DUNDDEST" />
+		<KeyWord name="DUNDi" />
+		<KeyWord name="DUNDiLookup" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use DUNDILOOKUP function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DUNDILOOKUP" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				Do a DUNDi lookup of a phone number.
+				
+				[Description]
+				This will do a DUNDi lookup of the given phone number.
+				This function will return the Technology/Resource found in the first result in the DUNDi lookup.
+				If no results were found, the result will be blank.
+				
+				[Syntax]
+				DUNDILOOKUP(number,context,options)
+
+				[Arguments]
+				&#x20;&#x2022; number
+				&#x20;&#x2022; context - If not specified the default will be e164.
+				&#x20;&#x2022; options
+				&#x20;&#x20;&#x20;&#x2022; b - Bypass the internal DUNDi cache">
+				<Param name="INTEGER number" />
+				<Param name="STRING context" />
+				<Param name="STRING options" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DUNDIQUERY" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DUNDIRESULT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DUNDTECH" />
+		<KeyWord name="DYNAMIC_FEATURENAME" />
+		<KeyWord name="DYNAMIC_FEATURES" />
+		<KeyWord name="DYNAMIC_PEERNAME" />
+		<KeyWord name="DynExtenDB" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="EAGI" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Echo" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ENABLED" />
+		<KeyWord name="ENDMARKED" />
+		<KeyWord name="EndWhile" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ENTITYID" />
+		<KeyWord name="ENUM" />
+		<KeyWord name="EnumLookup" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use ENUMLOOKUP function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ENUMLOOKUP" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ENUMQUERY" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ENUMRESULT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ENUMSTATUS" />
+		<KeyWord name="ENV" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="EPOCH" />
+		<KeyWord name="ERROR" />
+		<KeyWord name="Eval" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use EVAL function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="EVAL" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="EXCEPTION" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Exec" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ExecIf" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ExecIfTime" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="EXISTS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="EXITCONTEXT" />
+		<KeyWord name="ExitWhile" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="EXTEN" />
+		<KeyWord name="EXTENSION_STATE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ExtenSpy" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ExternalIVR" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FAIL" />
+		<KeyWord name="FAILED" />
+		<KeyWord name="FAILURE" />
+		<KeyWord name="FastAGI" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FAXBITRATE" />
+		<KeyWord name="FAXERROR" />
+		<KeyWord name="FAXEXTEN" />
+		<KeyWord name="FAXOPT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FAXOPT_res_fax" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FAXPAGES" />
+		<KeyWord name="FAXRESOLUTION" />
+		<KeyWord name="FAXSTATUS" />
+		<KeyWord name="FEATURE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FEATUREMAP" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Festival" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FIELDNUM" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FIELDQTY" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FILE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FILE_COUNT_LINE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FILE_FORMAT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Flite" func="yes">
+			<Overload retVal="STRING" descr="
+				[Synopsis]
+				This provides the 'Flite' dialplan application, which allows you to use
+				the Flite TTS Engine with Asterisk.
+				
+				[Description]
+				This module invokes the Flite TTS engine locally, and uses it to render 
+				text to speech.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				Flite(text[,intkeys])
+				
+				[Example]
+				;Flite Demo
+			exten => 1234,1,Answer()
+			exten => 1234,n,Flite("This is a simple F lite test in english.",any)
+			;Read a text file from disk and pass it to flite
+			exten => 1234,n,ReadFile(MYTEXT=/path/myfile,200)
+			exten => 1234,n,Flite("${MYTEXT}",any)
+			exten => 1234,n,Hangup()
+				
+				[Arguments]
+				&#x20;&#x2022; text
+				&#x20;&#x2022; intkeys">
+				<Param name="STRING text"/>
+				<Param name="STRING intkeys"/>
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FILTER" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Flash" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FollowMe" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ForkCDR" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FORWARD" />
+		<KeyWord name="FORWARD_CONTEXT" />
+		<KeyWord name="FRAME_TRACE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FREE" />
+		<KeyWord name="FULL" />
+		<KeyWord name="GetCPEID" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="GetGroupCount" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="GetGroupMatchCount" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="GLOBAL" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Gosub" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="GosubIf" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="GOSUB_RESULT" />
+		<KeyWord name="Goto" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="GotoIf" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="GotoIfTime" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="GOTO_ON_BLINDXFR" />
+		<KeyWord name="GROUP" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="GROUP_COUNT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="GROUP_COUNT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="GROUP_MATCH_COUNT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Gtalk" />
+		<KeyWord name="HANGUP" />
+		<KeyWord name="Hangup" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="HANGUPCAUSE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="HangupCauseClear" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="HANGUPCAUSE_KEYS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="HASH" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="HASHKEYS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="HasNewVoicemail" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="HASVMSTATUS" />
+		<KeyWord name="HasVoicemail" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="HINT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="HINTNAME" />
+		<KeyWord name="HoldedCall" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="HOLDINUSE" />
+		<KeyWord name="HOOKFLASH" />
+		<KeyWord name="HTML" />
+		<KeyWord name="HUMAN" />
+		<KeyWord name="IAX" />
+		<KeyWord name="IAX2" />
+		<KeyWord name="IAX2Provision" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="IAXPEER" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="IAXVAR" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ICES" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Iconv" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use ICONV function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ICONV" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="IF" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="IFMODULE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="IFTIME" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="IMAGE" />
+		<KeyWord name="IMPORT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ImportVar" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="INC" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="INCOMPATIBLE" />
+		<KeyWord name="Incomplete" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="INITIALSILENCE" />
+		<KeyWord name="INUSE" />
+		<KeyWord name="INVALID" />
+		<KeyWord name="INVALIDARGS" />
+		<KeyWord name="INVALID_EXTEN" />
+		<KeyWord name="INVALID_PROTOCOL" />
+		<KeyWord name="INVALID_URI" />
+		<KeyWord name="ISNULL" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="IVRDemo" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JabberJoin" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JabberJoin_res_xmpp" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JabberLeave" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JabberLeave_res_xmpp" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JabberSend" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JabberSendGroup" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JabberSendGroup_res_xmpp" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JabberSend_res_xmpp" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JabberStatus" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JabberStatus_res_xmpp" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JABBER_RECEIVE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JABBER_RECEIVE_res_xmpp" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JABBER_STATUS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JABBER_STATUS_res_xmpp" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JACK_HOOK" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JACK" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JINGLE" />
+		<KeyWord name="JITTERBUFFER" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JOINEMPTY" />
+		<KeyWord name="JOINUNAVAIL" />
+		<KeyWord name="KeepAlive" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="KEYPADHASH" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="KICKED" />
+		<KeyWord name="LABEL" />
+		<KeyWord name="LANGUAGE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="LEAVEEMPTY" />
+		<KeyWord name="LEAVEUNAVAIL" />
+		<KeyWord name="LEN" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="LDAPget" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="LIMIT_CONNECT_FILE" />
+		<KeyWord name="LIMIT_PLAYAUDIO_CALLEE" />
+		<KeyWord name="LIMIT_PLAYAUDIO_CALLER" />
+		<KeyWord name="LIMIT_TIMEOUT_FILE" />
+		<KeyWord name="LIMIT_WARNING_FILE" />
+		<KeyWord name="LINKEDID_END" />
+		<KeyWord name="LISTFILTER" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Local" />
+		<KeyWord name="LOCAL" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="LOCALHEADERINFO" />
+		<KeyWord name="LOCALSTATIONID" />
+		<KeyWord name="LOCAL_OPTIMIZE" />
+		<KeyWord name="LOCAL_PEEK" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="LOCAL_REINVITE" />
+		<KeyWord name="LOCK" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Log" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="LOGGEDIN" />
+		<KeyWord name="LOGGEDOUT" />
+		<KeyWord name="LONGGREETING" />
+		<KeyWord name="LookupBlacklist" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="LOOKUPBLSTATUS" />
+		<KeyWord name="LookupCIDName" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="LOOP" />
+		<KeyWord name="MACHINE" />
+		<KeyWord name="Macro" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MacroExclusive" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MacroExit" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MacroIf" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MACRO_CONTEXT" />
+		<KeyWord name="MACRO_EXTEN" />
+		<KeyWord name="MACRO_OFFSET" />
+		<KeyWord name="MACRO_PRIORITY" />
+		<KeyWord name="MACRO_RESULT" />
+		<KeyWord name="MailboxExists" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use MAILBOX_EXISTS function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MAILBOX_EXISTS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MASTER_CHANNEL" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MATH" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Math" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use MATH function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MAXWORDLENGTH" />
+		<KeyWord name="MD5" func="yes">
+			<Overload retVal="string" descr="
+				[Synopsis]
+				Computes an MD5 digest.
+				
+				[Description]
+				Computes an MD5 digest.
+				
+				[Syntax]
+				MD5(data)
+				
+				[Arguments]
+				&#x20;&#x2022; data">
+				<Param name="string data" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MD5Check" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use CHECK_MD5 function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MeetMe" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MeetMeAdmin" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MEETMEADMINSTATUS" />
+		<KeyWord name="MEETMEBOOKID" />
+		<KeyWord name="MeetMeChannelAdmin" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MeetMeCount" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MEETMESECS" />
+		<KeyWord name="MEETME_AGI_BACKGROUND" />
+		<KeyWord name="MEETME_EXIT_CONTEXT" />
+		<KeyWord name="MEETME_EXIT_KEY" />
+		<KeyWord name="MEETME_INFO" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MEETME_RECORDINGFILE" />
+		<KeyWord name="MEETME_RECORDINGFORMAT" />
+		<KeyWord name="MEMBERALREADY" />
+		<KeyWord name="MEMBERCALLS" />
+		<KeyWord name="MEMBERDYNAMIC" />
+		<KeyWord name="MEMBERINTERFACE" />
+		<KeyWord name="MEMBERLASTCALL" />
+		<KeyWord name="MEMBERNAME" />
+		<KeyWord name="MEMBERPENALTY" />
+		<KeyWord name="MEMBERREALTIME" />
+		<KeyWord name="MESSAGE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MessageSend" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MESSAGE_DATA" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MESSAGE_SEND_STATUS" />
+		<KeyWord name="Milliwatt" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MinivmAccMess" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MINIVMACCOUNT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MINIVMCOUNTER" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MinivmDelete" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MinivmGreet" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MinivmMWI" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MinivmNotify" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MinivmRecord" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MIXMONITOR" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MixMonitor" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use MIXMONITOR function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MIXMONITOR_FILENAME" />
+		<KeyWord name="Modem" />
+		<KeyWord name="MODEM" />
+		<KeyWord name="MGCP" />
+		<KeyWord name="Monitor" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MONITOR" />
+		<KeyWord name="MONITOR_EXEC" />
+		<KeyWord name="MONITOR_EXEC_ARGS" />
+		<KeyWord name="MONITOR_FILENAME" />
+		<KeyWord name="Morsecode" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MORSEDITLEN" />
+		<KeyWord name="MORSETONE" />
+		<KeyWord name="MP3Player" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="mISDN" />
+		<KeyWord name="MSet" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MulticastRTP" />
+		<KeyWord name="MUSICCLASS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MusicOnHold" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MUTEAUDIO" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MYSQL" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				Basic MYSQL Database Functionality
+				
+				[Description]
+				MYSQL(): Basic MYSQL Database Functionality
+				This is an ADD-ON of asterisk, is not installed by default and must be downloaded
+				
+				[Syntax]
+				MYSQL(Connect connid dhhost dbuser dbpass dbname)
+				MYSQL(Query resultid ${connid} query-string)
+				MYSQL(Fetch fetchid ${resultid} var1\ var2\ ...\ varN)
+				MYSQL(Nextresult resultid ${connid}) (New in Asterisk 1.8)
+				MYSQL(Clear ${resultid})
+				MYSQL(Disconnect ${connid})
+				
+				[Examples]
+				exten => _X.,1,MYSQL(Connect connid localhost dbuser dbpass dbname)
+				exten => _X.,2,MYSQL(Query resultid ${connid} SELECT\ scriptname\ from\ mac2pin\ where\ userid=${CALLERIDNAME})
+				exten => _X.,3,MYSQL(Fetch fetchid ${resultid} AGIScript)
+				exten => _X.,4,GotoIf($[${AGIScript} = NULL]?5:7)
+				exten => _X.,5,AGI(${DefaultAGIScript},${EXTEN})
+				exten => _X.,6,Goto(_X.,8)
+				exten => _X.,7,AGI(${AGIScript},${EXTEN})
+				exten => _X.,8,MYSQL(Clear ${resultid})
+				exten => _X.,9,MYSQL(Disconnect ${connid})
+				exten => _X.,10,Hangup">
+				<Param name="Command params" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MVM_ACCMESS_STATUS" />
+		<KeyWord name="MVM_COUNTER" />
+		<KeyWord name="MVM_DELETE_STATUS" />
+		<KeyWord name="MVM_DURATION" />
+		<KeyWord name="MVM_FILENAME" />
+		<KeyWord name="MVM_GREET_STATUS" />
+		<KeyWord name="MVM_NOTIFY_STATUS" />
+		<KeyWord name="MVM_RECORD_STATUS" />
+		<KeyWord name="NBScat" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="NOANSWER" />
+		<KeyWord name="NOAPP" />
+		<KeyWord name="NoCDR" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="NOCHANNEL" />
+		<KeyWord name="NOLOAD" />
+		<KeyWord name="NONEXISTENT" />
+		<KeyWord name="NoOp" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="NOPARSE" />
+		<KeyWord name="NOSUCHQUEUE" />
+		<KeyWord name="NOTDYNAMIC" />
+		<KeyWord name="NOTFOUND" />
+		<KeyWord name="NOTHING" />
+		<KeyWord name="NOTINQUEUE" />
+		<KeyWord name="NOTSURE" />
+		<KeyWord name="NOT_CONNECTED" />
+		<KeyWord name="NOT_GENERIC" />
+		<KeyWord name="NOT_INUSE" />
+		<KeyWord name="NOT_LOGGED_IN" />
+		<KeyWord name="NO_CORE_INSTANCE" />
+		<KeyWord name="NULL" />
+		<KeyWord name="ODBC" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ODBCFinish" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ODBC_Commit" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ODBC_FETCH" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ODBC_FETCH_STATUS" />
+		<KeyWord name="ODBC_Rollback" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ODBC_SQL" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ODBC_USER_DATABASE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="OK" />
+		<KeyWord name="OMIT" />
+		<KeyWord name="ONHOLD" />
+		<KeyWord name="OPERATOR" />
+		<KeyWord name="Originate" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ORIGINATE_STATUS" />
+		<KeyWord name="OSPAuth" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="OSPAUTHSTATUS" />
+		<KeyWord name="OSPCALLING" />
+		<KeyWord name="OSPDEST" />
+		<KeyWord name="OSPDESTINATION" />
+		<KeyWord name="OSPDESTREMAILS" />
+		<KeyWord name="OSPDIALSTR" />
+		<KeyWord name="OSPFinish" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="OSPFINISHSTATUS" />
+		<KeyWord name="OSPINACTUALSRC" />
+		<KeyWord name="OSPINALTSPN" />
+		<KeyWord name="OSPINAUDIOQOS" />
+		<KeyWord name="OSPINCUSTOMINFOn" />
+		<KeyWord name="OSPINCUSTOMINFON" />
+		<KeyWord name="OSPINDIVHOST" />
+		<KeyWord name="OSPINDIVUSER" />
+		<KeyWord name="OSPINHANDLE" />
+		<KeyWord name="OSPINMCC" />
+		<KeyWord name="OSPINMNC" />
+		<KeyWord name="OSPINNETWORKID" />
+		<KeyWord name="OSPINNPCIC" />
+		<KeyWord name="OSPINNPDI" />
+		<KeyWord name="OSPINNPRN" />
+		<KeyWord name="OSPINOCN" />
+		<KeyWord name="OSPINPAIUSER" />
+		<KeyWord name="OSPINPCIUSER" />
+		<KeyWord name="OSPINPEERIP" />
+		<KeyWord name="OSPINRPIDUSER" />
+		<KeyWord name="OSPINSPID" />
+		<KeyWord name="OSPINSPN" />
+		<KeyWord name="OSPINTECH" />
+		<KeyWord name="OSPINTIMELIMIT" />
+		<KeyWord name="OSPINTOHOST" />
+		<KeyWord name="OSPINTOKEN" />
+		<KeyWord name="OSPLookup" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="OSPLOOKUPSTATUS" />
+		<KeyWord name="OSPNext" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="OSPNEXTSTATUS" />
+		<KeyWord name="OSPOUTALTSPN" />
+		<KeyWord name="OSPOUTAUDIOQOS" />
+		<KeyWord name="OSPOUTCALLED" />
+		<KeyWord name="OSPOUTCALLID" />
+		<KeyWord name="OSPOUTCALLIDTYPES" />
+		<KeyWord name="OSPOUTCALLING" />
+		<KeyWord name="OSPOUTHANDLE" />
+		<KeyWord name="OSPOUTMCC" />
+		<KeyWord name="OSPOUTMNC" />
+		<KeyWord name="OSPOUTNETWORKID" />
+		<KeyWord name="OSPOUTNPCIC" />
+		<KeyWord name="OSPOUTNPDI" />
+		<KeyWord name="OSPOUTNPRN" />
+		<KeyWord name="OSPOUTOCN" />
+		<KeyWord name="OSPOUTSPID" />
+		<KeyWord name="OSPOUTSPN" />
+		<KeyWord name="OSPOUTTECH" />
+		<KeyWord name="OSPOUTTIMELIMIT" />
+		<KeyWord name="OSPOUTTOKEN" />
+		<KeyWord name="OSPRESULTS" />
+		<KeyWord name="OSPTECH" />
+		<KeyWord name="OUTBOUND_GROUP" />
+		<KeyWord name="OUTBOUND_GROUP_ONCE" />
+		<KeyWord name="Page" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Park" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ParkAndAnnounce" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PARKEDAT" />
+		<KeyWord name="ParkedCall" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PARKEDLOT" />
+		<KeyWord name="PARKER" />
+		<KeyWord name="PARKER_FLAT" />
+		<KeyWord name="PARKINGEXTEN" />
+		<KeyWord name="PARKINGLOT" />
+		<KeyWord name="PARKINGSLOT" />
+		<KeyWord name="PARKING_SPACE" />
+		<KeyWord name="PARK_END" />
+		<KeyWord name="PARK_START" />
+		<KeyWord name="PASSTHRU" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PAST" />
+		<KeyWord name="PAUSED" />
+		<KeyWord name="PauseMonitor" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PauseQueueMember" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Perl" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PERIODIC_HOOK" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Phone" />
+		<KeyWord name="PHP" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PickDown" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PICKUP" />
+		<KeyWord name="Pickup" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PickupChan" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PICKUPMARK" />
+		<KeyWord name="PITCH_SHIFT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PJSIP" />
+		<KeyWord name="PJSIP_AOR" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PJSIP_CONTACT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PJSIP_DIAL_CONTACTS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PJSIP_ENDPOINT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PJSIP_HEADER" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PJSIP_MEDIA_OFFER" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Playback" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PLAYBACKSTATUS" />
+		<KeyWord name="PlayTones" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="POP" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PPPD" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PP_EACH_EXTENSION" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PP_EACH_USER" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PQMSTATUS" />
+		<KeyWord name="Prepaid" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PRESENCE_STATE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PRIORITY" />
+		<KeyWord name="PRIREDIRECTREASON" />
+		<KeyWord name="PrivacyManager" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PRIVACYMGRSTATUS" />
+		<KeyWord name="PRI_CAUSE" />
+		<KeyWord name="Proceeding" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Progress" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="PUSH" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="QEHOLDTIME" />
+		<KeyWord name="QEORIGINALPOS" />
+		<KeyWord name="Queue" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="QUEUEABANDONED" />
+		<KeyWord name="QUEUECALLS" />
+		<KeyWord name="QUEUECOMPLETED" />
+		<KeyWord name="QUEUEHOLDTIME" />
+		<KeyWord name="QueueLog" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="QUEUEMAX" />
+		<KeyWord name="QUEUENAME" />
+		<KeyWord name="QUEUEPOSITION" />
+		<KeyWord name="QUEUESRVLEVEL" />
+		<KeyWord name="QUEUESRVLEVELPERF" />
+		<KeyWord name="QUEUESTATUS" />
+		<KeyWord name="QUEUESTRATEGY" />
+		<KeyWord name="QUEUEAGENTCOUNT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="QUEUE_EXISTS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="QUEUE_MAX_PENALTY" />
+		<KeyWord name="QUEUE_MEMBER" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="QUEUE_MEMBER_COUNT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="QUEUE_MEMBER_LIST" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="QUEUE_MEMBER_PENALTY" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="QUEUE_MIN_PENALTY" />
+		<KeyWord name="QUEUE_PRIO" />
+		<KeyWord name="QUEUE_VARIABLES" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="QUEUE_WAITING_COUNT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="QUOTE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="RaiseException" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="RAND" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Random" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Read" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ReadExten" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="READEXTENSTATUS" />
+		<KeyWord name="ReadFile" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="REALTIME" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="RealTime" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use REALTIME function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="RealTimeUpdate" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="REALTIME_DESTROY" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="REALTIME_FIELD" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="REALTIME_HASH" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="REALTIME_STORE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="REASON" />
+		<KeyWord name="ReceiveFAX" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ReceiveFAX_app_fax" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ReceiveFAX_res_fax" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Record" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="RECORDED_FILE" />
+		<KeyWord name="RECORD_STATUS" />
+		<KeyWord name="REDIRECTING" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="REDIRECTING_CALLEE_SEND_MACRO" />
+		<KeyWord name="REDIRECTING_CALLEE_SEND_MACRO_ARGS" />
+		<KeyWord name="REDIRECTING_CALLER_SEND_MACRO" />
+		<KeyWord name="REDIRECTING_CALLER_SEND_MACRO_ARGS" />
+		<KeyWord name="REGEX" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="REJECTED" />
+		<KeyWord name="REMOTESTATIONID" />
+		<KeyWord name="REMOTESTOPPED" />
+		<KeyWord name="REMOTE_HOST" />
+		<KeyWord name="REMOTE_REINVITE" />
+		<KeyWord name="REMOVED" />
+		<KeyWord name="RemoveQueueMember" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="REPLACE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ResetCDR" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ResponseTimeout" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="RESPONSETIMEOUT" />
+		<KeyWord name="RESTRICTED_DIGITAL" />
+		<KeyWord name="RetryDial" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Return" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="RINGING" />
+		<KeyWord name="Ringing" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="RINGINUSE" />
+		<KeyWord name="RINGTIMEOUT" />
+		<KeyWord name="RQMSTATUS" />
+		<KeyWord name="Rpt" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="RTPAUDIOQOS" />
+		<KeyWord name="RTPVIDEOQOS" />
+		<KeyWord name="RxFAX" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SayAlpha" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SayAlphaCase" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SayCountedAdj" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SayCountedNoun" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SayCountPL" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SayDigits" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SayNumber" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SayPhonetic" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SayUnixTime" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SAY_DTMF_INTERRUPT" />
+		<KeyWord name="SECRET" />
+		<KeyWord name="SELECTED" />
+		<KeyWord name="SendDTMF" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SendFAX" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SendFAX_app_fax" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SendFAX_res_fax" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SendImage" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SENDIMAGESTATUS" />
+		<KeyWord name="SendText" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SENDTEXTSTATUS" />
+		<KeyWord name="SendURL" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SENDURLSTATUS" />
+		<KeyWord name="Set" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SET" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetAccount" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetAMAFlags" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetCallerID" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetCallerPres" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetCDRUserField" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetCIDName" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetCIDNum" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetGlobalVar" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetGroup" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetLanguage" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetMusicOnHold" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetRDNIS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetTransferCapability" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetVar" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SHA1" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SHARED" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SHELL" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SHIFT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SILENCE" />
+		<KeyWord name="SIP" />
+		<KeyWord name="SIPAddHeader" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIPCALLID" />
+		<KeyWord name="SIPCallPickup" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIPCHANINFO" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIPDOMAIN" />
+		<KeyWord name="SIPDtmfMode" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				Change the dtmfmode for a SIP call
+
+				[Description]
+				Changes the dtmfmode for a SIP call, i.e. calls originating in a SIP channel,
+				not calls TO a SIP channel originating in another type of channel, like a ZAP channel.
+				
+				[Syntax]
+				SIPDtmfMode(mode)
+
+				[Example]
+				SIPDtmfMode(inband)
+				
+				[Arguments]
+				&#x20;&#x2022; mode
+				&#x20;&#x20;&#x20;&#x2022; inband
+				&#x20;&#x20;&#x20;&#x2022; info
+				&#x20;&#x20;&#x20;&#x2022; rfc2833">
+				<Param name="STRING mode" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIPFROMDOMAIN" />
+		<KeyWord name="SIPFROMUSER" />
+		<KeyWord name="SIPGetHeader" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIPPEER" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIPRemoveHeader" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIPSendCustomINFO" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIPURI" />
+		<KeyWord name="SIPUSERAGENT" />
+		<KeyWord name="SIP_CODEC" />
+		<KeyWord name="SIP_CODEC_INBOUND" />
+		<KeyWord name="SIP_CODEC_OUTBOUND" />
+		<KeyWord name="SIP_HEADER" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIP_MAX_FORWARDS" />
+		<KeyWord name="SIP_RECVADDR" />
+		<KeyWord name="SIP_URI_OPTIONS" />
+		<KeyWord name="Skel" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SkelGuessNumber" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Skinny" />
+		<KeyWord name="SKIP" />
+		<KeyWord name="SLAStation" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SLASTATION_STATUS" />
+		<KeyWord name="SLATrunk" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SLATRUNK_STATUS" />
+		<KeyWord name="SMDI_MSG" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SMDI_MSG_RETRIEVE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SMDI_VM_TYPE" />
+		<KeyWord name="SMS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SoftHangup" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Sort" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use SORT function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SORT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SPEECH" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SpeechActivateGrammar" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SpeechBackground" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SpeechCreate" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SpeechDeactivateGrammar" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SpeechDestroy" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SpeechLoadGrammar" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SpeechProcessingSound" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SpeechStart" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SpeechUnloadGrammar" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SPEECH_ENGINE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SPEECH_GRAMMAR" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SPEECH_RESULTS_TYPE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SPEECH_SCORE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SPEECH_TEXT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SPRINTF" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SPYGROUP" />
+		<KeyWord name="SPY_CHANNEL" />
+		<KeyWord name="SPY_EXIT_CONTEXT" />
+		<KeyWord name="SQL_ESC" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SRVQUERY" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SRVRESULT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SrxDeflect" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SrxEchoCan" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SrxMWI" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="StackPop" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="STACK_PEEK" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Steal" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="StartMusicOnHold" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Stasis" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="STAT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="StopMixMonitor" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="StopMonitor" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="StopMusicOnHold" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="StopPlayTones" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="STRFTIME" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="StripLSD" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="StripMSD" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="STRPTIME" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="STRREPLACE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SubString" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SUCCESS" />
+		<KeyWord name="Swift" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SYSINFO" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="System" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SYSTEMNAME" />
+		<KeyWord name="SYSTEMSTATUS" />
+		<KeyWord name="TALK_DETECT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TALK_DETECTED" />
+		<KeyWord name="TENTATIVE" />
+		<KeyWord name="TestClient" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TestServer" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TESTTIME" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TEXT" />
+		<KeyWord name="TIMEOUT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TIMESTAMP" />
+		<KeyWord name="TOLOWER" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TOOLONG" />
+		<KeyWord name="TOO_MANY_REQUESTS" />
+		<KeyWord name="TORTURE" />
+		<KeyWord name="TOUCH_MIXMONITOR" />
+		<KeyWord name="TOUCH_MIXMONITOR_FORMAT" />
+		<KeyWord name="TOUCH_MIXMONITOR_OUTPUT" />
+		<KeyWord name="TOUCH_MONITOR" />
+		<KeyWord name="TOUCH_MONITOR_FORMAT" />
+		<KeyWord name="TOUCH_MONITOR_MESSAGE_START" />
+		<KeyWord name="TOUCH_MONITOR_MESSAGE_STOP" />
+		<KeyWord name="TOUCH_MONITOR_OUTPUT" />
+		<KeyWord name="TOUCH_MONITOR_PREF" />
+		<KeyWord name="TOUCH_MONITOR_PREFIX" />
+		<KeyWord name="TOUPPER" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TRANSFER" />
+		<KeyWord name="Transfer" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TRANSFERCAPABILITY" />
+		<KeyWord name="TRANSFERSTATUS" />
+		<KeyWord name="TRANSFER_CONTEXT" />
+		<KeyWord name="TryExec" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TRYLOCK" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TRYSTATUS" />
+		<KeyWord name="TrySystem" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TXTCIDNAME" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TXTCIDName" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use TXTCIDNAME function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TXTCIDNAMESTATUS" />
+		<KeyWord name="UNANSWERED" />
+		<KeyWord name="UNAVAILABLE" />
+		<KeyWord name="UNIQUEID" />
+		<KeyWord name="UNKNOWN" />
+		<KeyWord name="UNLOCK" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="UNPAUSED" />
+		<KeyWord name="UnpauseMonitor" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="UnpauseQueueMember" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="UNSHIFT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="UNSPECIFIED" />
+		<KeyWord name="UNSUPPORTED" />
+		<KeyWord name="UPQMSTATUS" />
+		<KeyWord name="URIDECODE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="URIENCODE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="UserEvent" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="USEREXIT" />
+		<KeyWord name="USERNAME" />
+		<KeyWord name="USERSTOPPED" />
+		<KeyWord name="USER_DEFINED" />
+		<KeyWord name="VALID_EXTEN" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Verbose" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="VERSION" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="VIDEO" />
+		<KeyWord name="VMAuthenticate" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="VMBOXEXISTSSTATUS" />
+		<KeyWord name="VMCOUNT" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="VMSayName" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="VMSTATUS" />
+		<KeyWord name="VM_CALLERID" />
+		<KeyWord name="VM_CATEGORY" />
+		<KeyWord name="VM_CIDNAME" />
+		<KeyWord name="VM_CIDNUM" />
+		<KeyWord name="VM_DATE" />
+		<KeyWord name="VM_DUR" />
+		<KeyWord name="VM_INFO" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="VM_MAILBOX" />
+		<KeyWord name="VM_MESSAGEFILE" />
+		<KeyWord name="VM_MSGNUM" />
+		<KeyWord name="VM_NAME" />
+		<KeyWord name="VOICE" />
+		<KeyWord name="VoiceMail" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="VoiceMailMain" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="VoiceMailPlayMsg" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="VOICEMAIL_PLAYBACKSTATUS" />
+		<KeyWord name="VOLUME" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="VPB" />
+		<KeyWord name="VPB_GETDTMF" />
+		<KeyWord name="VXML_URL" />
+		<KeyWord name="Wait" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="WaitExten" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="WaitForNoise" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="WaitForRing" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="WaitForSilence" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="WaitMusicOnHold" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="WAITSTATUS" />
+		<KeyWord name="WaitUntil" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="WAITUNTILSTATUS" />
+		<KeyWord name="While" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="XAGI" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="XMPP" />
+		<KeyWord name="Zap" />
+		<KeyWord name="Zapateller" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ZAPATELLERSTATUS" />
+		<KeyWord name="ZapBarge" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ZapEC" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ZAPPED" />
+		<KeyWord name="ZapRAS" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ZapScan" func="yes">
+			<Overload retVal="" descr="">
+			</Overload>
+		</KeyWord>	
+	</AutoComplete>
+</NotepadPlus>
