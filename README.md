@@ -12,5 +12,6 @@ Asterisk Dialplan Syntax Highlighting for Notepad++
 ##Notes
 <ul>
   <li>These files are still on progress</li>
-  <li>More info <a target="_blank" href="http://www.xilitium.com/blog/2/asterisk-dialplan-syntax-highlighting-for-notepad-plus-plus">in English</a> or <a target="_blank" href="http://www.xilitium.com/blog/1/resaltado-de-sintaxis-para-asterisk-dialplan-en-notepad-plus-plus">en Español</a></li>
+  <li>More info <a target="_blank"  href="http://www.xilitium.com/blog/2/asterisk-dialplan-syntax-highlighting-for-notepad-plus-plus">in English</a></li>
+<li>Mas información <a target="_blank" href="http://www.xilitium.com/blog/1/resaltado-de-sintaxis-para-asterisk-dialplan-en-notepad-plus-plus">en Español</a></li>
 </ul>
