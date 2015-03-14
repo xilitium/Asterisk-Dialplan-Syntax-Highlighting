@@ -69,12 +69,24 @@
 				[Asterisk Version]
 				1.0+
 				
-				[Syntax]">
+				[Syntax]
+				
+				[Arguments]">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="AELSub" func="yes">
-			<Overload retVal="" descr="">
+			<Overload retVal="" descr="
+				[Synopsis]
+				
+				[Description]
+					
+				[Asterisk Version]
+				1.4+
+				
+				[Syntax]
+				
+				[Arguments]">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
@@ -175,26 +187,65 @@
 		<KeyWord name="AGENTACKCALL" />
 		<KeyWord name="AGENTAUTOLOGOFF" />
 		<KeyWord name="AgentCallBackLogin" func="yes">
-			<Overload retVal="" descr="">
+		<Overload retVal="" descr="
+				[Synopsis]
+				
+				[Description]
+					
+				[Asterisk Version]
+				1.0+
+				
+				[Syntax]
+				
+				[Arguments]">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="AGENTEXTEN" />
 		<KeyWord name="AGENTGOODBYE" />
 		<KeyWord name="AgentLogin" func="yes">
-			<Overload retVal="" descr="">
+			<Overload retVal="" descr="
+				[Synopsis]
+				
+				[Description]
+					
+				[Asterisk Version]
+				1.0+
+				
+				[Syntax]
+				
+				[Arguments]">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="AGENTMAXLOGINTRIES" />
 		<KeyWord name="AgentMonitorOutgoing" func="yes">
-			<Overload retVal="" descr="">
+			<Overload retVal="" descr="
+				[Synopsis]
+				
+				[Description]
+					
+				[Asterisk Version]
+				1.0+
+				
+				[Syntax]
+				
+				[Arguments]">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="AGENTNUMBER" />
 		<KeyWord name="AgentRequest" func="yes">
-			<Overload retVal="" descr="">
+			<Overload retVal="" descr="
+				[Synopsis]
+				
+				[Description]
+					
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
@@ -203,7 +254,17 @@
 		<KeyWord name="AGENTWRAPUPTIME" />
 		<KeyWord name="AGENT_STATUS" />
 		<KeyWord name="AGI" func="yes">
-			<Overload retVal="" descr="">
+		<Overload retVal="" descr="
+				[Synopsis]
+				
+				[Description]
+					
+				[Asterisk Version]
+				1.0+
+				
+				[Syntax]
+				
+				[Arguments]">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
@@ -298,6 +359,9 @@
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ASSISTANT" />
+		<KeyWord name="ASTERISKINCDIR" />
+		<KeyWord name="ASTERISKETCDIR" />
+		<KeyWord name="ASTERISKMODDIR" />
 		<KeyWord name="ASTERISK_VERSION_NUM" />
 		<KeyWord name="AST_CONFIG" func="yes">
 			<Overload retVal="VARIABLE" descr="
@@ -363,6 +427,7 @@
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ATTENDEDTRANSFER" />
+		<KeyWord name="ATTENDED_TRANSFER_COMPLETE_SOUND" />
 		<KeyWord name="AUDIOHOOK_INHERIT" func="yes">
 			<Overload retVal="" descr="
 				Deprecated. Used to set whether an audiohook may be inherited to another channel. Due to architectural changes in Asterisk 12, 
@@ -593,7 +658,8 @@
 				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; priv-num-plan, priv-num-pres, priv-subaddr, priv-subaddr-valid, priv-subaddr-type, priv-subaddr-odd, priv-tag, ANI-all, 
 				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; ANI-name, ANI-name-valid, ANI-name-charset, ANI-name-pres, ANI-num, ANI-num-valid, ANI-num-plan, ANI-num-pres, ANI-tag,
 				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; RDNIS, DNID, dnid-num-plan, dnid-subaddr, dnid-subaddr-valid, dnid-subaddr-type, dnid-subaddr-odd ]
-				&#x20;&#x2022; CID - Optional Caller*ID to parse instead of using the Caller*ID from the channel. This parameter is only optional when reading the Caller*ID.">
+				&#x20;&#x2022; CID - Optional Caller*ID to parse instead of using the Caller*ID from the channel. This parameter is only optional when reading
+				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;  the Caller*ID.">
 				<Param name="STRING datatype" />
 				<Param name="[STRING CID]" />
 			</Overload>
@@ -815,6 +881,12 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="Curl" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use CURL function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="CURL" func="yes">
 			<Overload retVal="" descr="">
 				<Param name="" />
@@ -826,6 +898,12 @@
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CURRENTCHANNEL" />
+		<KeyWord name="Cut" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use CUT function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="CUT" func="yes">
 			<Overload retVal="" descr="">
 				<Param name="" />
@@ -1205,6 +1283,11 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="ExternIVR" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="ExternalIVR" func="yes">
 			<Overload retVal="" descr="">
 				<Param name="" />
@@ -1293,10 +1376,10 @@
 				[Example]
 				;Flite Demo
 			exten => 1234,1,Answer()
-			exten => 1234,n,Flite("This is a simple F lite test in english.",any)
+			exten => 1234,n,Flite(&#x0022;This is a simple F lite test in english.&#x0022;,any)
 			;Read a text file from disk and pass it to flite
 			exten => 1234,n,ReadFile(MYTEXT=/path/myfile,200)
-			exten => 1234,n,Flite("${MYTEXT}",any)
+			exten => 1234,n,Flite(&#x0022;${MYTEXT}&#x0022;,any)
 			exten => 1234,n,Hangup()
 				
 				[Arguments]
@@ -1537,6 +1620,7 @@
 		<KeyWord name="INVALID_EXTEN" />
 		<KeyWord name="INVALID_PROTOCOL" />
 		<KeyWord name="INVALID_URI" />
+		<KeyWord name="IPADDR" />
 		<KeyWord name="ISNULL" func="yes">
 			<Overload retVal="" descr="">
 				<Param name="" />
@@ -1983,11 +2067,18 @@
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MVM_ACCMESS_STATUS" />
+		<KeyWord name="MVM_CALLERID" />
+		<KeyWord name="MVM_CIDNUM" />
+		<KeyWord name="MVM_CIDNAME" />
 		<KeyWord name="MVM_COUNTER" />
+		<KeyWord name="MVM_DATE" />
 		<KeyWord name="MVM_DELETE_STATUS" />
+		<KeyWord name="MVM_DUR" />
 		<KeyWord name="MVM_DURATION" />
 		<KeyWord name="MVM_FILENAME" />
 		<KeyWord name="MVM_GREET_STATUS" />
+		<KeyWord name="MVM_MSGNUM" />
+		<KeyWord name="MVM_NAME" />
 		<KeyWord name="MVM_NOTIFY_STATUS" />
 		<KeyWord name="MVM_RECORD_STATUS" />
 		<KeyWord name="NBScat" func="yes">
@@ -2023,6 +2114,7 @@
 		<KeyWord name="NOT_LOGGED_IN" />
 		<KeyWord name="NO_CORE_INSTANCE" />
 		<KeyWord name="NULL" />
+		<KeyWord name="NUMBER" />
 		<KeyWord name="ODBC" func="yes">
 			<Overload retVal="" descr="">
 				<Param name="" />
@@ -2555,6 +2647,12 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="Prefix" func="yes">
+			<Overload retVal="" descr="
+				Obsolete. Has been Removed">
+				<Param name="STRING digits" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="RTPAUDIOQOS" />
 		<KeyWord name="RTPVIDEOQOS" />
 		<KeyWord name="RxFAX" func="yes">
@@ -2608,6 +2706,55 @@
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SAY_DTMF_INTERRUPT" />
+		<KeyWord name="SCCPDEVICE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SCCPLINE" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SCCPCHANNEL" func="yes">
+			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SCCPSetCodec" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use Set(CHANNEL(codec)=&#x0025;s) function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SCCPSetCalledParty" func="yes">
+			<Overload retVal="" descr="
+				Deprecated. Use Set(CHANNEL(calledparty)=&#x0022;name &#x003C;exten&#x003E;&#x0022;) function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SCCPSetMessage" func="yes">
+			<Overload retVal="" descr="
+				[Synopsis]
+				Send a Message to the current Phone
+				
+				[Description]
+				Send a Message to the Calling Device (and remove after timeout, if timeout 
+				is ommited will stay until next/empty message). Use priority to set/clear 
+				priority notifications. Higher priority levels overrule lower ones.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				SCCPSetMessage(message text [,timeout])
+				
+				[Arguments]
+				&#x20;&#x2022; message
+				&#x20;&#x2022; timeout">
+				<Param name="STRING message" />
+				<Param name="[INTEGER timeout]" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="SECRET" />
 		<KeyWord name="SELECTED" />
 		<KeyWord name="SendDTMF" func="yes">
@@ -2673,6 +2820,12 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="SetCalledParty" func="yes">
+			<Overload retVal="" descr="
+				Deprecated in favor of SCCPSetCalledParty">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="SetCallerPres" func="yes">
 			<Overload retVal="" descr="">
 				<Param name="" />
@@ -2708,6 +2861,12 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="SetMessage" func="yes">
+			<Overload retVal="" descr="
+				Deprecated in favor of SCCPSetMessage">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="SetMusicOnHold" func="yes">
 			<Overload retVal="" descr="">
 				<Param name="" />
@@ -2715,6 +2874,12 @@
 		</KeyWord>
 		<KeyWord name="SetRDNIS" func="yes">
 			<Overload retVal="" descr="">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetSCCPCodec" func="yes">
+			<Overload retVal="" descr="
+				Deprecated in favor of SCCPSetCodec">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
@@ -3007,6 +3172,12 @@
 		<KeyWord name="Steal" func="yes">
 			<Overload retVal="" descr="">
 				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Suffix" func="yes">
+			<Overload retVal="" descr="
+				Obsolete. Has been Removed">
+				<Param name="STRING digits" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="StartMusicOnHold" func="yes">
