@@ -23,3 +23,9 @@ Asterisk Dialplan Syntax Highlighting for Notepad++. Works with UDL 2.1
 ![Asterisk Dialplan Auto Completation and Function Hint](http://i703.photobucket.com/albums/ww40/xilitium/asterisk-syntax-highlighting-notepad-5.png)
 <p>Syntax Highlighting for Asterisk .conf files</p>
 ![Syntax Highlighting for Asterisk .conf files](http://i703.photobucket.com/albums/ww40/xilitium/asterisk-syntax-highlighting-notepad-4.png)
+
+####Dark Styles
+<p>Highlighting for Mono Industrial Theme</p>
+![Highlighting for Mono Industrial  Theme](http://i703.photobucket.com/albums/ww40/xilitium/asterisk-syntax-highlighting-notepad-dark-mono-1.png)
+<br><br>
+![Highlighting for Mono Industrial  Theme](http://i703.photobucket.com/albums/ww40/xilitium/asterisk-syntax-highlighting-notepad-dark-mono-2.png)
