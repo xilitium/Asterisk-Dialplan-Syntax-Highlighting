@@ -21,8 +21,8 @@
 				AES_DECRYPT(key,string)
 				
 				[Arguments]
-				&#x20;&#x2022; key - AES Key
-				&#x20;&#x2022; string - Input string">
+				  &#x2022; key - AES Key
+				  &#x2022; string - Input string">
 				<Param name="STRING key"/>
 				<Param name="STRING string"/>
 			</Overload>
@@ -39,10 +39,10 @@
 				
 				[Syntax]
 				AES_ENCRYPT(key,string)
-
+				
 				[Arguments]
-				&#x20;&#x20;&#x2022; key - AES Key
-				&#x20;&#x20;&#x2022; string - Input string">
+				  &#x2022; key - AES Key
+				  &#x2022; string - Input string">
 				<Param name="STRING key"/>
 				<Param name="STRING string"/>
 			</Overload>
@@ -70,7 +70,7 @@
 				exten => 1,2,Set(AGC(tx)=off)
 				
 				[Arguments]
-				&#x20;&#x20;&#x2022; channeldirection - This can be either rx or tx">
+				  &#x2022; channeldirection - This can be either rx or tx">
 				<Param name="STRING (rx|tx)"/>
 			</Overload>
 		</KeyWord>
@@ -88,14 +88,14 @@
 				exten => 123,1,Set(foo=${AGENT(42:name)})
 				
 				[Arguments]
-				&#x20;&#x2022; AgentId
-				&#x20;&#x2022; item - The valid items to retrieve are:
-				&#x20;&#x20;&#x20;&#x2022; status - (default) The status of the agent (LOGGEDIN | LOGGEDOUT)
-				&#x20;&#x20;&#x20;&#x2022; password - Deprecated. The dialplan handles any agent authentication.
-				&#x20;&#x20;&#x20;&#x2022; name - The name of the agent
-				&#x20;&#x20;&#x20;&#x2022; mohclass - MusicOnHold class
-				&#x20;&#x20;&#x20;&#x2022; channel - The name of the active channel for the Agent (AgentLogin)
-				&#x20;&#x20;&#x20;&#x2022; fullchannel - The untruncated name of the active channel for the Agent (AgentLogin)">
+				  &#x2022; AgentId
+				  &#x2022; item - The valid items to retrieve are:
+				    &#x2022; status - (default) The status of the agent (LOGGEDIN | LOGGEDOUT)
+				    &#x2022; password - Deprecated. The dialplan handles any agent authentication.
+				    &#x2022; name - The name of the agent
+				    &#x2022; mohclass - MusicOnHold class
+				    &#x2022; channel - The name of the active channel for the Agent (AgentLogin)
+				    &#x2022; fullchannel - The untruncated name of the active channel for the Agent (AgentLogin)">
 				<Param name="STRING AgentId[:item]"/>
 			</Overload>
 		</KeyWord>
@@ -104,7 +104,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -123,22 +123,24 @@
 				be interpreted as a set of values to which the comma-separated list of
 				variable names in the argument should be set.
 				Hence, Set(ARRAY(var1|var2)=1\,2) will set var1 to 1 and var2 to 2
-				Note: remember to either backslash your commas in extensions.conf or quote the
+				
+				Note:
+				remember to either backslash your commas in extensions.conf or quote the
 				entire argument, since Set can take multiple arguments itself.
 				
 				[Asterisk Version]
 				
 				[Syntax]
-				ARRAY(var1[|var2[...][|varN]]): (1.4-)
-				ARRAY(var1[,var2[...][,varN]]): (1.6+)
+				ARRAY(var1[|var2[...][|varN]]): - Asterisk 1.4 and lower
+				ARRAY(var1[,var2[...][,varN]]): - Asterisk 1.6 and later
 				
 				[Example]
 				Set(ARRAY(var1,var2)=1,2)
 				
 				[Arguments]
-				&#x20;&#x2022; var1
-				&#x20;&#x2022; var2
-				&#x20;&#x2022; varN">
+				  &#x2022; var1
+				  &#x2022; var2
+				  &#x2022; varN">
 				<Param name="STRING var1" />
 				<Param name="[STRING var2" />
 				<Param name="[STRING varN]]" />
@@ -153,7 +155,7 @@
 				This function reads a variable from an Asterisk configuration file.
 				
 				[Asterisk Version]
-				(1.6)+
+				(1.6+)
 				
 				[Syntax]
 				AST_CONFIG(config_file,category,variable_name)
@@ -163,9 +165,9 @@
 				exten => _XXXX,1,Goto(${AST_CONFIG(sip.conf,${CALLERID(num)},context)},${EXTEN},1)
 				
 				[Arguments]
-				&#x20;&#x2022; config_file
-				&#x20;&#x2022; category
-				&#x20;&#x2022; variable_name">
+				  &#x2022; config_file
+				  &#x2022; category
+				  &#x2022; variable_name">
 				<Param name="STRING config_file" />
 				<Param name="STRING category" />
 				<Param name="STRING variable_name" />
@@ -184,14 +186,14 @@
 				AST_SORCERY(module_name,object_type,object_id,field_name[,retrieval_method[,retrieval_details]])
 				
 				[Arguments]
-				&#x20;&#x2022; module_name - The name of the module owning the sorcery instance.
-				&#x20;&#x2022; object_type - The type of object to query.
-				&#x20;&#x2022; object_id - The id of the object to query.
-				&#x20;&#x2022; field_name - The name of the field.
-				&#x20;&#x2022; retrieval_method - Fields that have multiple occurrences may be retrieved in two ways.
-				&#x20;&#x20;&#x20;&#x2022; concat - Returns all matching fields concatenated in a single string separated by separator which defaults to ,.
-				&#x20;&#x20;&#x20;&#x2022; single - Returns the nth occurrence of the field as specified by occurrence_number which defaults to 1.
-				&#x20;&#x2022; retrieval_details - Specifies either the separator for concat or the occurrence number for single.">
+				  &#x2022; module_name - The name of the module owning the sorcery instance.
+				  &#x2022; object_type - The type of object to query.
+				  &#x2022; object_id - The id of the object to query.
+				  &#x2022; field_name - The name of the field.
+				  &#x2022; retrieval_method - Fields that have multiple occurrences may be retrieved in two ways.
+				    &#x2022; concat - Returns all matching fields concatenated in a single string separated by separator which defaults to ,.
+				    &#x2022; single - Returns the nth occurrence of the field as specified by occurrence_number which defaults to 1.
+				  &#x2022; retrieval_details - Specifies either the separator for concat or the occurrence number for single.">
 				<Param name="STRING module_name" />
 				<Param name="STRING object_type" />
 				<Param name="INTEGER object_id" />
@@ -233,7 +235,7 @@
 				BASE64_DECODE(string)
 				
 				[Arguments]
-				&#x20;&#x2022; string - Input string.">
+				  &#x2022; string - Input string.">
 				<Param name="STRING string" />
 			</Overload>
 		</KeyWord>
@@ -251,7 +253,7 @@
 				BASE64_ENCODE(string)
 				
 				[Arguments]
-				&#x20;&#x2022; string - Input string.">
+				  &#x2022; string - Input string.">
 				<Param name="STRING string" />
 			</Overload>
 		</KeyWord>
@@ -293,78 +295,160 @@
 				CALENDAR_BUSY(calendar)
 				
 				[Arguments]
-				&#x20;&#x2022; calendar">
+				  &#x2022; calendar">
 				<Param name="STRING calendar" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CALENDAR_EVENT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Get calendar event notification data from a notification call.
 				
 				[Description]
-					
+				Whenever a calendar event notification call is made, the event data may be accessed with this function.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CALENDAR_EVENT(field)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; field
+				    &#x2022; summary - The VEVENT SUMMARY property or Exchange event 'subject'
+				    &#x2022; description - The text description of the event
+				    &#x2022; organizer - The organizer of the event
+				    &#x2022; location - The location of the eventt
+				    &#x2022; categories - The categories of the event
+				    &#x2022; priority - The priority of the event
+				    &#x2022; calendar - The name of the calendar associated with the event
+				    &#x2022; uid - The unique identifier for this event
+				    &#x2022; start - The start time of the event
+				    &#x2022; end - The end time of the event
+				    &#x2022; busystate - The busy state of the event 0=FREE, 1=TENTATIVE, 2=BUSY">
+				<Param name="STRING field" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CALENDAR_QUERY" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Query a calendar server and store the data on a channel
 				
 				[Description]
-					
+				Get a list of events in the currently accessible timeframe of the calendar The function returns 
+				the id for accessing the result with CALENDAR_QUERY_RESULT()
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CALENDAR_QUERY(calendar[,start[,end]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; calendar - The calendar that should be queried
+				  &#x2022; start - The start time of the query (in seconds since epoch)
+				  &#x2022; end - The end time of the query (in seconds since epoch)">
+				<Param name="STRING calendar" />
+				<Param name="[INTEGER start" />
+				<Param name="[INTEGER end]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CALENDAR_QUERY_RESULT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve data from a previously run CALENDAR_QUERY() call
 				
 				[Description]
-					
+				After running CALENDAR_QUERY and getting a result id, calling CALENDAR_QUERY with that id and a field 
+				will return the data for that field. If multiple events matched the query, and entry is provided, 
+				information from that event will be returned.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CALENDAR_QUERY_RESULT(id,field[,entry])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; id - The query ID returned by CALENDAR_QUERY
+				  &#x2022; field
+				    &#x2022; getnum - number of events occurring during time range
+				    &#x2022; summary - A summary of the event
+				    &#x2022; description - The full event description
+				    &#x2022; organizer - The event organizer
+				    &#x2022; location - The event location
+				    &#x2022; categories - The categories of the event
+				    &#x2022; priority - The priority of the event
+				    &#x2022; calendar - The name of the calendar associted with the event
+				    &#x2022; uid - The unique identifier for the event
+				    &#x2022; start - The start time of the event (in seconds since epoch)
+				    &#x2022; end - The end time of the event (in seconds since epoch)
+				    &#x2022; busystate - The busy status of the event 0=FREE, 1=TENTATIVE, 2=BUSY
+				  &#x2022; entry - Return data from a specific event returned by the query">
+				<Param name="STRING id" />
+				<Param name="STRING field" />
+				<Param name="[STRING entry]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CALENDAR_WRITE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Write an event to a calendar
 				
 				[Description]
-					
+				Example: CALENDAR_WRITE(calendar,field1,field2,field3)=val1,val2,val3
+				The field and value arguments can easily be set/passed using the HASHKEYS() and HASH() functions
+				  &#x2022; CALENDAR_SUCCESS - The status of the write operation to the calendar 
+				    &#x2022; 1 - The event was successfully written to the calendar.
+				    &#x2022; 0 - The event was not written to the calendar due to network issues, permissions, etc.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CALENDAR_WRITE(calendar,field[,...])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; calendar - The calendar to write to
+				  &#x2022; field
+				    &#x2022; summary - A summary of the event
+				    &#x2022; description - The full event description
+				    &#x2022; organizer - The event organizer
+				    &#x2022; location - The event location
+				    &#x2022; categories - The categories of the event
+				    &#x2022; priority - The priority of the event
+				    &#x2022; uid - The unique identifier for the event
+				    &#x2022; start - The start time of the event (in seconds since epoch)
+				    &#x2022; end - The end time of the event (in seconds since epoch)
+				    &#x2022; busystate - The busy status of the event 0=FREE, 1=TENTATIVE, 2=BUSY">
+				<Param name="STRING calendar" />
+				<Param name="STRING field" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CALLCOMPLETION" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Get or set a call completion configuration parameter for a channel.
 				
 				[Description]
-					
+				The CALLCOMPLETION function can be used to get or set a call completion configuration parameter for a channel.
+				Note that setting a configuration parameter will only change the parameter for the duration of the call. 
+				For more information see doc/AST.pdf. For more information on call completion parameters, see configs/ccss.conf.sample.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CALLCOMPLETION(option)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; option - The allowable options are:
+				    &#x2022; cc_agent_policy
+				    &#x2022; cc_monitor_policy
+				    &#x2022; cc_offer_timer
+				    &#x2022; ccnr_available_timer
+				    &#x2022; ccbs_available_timer
+				    &#x2022; cc_recall_timer
+				    &#x2022; cc_max_agents
+				    &#x2022; cc_max_monitors
+				    &#x2022; cc_callback_macro
+				    &#x2022; cc_agent_dialstring">
+				<Param name="STRING option" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CALLERID" func="yes">
@@ -376,22 +460,43 @@
 				Gets or sets Caller*ID data on the channel. Uses channel callerid by default or optional callerid,
 				if specified.
 				
+				The allowable values for the name-charset field are the following:
+				
+				  &#x2022; unknown - Unknown
+				  &#x2022; iso8859-1 - ISO8859-1
+				  &#x2022; withdrawn - Withdrawn
+				  &#x2022; iso8859-2 - ISO8859-2
+				  &#x2022; iso8859-3 - ISO8859-3
+				  &#x2022; iso8859-4 - ISO8859-4
+				  &#x2022; iso8859-5 - ISO8859-5
+				  &#x2022; iso8859-7 - ISO8859-7
+				  &#x2022; bmp - ISO10646 Bmp String
+				  &#x2022; utf8 - ISO10646 UTF-8 String
+				
 				[Asterisk Version]
 				
 				[Syntax]
 				CALLERID(datatype,CID)
 				
 				[Arguments]
-				&#x20;&#x2022; datatype - The allowable datatypes are:
-				&#x20;&#x20;&#x20;&#x2022; all, name, name-valid, name-charset, name-pres, num, num-valid, num-plan, num-pres, subaddr,
-				&#x20;&#x20;&#x20;&#x20; subaddr-valid, subaddr-type, subaddr-odd, tag, priv-all, priv-name, priv-name-valid,
-				&#x20;&#x20;&#x20;&#x20; priv-name-charset, priv-name-pres, priv-num, priv-num-valid, priv-num-plan,
-				&#x20;&#x20;&#x20;&#x20; priv-num-pres, priv-subaddr, priv-subaddr-valid, priv-subaddr-type, priv-subaddr-odd,
-				&#x20;&#x20;&#x20;&#x20; priv-tag, ANI-all, ANI-name, ANI-name-valid, ANI-name-charset, ANI-name-pres, ANI-num,
-				&#x20;&#x20;&#x20;&#x20; ANI-num-valid, ANI-num-plan, ANI-num-pres, ANI-tag, RDNIS, DNID, dnid-num-plan,
-				&#x20;&#x20;&#x20;&#x20; dnid-subaddr, dnid-subaddr-valid, dnid-subaddr-type, dnid-subaddr-odd
-				&#x20;&#x2022; CID - Optional Caller*ID to parse instead of using the Caller*ID from the channel. This parameter
-				&#x20;&#x20;&#x20;&#x20; is only optional when reading the Caller*ID.">
+				  &#x2022; datatype - The allowable datatypes are:
+				    &#x2022; all                  &#x2022; name                  &#x2022; name-valid
+				    &#x2022; name-charset         &#x2022; name-pres             &#x2022; num
+				    &#x2022; num-valid            &#x2022; num-plan              &#x2022; num-pres
+				    &#x2022; subaddr              &#x2022; subaddr-valid         &#x2022; subaddr-type
+				    &#x2022; subaddr-odd          &#x2022; tag                   &#x2022; priv-all
+				    &#x2022; priv-name            &#x2022; priv-name-valid       &#x2022; priv-name-charset
+				    &#x2022; priv-name-pres       &#x2022; priv-num              &#x2022; priv-num-valid
+				    &#x2022; priv-num-plan        &#x2022; priv-num-pres         &#x2022; priv-subaddr
+				    &#x2022; priv-subaddr-valid   &#x2022; priv-subaddr-type     &#x2022; priv-subaddr-odd
+				    &#x2022; priv-tag             &#x2022; ANI-all               &#x2022; ANI-name
+				    &#x2022; ANI-name-valid       &#x2022; ANI-name-charset      &#x2022; ANI-name-pres
+				    &#x2022; ANI-num              &#x2022; ANI-num-valid         &#x2022; ANI-num-plan
+				    &#x2022; ANI-num-pres         &#x2022; ANI-tag               &#x2022; RDNIS
+				    &#x2022; DNID                 &#x2022; dnid-num-plan         &#x2022; dnid-subaddr
+				    &#x2022; dnid-subaddr-valid   &#x2022; dnid-subaddr-type     &#x2022; dnid-subaddr-odd
+				  &#x2022; CID - Optional Caller*ID to parse instead of using the Caller*ID from the channel.
+				    This parameter is only optional when reading the Caller*ID.">
 				<Param name="STRING datatype" />
 				<Param name="[STRING CID]" />
 			</Overload>
@@ -399,12 +504,26 @@
 		<KeyWord name="CALLERPRES" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets or sets Caller*ID presentation on the channel.
 				
 				[Description]
-					
+				Gets or sets Caller*ID presentation on the channel. This function is deprecated in favor of 
+				CALLERID(num-pres) and CALLERID(name-pres). The following values are valid:
+				
+				  &#x2022; allowed_not_screened - Presentation Allowed, Not Screened.
+				  &#x2022; allowed_passed_screen - Presentation Allowed, Passed Screen.
+				  &#x2022; allowed_failed_screen - Presentation Allowed, Failed Screen.
+				  &#x2022; allowed - Presentation Allowed, Network Number.
+				  &#x2022; prohib_not_screened - Presentation Prohibited, Not Screened.
+				  &#x2022; prohib_passed_screen - Presentation Prohibited, Passed Screen.
+				  &#x2022; prohib_failed_screen - Presentation Prohibited, Failed Screen.
+				  &#x2022; prohib - Presentation Prohibited, Network Number.
+				  &#x2022; unavailable - Number Unavailable.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CALLERPRES()
 				
 				[Arguments]">
 				<Param name="" />
@@ -413,29 +532,82 @@
 		<KeyWord name="CDR" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets or sets a CDR variable.
 				
 				[Description]
-					
+				All of the CDR field names are read-only, except for accountcode, userfield, and amaflags. 
+				You may, however, supply a name not on the above list, and create your own variable, whose value can be changed 
+				with this function, and this variable will be stored on the CDR.
+				
+				Note:
+				CDRs can only be modified before the bridge between two channels is torn down. For example, 
+				CDRs may not be modified after the Dial application has returned.
+				
+				Example: exten => 1,1,Set(CDR(userfield)=test)
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CDR(name[,options])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; name - CDR field name: 
+				    &#x2022; clid - Caller ID.
+				    &#x2022; lastdata - Last application arguments.
+				    &#x2022; disposition - The final state of the CDR.
+				      &#x2022; 0 - NO ANSWER
+				      &#x2022; 1 - NO ANSWER (NULL record)
+				      &#x2022; 2 - FAILED
+				      &#x2022; 4 - BUSY
+				      &#x2022; 8 - ANSWERED
+				      &#x2022; 16 - CONGESTION
+				  &#x2022; src - Source.
+				  &#x2022; start - Time the call started.
+				  &#x2022; amaflags
+				    &#x2022; 1 - OMIT
+				    &#x2022; 2 - BILLING
+				    &#x2022; 3 - DOCUMENTATION 
+				 &#x2022; dst - Destination.
+				  &#x2022; answer - Time the call was answered.
+				  &#x2022; accountcode - The channel's account code.
+				  &#x2022; dcontext - Destination context.
+				  &#x2022; end - Time the call ended.
+				  &#x2022; uniqueid - The channel's unique id.
+				  &#x2022; dstchannel - Destination channel.
+				  &#x2022; duration - Duration of the call.
+				  &#x2022; userfield - The channel's user specified field.
+				  &#x2022; lastapp - Last application.
+				  &#x2022; billsec - Duration of the call once it was answered.
+				  &#x2022; channel - Channel name.
+				  &#x2022; sequence - CDR sequence number.
+				  &#x2022; options
+				    &#x2022; f - Returns billsec or duration fields as floating point values.
+				    &#x2022; u - Retrieves the raw, unprocessed value.">
+				<Param name="STRING name" />
+				<Param name="[STRING options]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CDR_PROP" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Set a property on a channel's CDR.
 				
 				[Description]
-					
+				This function sets a property on a channel's CDR. Properties alter the behavior of how the CDR operates 
+				for that channel.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CDR_PROP(name)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				 &#x2022; name - The property to set on the CDR.
+				   &#x2022; party_a - Set this channel as the preferred Party A when channels are associated together.
+				     Write-Only
+				   &#x2022; disable - Disable CDRs for this channel.
+				     Write-Only">
+				<Param name="STRING name" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CHANNEL" func="yes">
@@ -444,59 +616,79 @@
 				Gets/sets various pieces of information about the channel.
 				
 				[Description]
-				Gets/sets various pieces of information about the channel, additional item may be available from the channel driver;
-				see its documentation for details. Any item requested that is not available on the current channel will return an empty string.
+				Gets/sets various pieces of information about the channel, additional item may be available from the 
+				channel driver.
 				
 				[Asterisk Version]
 				
 				[Syntax]
 				CHANNEL(item)
 				
-				[Example]
-				exten => s,1,Set(foo=${CHANNEL(channeltype)})
-				exten => s,1,Set(CHANNEL(callgroup)=g3)
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Function_CHANNEL
 				
 				[Arguments]
-				&#x20;&#x2022; item - Standard items (provided by all channel technologies) are:
-				&#x20;&#x20;&#x20;&#x2022; [ amaflags, accountcode, audioreadformat, audionativeformat, audiowriteformat, dtmf_features, callgroup, pickupgroup,
-				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; namedcallgroup, namedpickupgroup, channeltype, checkhangup, after_bridge_goto, hangup_handler_pop, 
-				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; hangup_handler_push, hangup_handler_wipe, language, musicclass, name, parkinglot, rxgain, secure_bridge_signaling, 
-				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; secure_bridge_media, state, tonezone, transfercapability, txgain, videonativeformat, trace, peerip, recvip,
-				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; recvport, from,	uri, useragent, peername, t38passthrough, rtpqos, rtpdest, rtpsource ]
-				&#x20;&#x20;&#x20; [Technology: PJSIP]
-				&#x20;&#x20;&#x20;&#x2022; [ rtp, rtcp, endpoint, contact, aor, pjsip, osptoken, peerip, peername, secure_signaling, secure_media, 
-				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; dahdi_channel, dahdi_span, dahdi_type, keypad_digits, reversecharge, no_media_path, buffers, echocan_mode, 
-				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; faxdetect, t38support, h323id_url, caller_h323id, caller_dialeddigits, caller_email, callee_email, 
-				&#x20;&#x20;&#x20;&#x20;&#x20;&#x20; callee_dialeddigits, caller_url ]">
+				  &#x2022; item - Standard items (provided by all channel technologies) are:
+				    - amaflags              - accountcode         - audioreadformat      - audionativeformat
+				    - audionativeformat     - audiowriteformat    - dtmf_features        - callgroup
+				    - pickupgroup           - namedcallgroup      - namedpickupgroup     - channeltype
+				    - checkhangup           - after_bridge_goto   - hangup_handler_pop   - hangup_handler_push
+				    - hangup_handler_wipe   - language            - musicclass           - name
+				    - parkinglot            - rxgain              - state                - secure_bridge_signaling
+				    - secure_bridge_media   - tonezone            - transfercapability   - txgain
+				    - videonativeformat     - trace               - peerip               - recvip
+				    - recvport              - from                - uri                  - useragent
+				    - peername              - t38passthrough      - rtpqos               - rtpdest
+				    - rtpsource
+				    - [ Technology: PJSIP ]
+				      - rtp    - rtcp    - endpoint    - contact     - aor    - pjsip
+				    - peerip                - peername            - secure_signaling     - secure_media
+				    - dahdi_channel         - dahdi_span          - dahdi_type           - keypad_digits
+				    - reversecharge         - no_media_path       - buffers              - echocan_mode
+				    - faxdetect             - t38support          - h323id_url           - caller_h323id
+				    - caller_dialeddigits   - caller_email        - callee_email         - callee_dialeddigits
+				    - caller_url">
 				<Param name="STRING item" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CHANNELS" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets the list of channels, optionally filtering by a regular expression.
 				
 				[Description]
-					
+				Gets the list of channels, optionally filtering by a regular_expression. If no argument is provided, 
+				all known channels are returned. The regular_expression must correspond to the POSIX.2 specification, 
+				as shown in regex(7). The list returned will be space-delimited.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CHANNELS(regular_expression)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; regular_expression">
+				<Param name="STRING regular_expression" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CHECKSIPDOMAIN" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Checks if domain is a local domain.
 				
 				[Description]
-					
+				This function checks if the domain in the argument is configured as a local SIP domain that this Asterisk 
+				server is configured to handle. Returns the domain name if it is locally handled, otherwise an empty string. 
+				Check the domain= configuration in sip.conf.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CHECKSIPDOMAIN(domain)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; domain">
+				<Param name="STRING domain" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CHECK_MD5" func="yes">
@@ -534,8 +726,8 @@
 				exten => 1,n,ConfBridge(1)
 				
 				[Arguments]
-				&#x20;&#x2022; type - Type refers to which type of profile the option belongs too. Type can be bridge, user, or menu.
-				&#x20;&#x2022; option - Option refers to confbridge.conf option that is being set dynamically on this channel, or clear to remove already applied options from the channel.">
+				  &#x2022; type - Type refers to which type of profile the option belongs too. Type can be bridge, user, or menu.
+				  &#x2022; option - Option refers to confbridge.conf option that is being set dynamically on this channel, or clear to remove already applied options from the channel.">
 				<Param name="STRING type" />
 				<Param name="STRING option" />
 			</Overload>
@@ -543,168 +735,305 @@
 		<KeyWord name="CONFBRIDGE_INFO" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Get information about a ConfBridge conference.
 				
 				[Description]
-					
+				This function returns a non-negative integer for valid conference identifiers (0 or 1 for locked) and &#x22;&#x22; 
+				for invalid conference identifiers.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CONFBRIDGE_INFO(type,conf)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; type - Type can be parties, admins, marked, or locked.
+				  &#x2022; conf - Conf refers to the name of the conference being referenced.">
+				<Param name="STRING type" />
+				<Param name="STRING conf" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CONNECTEDLINE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets or sets Connected Line data on the channel.
 				
 				[Description]
-					
+				Gets or sets Connected Line data on the channel.
+				The allowable values for the name-charset field are the following:
+				
+				  &#x2022; unknown - Unknown
+				  &#x2022; iso8859-1 - ISO8859-1
+				  &#x2022; withdrawn - Withdrawn
+				  &#x2022; iso8859-2 - ISO8859-2
+				  &#x2022; iso8859-3 - ISO8859-3
+				  &#x2022; iso8859-4 - ISO8859-4
+				  &#x2022; iso8859-5 - ISO8859-5
+				  &#x2022; iso8859-7 - ISO8859-7
+				  &#x2022; bmp - ISO10646 Bmp String
+				  &#x2022; utf8 - ISO10646 UTF-8 String
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CONNECTEDLINE(datatype,i)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; datatype - The allowable datatypes are:
+				    &#x2022; all                  &#x2022; name                  &#x2022; name-valid
+				    &#x2022; name-charset         &#x2022; name-pres             &#x2022; num
+				    &#x2022; num-valid            &#x2022; num-plan              &#x2022; num-pres
+				    &#x2022; subaddr              &#x2022; subaddr-valid         &#x2022; subaddr-type
+				    &#x2022; subaddr-odd          &#x2022; tag                   &#x2022; priv-all
+				    &#x2022; priv-name            &#x2022; priv-name-valid       &#x2022; priv-name-charset
+				    &#x2022; priv-name-pres       &#x2022; priv-num              &#x2022; priv-num-valid
+				    &#x2022; priv-num-plan        &#x2022; priv-num-pres         &#x2022; priv-subaddr
+				    &#x2022; priv-subaddr-valid   &#x2022; priv-subaddr-type     &#x2022; priv-subaddr-odd
+				    &#x2022; priv-tag
+				  &#x2022; i - If set, this will prevent the channel from sending out protocol messages because 
+				    of the value being set">
+				<Param name="STRING datatype" />
+				<Param name="STRING i" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CSV_QUOTE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Quotes a given string for use in a CSV file, escaping embedded quotes as necessary
 				
 				[Description]
-					
+				Example: ${CSV_QUOTE(	&#x22;a,b &#x22; 123)} will return  &#x22;&#x22;&#x22;a,b &#x22;&#x22; 123	&#x22;
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CSV_QUOTE(string)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; string">
+				<Param name="STRING string" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CURL" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve content from a remote web or ftp server
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CURL(url,post-data)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; url
+				  &#x2022; post-data - If specified, an HTTP POST will be performed with the content of post-data, instead of an HTTP GET (default).">
+				<Param name="STRING url" />
+				<Param name="STRING post-data" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CURLOPT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Sets various options for future invocations of CURL.
 				
 				[Description]
-					
+				Options may be set globally or per channel. Per-channel settings will override global settings.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CURLOPT(key)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; key
+				    &#x2022; cookie - A cookie to send with the request. Multiple cookies are supported.
+				    &#x2022; conntimeout - Number of seconds to wait for a connection to succeed
+				    &#x2022; dnstimeout - Number of seconds to wait for DNS to be resolved
+				    &#x2022; ftptext - For FTP URIs, force a text transfer (boolean)
+				    &#x2022; ftptimeout - For FTP URIs, number of seconds to wait for a server response
+				    &#x2022; header - Include header information in the result (boolean)
+				    &#x2022; httptimeout - For HTTP(S) URIs, number of seconds to wait for a server response
+				    &#x2022; maxredirs - Maximum number of redirects to follow
+				    &#x2022; proxy - Hostname or IP address to use as a proxy server
+				    &#x2022; proxytype - Type of proxy
+				      &#x2022; http
+				      &#x2022; socks4
+				      &#x2022; socks5
+				    &#x2022; proxyport - Port number of the proxy
+				    &#x2022; proxyuserpwd - A username:password combination to use for authenticating requests through a proxy
+				    &#x2022; referer - Referer URL to use for the request
+				    &#x2022; useragent - UserAgent string to use for the request
+				    &#x2022; userpwd - A username:password to use for authentication when the server response to an initial request 
+				      indicates a 401 status code.
+				    &#x2022; ssl_verifypeer - Whether to verify the server certificate against a list of known root certificate 
+				      authorities (boolean).
+				    &#x2022; hashcompat - Assuming the responses will be in key1=value1&key2=value2 format, reformat the response 
+				      such that it can be used by the HASH function. 
+				      &#x2022; yes
+				      &#x2022; no
+				      &#x2022; legacy - Also translate + to the space character, in violation of current RFC standards.">
+				<Param name="STRING key" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CUT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Slices and dices strings, based upon a named delimiter.
 				
 				[Description]
-					
+				Cut out information from a string ( varname), based upon a named delimiter.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				CUT(varname,char-delim,range-spec)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname - Variable you want cut
+				  &#x2022; char-delim - Delimiter, defaults to -
+				  &#x2022; range-spec - Number of the field you want (1-based offset), may also be specified as a 
+				    range (with -) or group of ranges and fields (with &#x26;)">
+				<Param name="STRING varname" />
+				<Param name="STRING char-delim" />
+				<Param name="INTEGER range-spec" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DB" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Read from or write to the Asterisk database.
 				
 				[Description]
-					
+				This function will read from or write a value to the Asterisk database. On a read, this function 
+				returns the corresponding value from the database, or blank if it does not exist. Reading a 
+				database value will also set the variable DB_RESULT. If you wish to find out if an entry exists, 
+				use the DB_EXISTS function.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				DB(family/key)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; family
+				  &#x2022; key">
+				<Param name="STRING family" />
+				<Param name="STRING key" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DB_DELETE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Return a value from the database and delete it.
 				
 				[Description]
-					
+				This function will retrieve a value from the Asterisk database and then remove that key from the database.
+				DB_RESULT will be set to the key's value if it exists.
+				
+				Note:
+				If live_dangerously in asterisk.conf is set to no, this function can only be read from the dialplan, 
+				and not directly from external protocols. It can, however, be executed as a write operation 
+				(DB_DELETE(family, key)=ignored)
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				DB_DELETE(family/key)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; family
+				  &#x2022; key">
+				<Param name="STRING family" />
+				<Param name="STRING key" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DB_EXISTS" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Check to see if a key exists in the Asterisk database.
 				
 				[Description]
-					
+				This function will check to see if a key exists in the Asterisk database. If it exists, the function will return 1.
+				If not, it will return 0. Checking for existence of a database key will also set the variable DB_RESULT to the key's 
+				value if it exists.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				DB_EXISTS(family/key)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; family
+				  &#x2022; key">
+				<Param name="STRING family" />
+				<Param name="STRING key" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DB_KEYS" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Obtain a list of keys within the Asterisk database.
 				
 				[Description]
-					
+				This function will return a comma-separated list of keys existing at the prefix specified within the 
+				Asterisk database. If no argument is provided, then a list of key families will be returned.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				DB_KEYS(prefix)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; prefix">
+				<Param name="STRING prefix" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DEC" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Decrements the value of a variable, while returning the updated value to the dialplan
 				
 				[Description]
-					
+				Decrements the value of a variable, while returning the updated value to the dialplan
+				
+				Example: DEC(MyVAR) - Decrements MyVar
+				
+				Note:
+				DEC(${MyVAR}) - Is wrong, as DEC expects the variable name, not its value
+
 				[Asterisk Version]
 				
 				[Syntax]
+				DEC(variable)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; variable - The variable name to be manipulated, without the braces.">
+				<Param name="STRING variable" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DENOISE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Apply noise reduction to audio on a channel.
 				
 				[Description]
-					
+				The DENOISE function will apply noise reduction to audio on the channel that it is executed on.
+				It is very useful for noisy analog lines, especially when adjusting gains or using AGC. Use rx 
+				for audio received from the channel and tx to apply the filter to the audio being sent to the channel.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				DENOISE(channeldirection)
 				
-				[Arguments]">
+				[Example]
+				exten => 1,1,Set(DENOISE(rx)=on)
+				exten => 1,2,Set(DENOISE(tx)=off)
+				
+				[Arguments]
+				  &#x2022; channeldirection - This can be either rx or tx the values that can be set to this are either on and off">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
@@ -712,7 +1041,7 @@
 			<Overload retVal="Function" descr="
 				[Synopsis]
 				Get or Set a device state.
-
+				
 				[Description]
 				The DEVICE_STATE function can be used to retrieve the device state from any device state provider.
 				For example:
@@ -733,9 +1062,9 @@
 				
 				[Syntax]
 				DEVICE_STATE(device)
-
+				
 				[Arguments]
-				&#x20;&#x2022; device">
+				  &#x2022; device">
 				<Param name="STRING device" />
 			</Overload>
 		</KeyWord>
@@ -748,29 +1077,60 @@
 		<KeyWord name="DIALGROUP" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Manages a group of users for dialing.
 				
 				[Description]
-					
+				Presents an interface meant to be used in concert with the Dial application, by presenting a list of 
+				channels which should be dialled when referenced.
+				
+				When DIALGROUP is read from, the argument is interpreted as the particular group for which a dial should 
+				be attempted. When DIALGROUP is written to with no arguments, the entire list is replaced with the argument 
+				specified.
+				
+				Functionality is similar to a queue, except that when no interfaces are available, execution may continue in 
+				the dialplan. This is useful when you want certain people to be the first to answer any calls, with immediate 
+				fallback to a queue when the front line people are busy or unavailable, but you still want front line people 
+				to log in and out of that group, just like a queue.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				DIALGROUP(group,op)
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				exten => 1,1,Set(DIALGROUP(mygroup,add)=SIP/10)
+				exten => 1,n,Set(DIALGROUP(mygroup,add)=SIP/20)
+				exten => 1,n,Dial(${DIALGROUP(mygroup)})
+				
+				[Arguments]
+				  &#x2022; group
+				  &#x2022; op - The operation name, possible values are:
+				    add - add a channel name or interface (write-only)
+				    del - remove a channel name or interface (write-only)">
+				<Param name="STRING group" />
+				<Param name="STRING op" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DIALPLAN_EXISTS" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Checks the existence of a dialplan target.
 				
 				[Description]
-					
+				This function returns 1 if the target exits. Otherwise, it returns 0.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				DIALPLAN_EXISTS(context,extension,priority)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; context
+				  &#x2022; extension
+				  &#x2022; priority">
+				<Param name="STRING context" />
+				<Param name="STRING extension" />
+				<Param name="STRING priority" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DUNDILOOKUP" func="yes">
@@ -787,12 +1147,12 @@
 				
 				[Syntax]
 				DUNDILOOKUP(number,context,options)
-
+				
 				[Arguments]
-				&#x20;&#x2022; number
-				&#x20;&#x2022; context - If not specified the default will be e164.
-				&#x20;&#x2022; options
-				&#x20;&#x20;&#x20;&#x2022; b - Bypass the internal DUNDi cache">
+				  &#x2022; number
+				  &#x2022; context - If not specified the default will be e164.
+				  &#x2022; options
+				    &#x2022; b - Bypass the internal DUNDi cache">
 				<Param name="INTEGER number" />
 				<Param name="STRING context" />
 				<Param name="STRING options" />
@@ -801,348 +1161,655 @@
 		<KeyWord name="DUNDIQUERY" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Initiate a DUNDi query.
 				
 				[Description]
-					
+				This will do a DUNDi lookup of the given phone number.
+				The result of this function will be a numeric ID that can be used to retrieve the results 
+				with the DUNDIRESULT function.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				DUNDIQUERY(number,context,options)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; number
+				  &#x2022; context - If not specified the default will be e164.
+				  &#x2022; options
+				    &#x2022; b - Bypass the internal DUNDi cache">
+				<Param name="INTEGER number" />
+				<Param name="STRING context" />
+				<Param name="STRING options" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DUNDIRESULT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve results from a DUNDIQUERY.
 				
 				[Description]
-					
+				This function will retrieve results from a previous use\n&#x22; of the DUNDIQUERY function.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				DUNDIRESULT(id,resultnum)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; id - The identifier returned by the DUNDIQUERY function.
+				  &#x2022; resultnum
+				    &#x2022; number - The number of the result that you want to retrieve, this starts at 1
+				    &#x2022; getnum - The total number of results that are available.">
+				<Param name="STRING id" />
+				<Param name="STRING resultnum" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ENUMLOOKUP" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				General or specific querying of NAPTR records for ENUM or ENUM-like DNS pointers.
 				
 				[Description]
-					
+				For more information see doc/AST.pdf.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				ENUMLOOKUP(number,method-type,options,record&#x23;,zone-suffix)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; number
+				  &#x2022; method-type - If no method-type is given, the default will be sip.
+				  &#x2022; options
+				    &#x2022; c - Returns an integer count of the number of NAPTRs of a certain RR type.
+				    Combination of c and Method-type of ALL will return a count of all NAPTRs for the record or -1 on error.
+				    &#x2022; u - Returns the full URI and does not strip off the URI-scheme.
+				    &#x2022; s - Triggers ISN specific rewriting.
+				    &#x2022; i - Looks for branches into an Infrastructure ENUM tree.
+				    &#x2022; d - for a direct DNS lookup without any flipping of digits.
+				  &#x2022; record&#x23; - If no record&#x23; is given, defaults to 1.
+				  &#x2022; zone-suffix - If no zone-suffix is given, the default will be e164.arpa">
+				<Param name="STRING number" />
+				<Param name="STRING method-type" />
+				<Param name="STRING options" />
+				<Param name="INTEGER record" />
+				<Param name="STRING zone-suffix" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ENUMQUERY" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Initiate an ENUM query.
 				
 				[Description]
-					
+				This will do a ENUM lookup of the given phone number.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				ENUMQUERY(number,method-type,zone-suffix)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; number
+				  &#x2022; method-type - If no method-type is given, the default will be sip.
+				  &#x2022; zone-suffix - If no zone-suffix is given, the default will be e164.arpa">
+				<Param name="STRING number" />
+				<Param name="STRING method-type" />
+				<Param name="STRING zone-suffix" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ENUMRESULT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve results from a ENUMQUERY.
 				
 				[Description]
-					
+				This function will retrieve results from a previous use of the ENUMQUERY function.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				ENUMRESULT(id,resultnum)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; id - The identifier returned by the ENUMQUERY function.
+				  &#x2022; resultnum - The number of the result that you want to retrieve.
+				    Results start at 1. If this argument is specified as getnum, then it will return the total 
+				    number of results that are available or -1 on error.">
+				<Param name="STRING id" />
+				<Param name="INTEGER resultnum" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ENV" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets or sets the environment variable specified.
 				
 				[Description]
-					
+				Variables starting with AST_ are reserved to the system and may not be set.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				ENV(varname)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname - Environment variable name">
+				<Param name="STRING varname" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="EVAL" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Evaluate stored variables
 				
 				[Description]
-					
+				Using EVAL basically causes a string to be evaluated twice. When a variable or expression is in the 
+				dialplan, it will be evaluated at runtime. However, if the results of the evaluation is in fact another 
+				variable or expression, using EVAL will have it evaluated a second time.
+				
+				Example: If the MYVAR contains OTHERVAR, then the result of ${EVAL( MYVAR)} in the dialplan will be the 
+				contents of OTHERVAR. Normally just putting MYVAR in the dialplan the result would be OTHERVAR.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				EVAL(variable)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; variable">
+				<Param name="STRING variable" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="EXCEPTION" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve the details of the current dialplan exception.
 				
 				[Description]
-					
+				Retrieve the details (specified field) of the current dialplan exception.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				EXCEPTION(field)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; field
+				    &#x2022; reason - INVALID, ERROR, RESPONSETIMEOUT, ABSOLUTETIMEOUT, or custom value set by the 
+				      RaiseException() application
+				    &#x2022; context - The context executing when the exception occurred.
+				    &#x2022; exten - The extension executing when the exception occurred.
+				    &#x2022; priority - The numeric priority executing when the exception occurred.">
+				<Param name="STRING field" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="EXISTS" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Test the existence of a value.
 				
 				[Description]
-					
+				Returns 1 if exists, 0 otherwise.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				EXISTS(data)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; data">
+				<Param name="STRING data" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="EXTENSION_STATE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Get an extension's state.
 				
 				[Description]
-					
+				The EXTENSION_STATE function can be used to retrieve the state from any hinted extension. For example:
+				NoOp(1234@default has state ${EXTENSION_STATE(1234)})
+				NoOp(4567@home has state ${EXTENSION_STATE(4567@home)})
+				
+				The possible values returned by this function are:
+				UNKNOWN | NOT_INUSE | INUSE | BUSY | INVALID | UNAVAILABLE | RINGING | RINGINUSE | HOLDINUSE | ONHOLD
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				EXTENSION_STATE(extension@context)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; extension
+				  &#x2022; context - If it is not specified defaults to default.">
+				<Param name="STRING data" />
+				<Param name="STRING context" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="FAXOPT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets/sets various pieces of information about a fax session.
 				
 				[Description]
-					
+				FAXOPT can be used to override the settings for a FAX session listed in res_fax.conf, it can also be 
+				used to retrieve information about a FAX session that has finished eg. pages/status.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				FAXOPT(item)
 				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="FAXOPT_res_fax" func="yes">
-			<Overload retVal="Function" descr="
-				[Synopsis]
-				
-				[Description]
-					
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; item
+				    &#x2022; ecm - R/W Error Correction Mode (ECM) enable with 'yes', disable with 'no'.
+				    &#x2022; error - R/O FAX transmission error code upon failure.
+				    &#x2022; filename - R/O Filename of the first file of the FAX transmission.
+				    &#x2022; filenames - R/O Filenames of all of the files in the FAX transmission (comma separated).
+				    &#x2022; headerinfo - R/W FAX header information.
+				    &#x2022; localstationid - R/W Local Station Identification.
+				    &#x2022; minrate - R/W Minimum transfer rate set before transmission.
+				    &#x2022; maxrate - R/W Maximum transfer rate set before transmission.
+				    &#x2022; modem - R/W Modem type (v17/v27/v29).
+				    &#x2022; gateway - R/W T38 fax gateway, with optional fax activity timeout in seconds (yes[,timeout]/no)
+				    &#x2022; faxdetect - R/W Enable FAX detect with optional timeout in seconds (yes,t38,cng[,timeout]/no)
+				    &#x2022; pages - R/O Number of pages transferred.
+				    &#x2022; rate - R/O Negotiated transmission rate.
+				    &#x2022; remotestationid - R/O Remote Station Identification after transmission.
+				    &#x2022; resolution - R/O Negotiated image resolution after transmission.
+				    &#x2022; sessionid - R/O Session ID of the FAX transmission.
+				    &#x2022; status - R/O Result Status of the FAX transmission.
+				    &#x2022; statusstr - R/O Verbose Result Status of the FAX transmission.
+				    &#x2022; t38timeout - R/W The timeout used for T.38 negotiation.">
+				<Param name="STRING item" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="FEATURE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Get or set a feature option on a channel.
 				
 				[Description]
-					
+				When this function is used as a read, it will get the current value of the specified feature option for this channel. 
+				It will be the value of this option configured in features.conf if a channel specific value has not been set. 
+				This function can also be used to set a channel specific value for the supported feature options.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				FEATURE(option_name)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; option_name - The allowed values are:
+				    &#x2022; inherit - Inherit feature settings made in FEATURE or FEATUREMAP to child channels.
+				    &#x2022; featuredigittimeout - Milliseconds allowed between digit presses when entering a feature code.
+				    &#x2022; transferdigittimeout - Seconds allowed between digit presses when dialing a transfer destination
+				    &#x2022; atxfernoanswertimeout - Seconds to wait for attended transfer destination to answer
+				    &#x2022; atxferdropcall - Hang up the call entirely if the attended transfer fails
+				    &#x2022; atxferloopdelay - Seconds to wait between attempts to re-dial transfer destination
+				    &#x2022; atxfercallbackretries - Number of times to re-attempt dialing a transfer destination
+				    &#x2022; xfersound - Sound to play to during transfer and transfer-like operations.
+				    &#x2022; xferfailsound - Sound to play to a transferee when a transfer fails
+				    &#x2022; atxferabort - Digits to dial to abort an attended transfer attempt
+				    &#x2022; atxfercomplete - Digits to dial to complete an attended transfer
+				    &#x2022; atxferthreeway - Digits to dial to change an attended transfer into a three-way call
+				    &#x2022; pickupexten - Digits used for picking up ringing calls
+				    &#x2022; pickupsound - Sound to play to picker when a call is picked up
+				    &#x2022; pickupfailsound - Sound to play to picker when a call cannot be picked up
+				    &#x2022; courtesytone - Sound to play when automon or automixmon is activated
+				    &#x2022; recordingfailsound - Sound to play when automon or automixmon is attempted but fails to start
+				    &#x2022; transferdialattempts - Number of dial attempts allowed when attempting a transfer
+				    &#x2022; transferretrysound - Sound that is played when an incorrect extension is dialed and the transferer should try again.
+				    &#x2022; transferinvalidsound - Sound that is played when an incorrect extension is dialed and the transferer has no attempts remaining.">
+				<Param name="STRING option_name" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="FEATUREMAP" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Get or set a feature map to a given value on a specific channel.
 				
 				[Description]
-					
+				When this function is used as a read, it will get the current digit sequence mapped to the specified feature for this channel. 
+				This value will be the one configured in features.conf if a channel specific value has not been set. This function can also 
+				be used to set a channel specific value for a feature mapping.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				FEATUREMAP(feature_name)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; feature_name - The allowed values are:
+				    &#x2022; atxfer - Attended Transfer
+				    &#x2022; blindxfer - Blind Transfer
+				    &#x2022; automon - Auto Monitor
+				    &#x2022; disconnect - Call Disconnect
+				    &#x2022; parkcall - Park Call
+				    &#x2022; automixmon - Auto MixMonitor">
+				<Param name="STRING feature_name" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="FIELDNUM" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Return the 1-based offset of a field in a list
 				
 				[Description]
-					
+				Search the variable named varname for the string value delimited by delim and return a 1-based offset as to its location. 
+				If not found or an error occured, return 0.
+				
+				The delimiter may be specified as a special or extended ASCII character, by encoding it. The characters \n, \r, and \t are
+				all recognized as the newline, carriage return, and tab characters, respectively. Also, octal and hexadecimal specifications 
+				are recognized by the patterns \0nnn and \xHH, respectively.
+				For example, if you wanted to encode a comma as the delimiter, you could use either \054 or \x2C.
+				
+				Example: If ${example} contains ex-amp-le, then ${FIELDNUM(example,-,amp)} returns 2.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				FIELDNUM(varname,delim,value)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname
+				  &#x2022; delim
+				  &#x2022; value">
+				<Param name="STRING varname" />
+				<Param name="STRING delim" />
+				<Param name="STRING value" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="FIELDQTY" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Count the fields with an arbitrary delimiter
 				
 				[Description]
-					
+				The delimiter may be specified as a special or extended ASCII character, by encoding it. The characters \n, \r, and \t are
+				all recognized as the newline, carriage return, and tab characters, respectively. Also, octal and hexadecimal specifications 
+				are recognized by the patterns \0nnn and \xHH, respectively. For example, if you wanted to encode a comma as the delimiter, 
+				you could use either \054 or \x2C.
+				
+				Example: If ${example} contains ex-amp-le, then ${FIELDQTY(example,-)} returns 3.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				FIELDQTY(varname,delim)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname
+				  &#x2022; delim">
+				<Param name="STRING varname" />
+				<Param name="STRING delim" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="FILE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Read or write text file.
 				
 				[Description]
-					
+				Read and write text file in character and line mode.
+				
+				Note:
+				If live_dangerously in asterisk.conf is set to no, this function can only be executed from the dialplan, 
+				and not directly from external protocols.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				FILE(filename,offset,length,options,format)
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				; Read mode (byte):
+				Set(foo=${FILE(/tmp/test.txt)})
+				; Read mode (line):
+				Set(foo=${FILE(/tmp/test.txt,3,1,l)})
+				; Write mode (byte):
+				Set(FILE(/tmp/test.txt)=bar)
+				; Write mode (line):
+				Set(FILE(/tmp/foo.txt,0,1,l)=bar)
+				
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Function_FILE
+				
+				[Arguments]
+				  &#x2022; filename
+				  &#x2022; offset - Maybe specified as any number. If negative, offset specifies the number of bytes back
+				    from the end of the file.
+				  &#x2022; length - If specified, will limit the length of the data read to that size. If negative, 
+				    trims length bytes from the end of the file.
+				  &#x2022; options
+				    &#x2022; l - Line mode: offset and length are assumed to be measured in lines, instead of byte offsets.
+				    &#x2022; a - In write mode only, the append option is used to append to the end of the file, instead of 
+				      overwriting the existing file.
+				    &#x2022; d - In write mode and line mode only, this option does not automatically append a newline 
+				      string to the end of a value. 
+				      This is useful for deleting lines, instead of setting them to blank.
+				  &#x2022; format - The format parameter may be used to delimit the type of line terminators in line mode.
+				    &#x2022; u - Unix newline format.
+				    &#x2022; d - DOS newline format.
+				    &#x2022; m - Macintosh newline format.
+				
+				  Note: If not specified, an attempt will be made to determine the newline format type.">
+				<Param name="STRING filename" />
+				<Param name="STRING offset" />
+				<Param name="STRING length" />
+				<Param name="STRING options" />
+				<Param name="STRING format" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="FILE_COUNT_LINE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Obtains the number of lines of a text file.
 				
 				[Description]
-					
+				Returns the number of lines, or -1 on error.
+				
+				Note:
+				If live_dangerously in asterisk.conf is set to no, this function can only be executed from the dialplan, 
+				and not directly from external protocols.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				FILE_COUNT_LINE(filename,format)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; filename
+				  &#x2022; format - Format may be one of the following: 
+				    &#x2022; u - Unix newline format.
+				    &#x2022; d - DOS newline format.
+				    &#x2022; m - Macintosh newline format.
+				
+				&#x20;&#x20; Note: If not specified, an attempt will be made to determine the newline format type.">
+				<Param name="STRING filename" />
+				<Param name="STRING format" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="FILE_FORMAT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Return the newline format of a text file.
 				
 				[Description]
-					
+				Return the line terminator type:
+				
+				'u' - Unix &#x22;\n&#x22; format
+				'd' - DOS &#x22;\r\n&#x22; format
+				'm' - Macintosh &#x22;\r&#x22; format
+				'x' - Cannot be determined
+				
+				Note:
+				If live_dangerously in asterisk.conf is set to no, this function can only be executed from the dialplan, 
+				and not directly from external protocols.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				FILE_FORMAT(filename)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; filename">
+				<Param name="STRING filename" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="FILTER" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Filter the string to include only the allowed characters
 				
 				[Description]
-					
+				Permits all characters listed in allowed-chars, filtering all others outs. In addition to literally listing
+				the characters, you may also use ranges of characters (delimited by a -
+				
+				Hexadecimal characters started with a \x(i.e. \x20)
+				
+				Octal characters started with a \0 (i.e. \040)
+				
+				Also \t,\n and \r are recognized.
+				
+				Note
+				If you want the - character it needs to be prefixed with a {{}}
+				
+				FILTER(<allowed-chars>,<string>) - Asterisk 1.6 and later
+				FILTER(<allowed-chars>|<string>) - Asterisk 1.4
+				
 				[Asterisk Version]
+				(1.4+)
 				
 				[Syntax]
+				FILTER(allowed-chars,string)
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				exten => s,1,Set(foo=${FILTER(0-9,${cdrnum})}) - Asterisk 1.6 and later
+				exten => s,1,Set(foo=${FILTER(0123456789|${cdrnum})}) - Asterisk 1.4
+				
+				[Arguments]
+				  &#x2022; allowed-chars
+				  &#x2022; string">
+				<Param name="STRING allowed-chars" />
+				<Param name="STRING string" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="FRAME_TRACE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				View internal ast_frames as they are read and written on a channel.
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				FRAME_TRACE(filter list type)
 				
-				[Arguments]">
+				[Example]
+				exten => 1,1,Set(FRAME_TRACE(white)=DTMF_BEGIN,DTMF_END); view only DTMF frames.
+				exten => 1,1,Set(FRAME_TRACE()=DTMF_BEGIN,DTMF_END); view only DTMF frames.
+				exten => 1,1,Set(FRAME_TRACE(black)=DTMF_BEGIN,DTMF_END); view everything except DTMF frames.
+				
+				[Arguments]
+				  &#x2022; filter list type - A filter can be applied to the trace to limit what frames are viewed. 
+				    This filter can either be a white or black list of frame types. When no filter type is present, 
+				    white is used. If no arguments are provided at all, all frames will be output.
+				
+				    Below are the different types of frames that can be filtered.
+				      &#x2022; DTMF_BEGIN
+				      &#x2022; DTMF_END
+				      &#x2022; VOICE
+				      &#x2022; VIDEO
+				      &#x2022; CONTROL
+				      &#x2022; NULL
+				      &#x2022; IAX
+				      &#x2022; TEXT
+				      &#x2022; IMAGE
+				      &#x2022; HTML
+				      &#x2022; CNG
+				      &#x2022; MODEM">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="GLOBAL" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets or sets the global variable specified.
 				
 				[Description]
-					
+				Set or get the value of a global variable specified in varname
+				
 				[Asterisk Version]
+				(1.4+)
 				
 				[Syntax]
+				GLOBAL(varname)
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				; define global variable ${myvariable}:
+				exten => 123,1,Set(GLOBAL(myvariable)=Test)
+				
+				[Arguments]
+				  &#x2022; varname - Global variable name">
+				<Param name="STRING varname" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="GROUP" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets or sets the channel group.
 				
 				[Description]
-					
+				category can be employed for more fine grained group management. Each channel can only be member of 
+				exactly one group per category.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				GROUP(category)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; Category name.">
+				<Param name="STRING category" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="GROUP_COUNT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Counts the number of channels in the specified group.
 				
 				[Description]
-					
+				Calculates the group count for the specified group, or uses the channel's current group if not 
+				specified (and non-empty).
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				GROUP_COUNT(groupname@category)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; groupname - Group name.
+				  &#x2022; category - Category name">
+				<Param name="STRING groupname" />
+				<Param name="STRING category" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="GROUP_LIST" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets a list of the groups set on a channel.
 				
 				[Description]
-					
+				Gets a list of the groups set on a channel.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				GROUP_LIST()
 				
 				[Arguments]">
 				<Param name="" />
@@ -1151,37 +1818,55 @@
 		<KeyWord name="GROUP_MATCH_COUNT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Counts the number of channels in the groups matching the specified pattern.
 				
 				[Description]
-					
+				Calculates the group count for all groups that match the specified pattern. Note: category matching is 
+				applied after matching based on group. Uses standard regular expression matching on both (see regex(7)).
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				GROUP_MATCH_COUNT(groupmatch@category)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; groupmatch - A standard regular expression used to match a group name.
+				  &#x2022; category - A standard regular expression used to match a category name.">
+				<Param name="STRING groupmatch" />
+				<Param name="STRING category" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="HANGUPCAUSE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets per-channel hangupcause information from the channel.
 				
 				[Description]
-					
+				Gets technology-specific or translated Asterisk cause code information from the channel for the specified 
+				channel that resulted from a dial.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				HANGUPCAUSE(channel,type)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; channel - The name of the channel for which to retrieve cause information.
+				  &#x2022; type - Parameter describing which type of information is requested. Types are:
+				    &#x2022; tech - Technology-specific cause information
+				    &#x2022; ast - Translated Asterisk cause code">
+				<Param name="STRING channel" />
+				<Param name="STRING type" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="HANGUPCAUSE_KEYS" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets the list of channels for which hangup causes are available.
 				
 				[Description]
-					
+				Returns a comma-separated list of channel names to be used with the HANGUPCAUSE function.
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1193,225 +1878,323 @@
 		<KeyWord name="HASH" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Implementation of a dialplan associative array
 				
 				[Description]
-					
+				In two arguments mode, gets and sets values to corresponding keys within a named associative array. 
+				The single-argument mode will only work when assigned to from a function defined by func_odbc
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				HASH(hashname,hashkey)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; hashname
+				  &#x2022; hashkey">
+				<Param name="STRING hashname" />
+				<Param name="STRING hashkey" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="HASHKEYS" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve the keys of the HASH() function.
 				
 				[Description]
-					
+				Returns a comma-delimited list of the current keys of the associative array defined by the HASH() function.
+				Note that if you iterate over the keys of the result, adding keys during iteration will cause the result 
+				of the HASHKEYS() function to change.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				HASHKEYS(hashname)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; hashname">
+				<Param name="STRING hashname" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="HINT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Get the devices set for a dialplan hint.
 				
 				[Description]
-					
+				The HINT function can be used to retrieve the list of devices that are mapped to a dialplan hint. 
+				For example:
+				
+				NoOp(Hint for Extension 1234 is ${HINT(1234)})
+				
 				[Asterisk Version]
-				
+				(1.6+)
+				 
 				[Syntax]
+				HINT(extension,options)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; extension
+				    &#x2022; extension
+				    &#x2022; context
+				  &#x2022; options
+				    &#x2022; n - Retrieve name on the hint instead of list of devices.">
+				<Param name="STRING extension" />
+				<Param name="STRING options" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="IAXPEER" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets IAX peer information.
 				
 				[Description]
-					
+				Gets information associated with the specified IAX2 peer.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				IAXPEER(peername,item)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; peername
+				    &#x2022; CURRENTCHANNEL - If peername is specified to this value, return the IP address of the endpoint 
+				      of the current channel
+				  &#x2022; item - If peername is specified, valid items are:
+				    &#x2022; ip - (default) The IP address.
+				    &#x2022; status - The peer's status (if qualify=yes)
+				    &#x2022; mailbox - The configured mailbox.
+				    &#x2022; context - The configured context.
+				    &#x2022; expire - The epoch time of the next expire.
+				    &#x2022; dynamic - Is it dynamic? (yes/no).
+				    &#x2022; callerid_name - The configured Caller ID name.
+				    &#x2022; callerid_num - The configured Caller ID number.
+				    &#x2022; codecs - The configured codecs.
+				    &#x2022; codecx - Preferred codec index number x (beginning with 0)">
+				<Param name="STRING peername" />
+				<Param name="STRING item" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="IAXVAR" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Sets or retrieves a remote variable.
 				
 				[Description]
-					
+				Gets or sets a variable that is sent to a remote IAX2 peer during call setup.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				IAXVAR(varname)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname">
+				<Param name="STRING varname" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ICONV" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Converts charsets of strings.
 				
 				[Description]
-					
+				Converts string from in-charset into out-charset. For available charsets, use iconv -l on your 
+				shell command line.
+				
+				Note:
+				Due to limitations within the API, ICONV will not currently work with charsets with embedded NULLs. 
+				If found, the string will terminate.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				ICONV(in-charset,out-charset,string)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; in-charset - Input charset
+				  &#x2022; out-charset - Output charset
+				  &#x2022; string - String to convert, from in-charset to out-charset">
+				<Param name="STRING in-charset" />
+				<Param name="STRING out-charset" />
+				<Param name="STRING string" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="IF" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Check for an expresion.
 				
 				[Description]
-					
+				Returns the data following ? if true, else the data following :
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				IF(expresion?retvalue)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; expresion
+				  &#x2022; retvalue
+				    &#x2022; true
+				    &#x2022; false">
+				<Param name="STRING expresion" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="IFMODULE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Checks if an Asterisk module is loaded in memory.
 				
 				[Description]
-					
+				Checks if a module is loaded. Use the full module name as shown by the list in module list. 
+				Returns 1 if module exists in memory, otherwise 0
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				IFMODULE(modulename.so)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; modulename.so - Module name complete with .so">
+				<Param name="STRING modulename" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="IFTIME" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Temporal Conditional.
 				
 				[Description]
-					
+				Returns the data following ? if true, else the data following :
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				IFTIME(timespec?retvalue)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; timespec
+				  &#x2022; retvalue
+				    &#x2022; true
+				    &#x2022; false">
+				<Param name="STRING expresion" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="IMPORT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve the value of a variable from another channel.
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				IMPORT(channel,variable)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; channel
+				  &#x2022; variable">
+				<Param name="STRING channel" />
+				<Param name="STRING variable" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="INC" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Increments the value of a variable, while returning the updated value to the dialplan
 				
 				[Description]
-					
+				Increments the value of a variable, while returning the updated value to the dialplan
+				
+				Example: INC(MyVAR) - Increments MyVar
+				
+				Note: INC(${MyVAR}) - Is wrong, as INC expects the variable name, not its value
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				INC(variable)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; variable - The variable name to be manipulated, without the braces.">
+				<Param name="STRING variable" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ISNULL" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Check if a value is NULL.
 				
 				[Description]
-					
+				Returns 1 if NULL or 0 otherwise.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				ISNULL(data)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				 &#x2022; data">
+				<Param name="STRING data" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="JABBER_RECEIVE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Reads XMPP messages.
 				
 				[Description]
-					
+				Receives a text message on the given account from the buddy identified by jid and returns the contents.
+				
+				Example: ${JABBER_RECEIVE(asterisk,bob@domain.com)} returns an XMPP message sent from bob@domain.com 
+				(or nothing in case of a time out), to the asterisk XMPP account configured in xmpp.conf.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				JABBER_RECEIVE(account,jid,timeout)
 				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="JABBER_RECEIVE_res_xmpp" func="yes">
-			<Overload retVal="Function" descr="
-				[Synopsis]
-				
-				[Description]
-					
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; account - The local named account to listen on (specified in xmpp.conf)
+				  &#x2022; jid - Jabber ID of the buddy to receive message from. It can be a bare JID (username@domain) 
+				    or a full JID (username@domain/resource).
+				  &#x2022; timeout - In seconds, defaults to 20.">
+				<Param name="STRING account" />
+				<Param name="STRING jid" />
+				<Param name="STRING timeout" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="JABBER_STATUS" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieves a buddy's status.
 				
 				[Description]
-					
+				Retrieves the numeric status associated with the buddy identified by jid. If the buddy does not exist 
+				in the buddylist, returns 7.
+				
+				Status will be 1-7.
+				
+				1=Online, 2=Chatty, 3=Away, 4=XAway, 5=DND, 6=Offline
+				
+				If not in roster variable will be set to 7.
+				
+				Example: ${JABBER_STATUS(asterisk,bob@domain.com)} returns 1 if bob@domain.com is online. asterisk is the 
+				associated XMPP account configured in xmpp.conf.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				JABBER_STATUS(account,jid)
 				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="JABBER_STATUS_res_xmpp" func="yes">
-			<Overload retVal="Function" descr="
-				[Synopsis]
-				
-				[Description]
-					
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; account - The local named account to listen on (specified in xmpp.conf)
+				  &#x2022; jid - Jabber ID of the buddy to receive message from. It can be a bare JID (username@domain) or a full 
+				    JID (username@domain/resource).">
+				<Param name="STRING account" />
+				<Param name="STRING jid" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="JACK_HOOK" func="yes">
@@ -1419,7 +2202,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1431,40 +2214,85 @@
 		<KeyWord name="JITTERBUFFER" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Add a Jitterbuffer to the Read side of the channel. This dejitters the audio stream before it reaches 
+				the Asterisk core. This is a write only function.
 				
 				[Description]
-					
+				Jitterbuffers are constructed in two different ways. The first always take three arguments: max_size, 
+				resync_threshold, and target_extra. Alternatively, a single argument of default can be provided, which 
+				will construct the default jitterbuffer for the given jitterbuffer type.
+				
+				The arguments are:
+				
+				max_size: Length in milliseconds of the buffer. Defaults to 200 ms.
+				
+				resync_threshold: The length in milliseconds over which a timestamp difference will result in resyncing 
+				the jitterbuffer. Defaults to 1000ms.
+				
+				target_extra: This option only affects the adaptive jitterbuffer. It represents the amount time in 
+				milliseconds by which the new jitter buffer will pad its size. Defaults to 40ms.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				JITTERBUFFER(jitterbuffer type)
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				; Fixed with defaults
+				exten => 1,1,Set(JITTERBUFFER(fixed)=default)
+				; Fixed with 200ms max size, resync threshold 1500
+				exten => 1,1,Set(JITTERBUFFER(fixed)=200,1500)
+				; Adaptive with defaults
+				exten => 1,1,Set(JITTERBUFFER(adaptive)=default)
+				; Adaptive with 200ms max size, 60ms target extra
+				exten => 1,1,Set(JITTERBUFFER(adaptive)=200,,60)
+				; Set a fixed jitterbuffer with defaults; then remove it
+				exten => 1,1,Set(JITTERBUFFER(fixed)=default)
+				exten => 1,n,Set(JITTERBUFFER(disabled)=)
+				
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Function_JITTERBUFFER
+				
+				[Arguments]
+				  &#x2022; jitterbuffer type
+				    &#x2022; fixed - Set a fixed jitterbuffer on the channel.
+				    &#x2022; adaptive - Set an adaptive jitterbuffer on the channel.
+				    &#x2022; disabled - Remove a previously set jitterbuffer from the channel.">
+				<Param name="STRING jitterbuffer" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="KEYPADHASH" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Hash the letters in string into equivalent keypad numbers.
 				
 				[Description]
-					
+				Example: ${KEYPADHASH(Les)} returns &#x22;537&#x22;
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				KEYPADHASH(string)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; string">
+				<Param name="STRING string" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="LANGUAGE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets or sets the channel language
 				
 				[Description]
-					
+				This function is deprecated in Asterisk 1.2 and removed in Asterisk 1.4.
+				Use CHANNEL(language) instead.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				Set(MYLANG=${LANGUAGE()}) - Asterisk 1.2
+				Set(CHANNEL(language)=fr) - Asterisk 1.4
 				
 				[Arguments]">
 				<Param name="" />
@@ -1473,93 +2301,146 @@
 		<KeyWord name="LEN" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Return the length of the string given.
 				
 				[Description]
-					
+				Example: ${LEN(example)} returns 7
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				LEN(string)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; string">
+				<Param name="STRING string" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="LISTFILTER" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Remove an item from a list, by name.
 				
 				[Description]
-					
+				Remove value from the list contained in the varname variable, where the list delimiter is specified by 
+				the delim parameter. This is very useful for removing a single channel name from a list of channels, 
+				for example. 
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				LISTFILTER(varname,delim,value)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname
+				  &#x2022; delim
+				  &#x2022; value">
+				<Param name="STRING varname" />
+				<Param name="STRING delim" />
+				<Param name="STRING value" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="LOCAL" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Manage variables local to the gosub stack frame.
 				
 				[Description]
-					
+				Read and write a variable local to the gosub stack frame, once we Return() it will be lost 
+				(or it will go back to whatever value it had before the Gosub()).
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				LOCAL(varname)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname">
+				<Param name="STRING varname" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="LOCAL_PEEK" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve variables hidden by the local gosub stack frame.
 				
 				[Description]
-					
+				Read a variable varname hidden by n levels of gosub stack frames. Note that ${LOCAL_PEEK(0,foo)} is the 
+				same as foo, since the value of n peeks under 0 levels of stack frames; in other words, 0 is the 
+				current level. If n exceeds the available number of stack frames, then an empty string is returned.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				LOCAL_PEEK(n,varname)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; n
+				  &#x2022; varname">
+				<Param name="INTEGER n" />
+				<Param name="STRING varname" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="LOCK" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Attempt to obtain a named mutex.
 				
 				[Description]
-					
+				Attempts to grab a named lock exclusively, and prevents other channels from obtaining the same lock. 
+				LOCK will wait for the lock to become available. Returns 1 if the lock was obtained or 0 on error.
+				
+				Note:
+				To avoid the possibility of a deadlock, LOCK will only attempt to obtain the lock for 3 seconds if 
+				the channel already has another lock.
+				
+				Note:
+				If live_dangerously in asterisk.conf is set to no, this function can only be executed from the 
+				dialplan, and not directly from external protocols.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				LOCK(lockname)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; lockname">
+				<Param name="STRING lockname" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MAILBOX_EXISTS" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Tell if a mailbox is configured.
 				
 				[Description]
-					
+				Returns a boolean of whether the corresponding mailbox exists. If context is not specified, defaults 
+				to the default context.
+				
+				Note:
+				DEPRECATED. Use VM_INFO(mailbox[@context],exists) instead.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				MAILBOX_EXISTS(mailbox@context)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; n
+				  &#x2022; varname">
+				<Param name="STRING mailbox" />
+				<Param name="STRING context" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MASTER_CHANNEL" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets or sets variables on the master channel
 				
 				[Description]
-					
+				Allows access to the channel which created the current channel, if any. If the channel is already a 
+				master channel, then accesses local channel variables.
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1571,15 +2452,27 @@
 		<KeyWord name="MATH" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Performs Mathematical Functions.
 				
 				[Description]
-					
+				Performs mathematical functions based on two parameters and an operator. The returned value type is type
+				Example: Set(i=${MATH(123%16,int)}) - sets var i=11
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				MATH(expression,type)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; expression - Is of the form: number1opnumber2 where the possible values for op are:
+				    +,-,/,*,%,<<,>>,^,AND,OR,XOR,<,>,<=,>=,== (and behave as their C equivalents)
+				  &#x2022; type - Wanted type of result:
+				    f, float - float(default)
+				    i, int - integer
+				    h, hex - hex
+				    c, char - char">
+				<Param name="STRING expression" />
+				<Param name="STRING type" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MD5" func="yes">
@@ -1596,103 +2489,184 @@
 				MD5(data)
 				
 				[Arguments]
-				&#x20;&#x2022; data">
-				<Param name="string data" />
+				  &#x2022; data">
+				<Param name="STRING data" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MEETME_INFO" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Query a given conference of various properties.
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				MEETME_INFO(keyword,confno)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; keyword - Options:
+				    &#x2022; lock - Boolean of whether the corresponding conference is locked.
+				    &#x2022; parties - Number of parties in a given conference
+				    &#x2022; activity - Duration of conference in seconds.
+				    &#x2022; dynamic - Boolean of whether the corresponding conference is dynamic.
+				  &#x2022; confno - Conference number to retrieve information from.">
+				<Param name="STRING keyword" />
+				<Param name="STRING confno" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MESSAGE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Create a message or read fields from a message.
 				
 				[Description]
-					
+				This function will read from or write a value to a text message. It is used both to read the data out of 
+				an incoming message, as well as modify or create a message that will be sent outbound.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				MESSAGE(argument)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; argument - Field of the message to get or set.
+				    &#x2022; to - Read-only. The destination of the message. When processing an incoming message, this will be set 
+				      to the destination listed as the recipient of the message that was received by Asterisk.
+				    &#x2022; from - Read-only. The source of the message. When processing an incoming message, this will be set 
+				      to the source of the message.
+				    &#x2022; custom_data - Write-only. Mark or unmark all message headers for an outgoing message. The following 
+				      values can be set: 
+				        &#x2022; mark_all_outbound - Mark all headers for an outgoing message.
+				        &#x2022; clear_all_outbound - Unmark all headers for an outgoing message.
+				    &#x2022; body - Read/Write.  The message body. When processing an incoming message, this includes the body of 
+				      the message that Asterisk received. When MessageSend() is executed, the contents of this field are used 
+				      as the body of the outgoing message. The body will always be UTF-8.">
+				<Param name="STRING argument" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MESSAGE_DATA" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Read or write custom data attached to a message.
 				
 				[Description]
-					
+				This function will read from or write a value to a text message. It is used both to read the data out of 
+				an incoming message, as well as modify a message that will be sent outbound.
+				
+				Note:
+				If you want to set an outbound message to carry data in the current message, do 
+				Set(MESSAGE_DATA( key)=${MESSAGE_DATA(key)}).
+				
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				MESSAGE_DATA(argument)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; argument - Field of the message to get or set.">
+				<Param name="STRING argument" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MINIVMACCOUNT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets MiniVoicemail account information.
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				MINIVMACCOUNT(account:item)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; account
+				  &#x2022; item - Valid items are: 
+				    &#x2022; path - Path to account mailbox (if account exists, otherwise temporary mailbox).
+				    &#x2022; hasaccount - 1 is static Minivm account exists, 0 otherwise.
+				    &#x2022; fullname - Full name of account owner.
+				    &#x2022; email - Email address used for account.
+				    &#x2022; etemplate - Email template for account (default template if none is configured).
+				    &#x2022; ptemplate - Pager template for account (default template if none is configured).
+				    &#x2022; accountcode - Account code for the voicemail account.
+				    &#x2022; pincode - Pin code for voicemail account.
+				    &#x2022; timezone - Time zone for voicemail account.
+				    &#x2022; language - Language for voicemail account.
+				    &#x2022; <channel variable name> - Channel variable value (set in configuration for account).">
+				<Param name="STRING account" />
+				<Param name="STRING item" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MINIVMCOUNTER" func="yes">
-			<Overload retVal="Function" descr="
+				<Overload retVal="Function" descr="
 				[Synopsis]
+				Reads or sets counters for MiniVoicemail message.
 				
 				[Description]
-					
+				The operation is atomic and the counter is locked while changing the value. The counters are stored as 
+				text files in the minivm account directories. It might be better to use realtime functions if you are 
+				using a database to operate your Asterisk.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				MINIVMCOUNTER(account:name:operand)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; account - If account is given and it exists, the counter is specific for the account.
+				    If account is a domain and the domain directory exists, counters are specific for a domain.
+				  &#x2022; name - The name of the counter is a string, up to 10 characters.
+				  &#x2022; operand - The counters never goes below zero. Valid operands for changing the value of a counter when 
+				    assigning a value are: 
+				      &#x2022; i - Increment by value.
+				      &#x2022; d - Decrement by value.
+				      &#x2022; s - Set to value.">
+				<Param name="STRING arguments" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MIXMONITOR" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve data pertaining to specific instances of MixMonitor on a channel.
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				MIXMONITOR(id,key)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; id - The unique ID of the MixMonitor instance. The unique ID can be retrieved through the channel variable 
+				    &#x2022; used as an argument to the i option to MixMonitor.
+				  &#x2022; key - The piece of data to retrieve from the MixMonitor. ">
+				<Param name="STRING id" />
+				<Param name="STRING key" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MUSICCLASS" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Read or Set the MusicOnHold class
 				
 				[Description]
-					
+				This function will read or set the music on hold class for a channel.
+				
+				Deprecated. Use CHANNEL function instead
+				
+				
 				[Asterisk Version]
+				Removed in Asterisk 1.6
 				
 				[Syntax]
+				MUSICCLASS()
+				
+				[Example]
+				exten => s,1,Set(foo=${MUSICCLASS()})
+				exten => s,1,Set(MUSICCLASS()=Marimba)
 				
 				[Arguments]">
 				<Param name="" />
@@ -1701,23 +2675,59 @@
 		<KeyWord name="MUTEAUDIO" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Muting audio streams in the channel
 				
 				[Description]
-					
+				The MUTEAUDIO function can be used to mute inbound (to the PBX) or outbound audio in a call.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				MUTEAUDIO(direction)
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				MUTEAUDIO(in)=on
+				MUTEAUDIO(in)=off
+				
+				[Arguments]
+				  &#x2022; direction - Must be one of 
+				    &#x2022; in - Inbound stream (to the PBX)
+				    &#x2022; out - Outbound stream (from the PBX)
+				    &#x2022; all - Both streams">
+				<Param name="STRING direction" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ODBC" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Controls ODBC transaction properties.
 				
 				[Description]
-					
+				The ODBC() function allows setting several properties to influence how a connected database processes transactions.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				ODBC(property[,argument])
+				
+				[Arguments]
+				  &#x2022; property
+				    &#x2022; transaction - Gets or sets the active transaction ID. If set, and the transaction ID does not exist 
+				      and a database name is specified as an argument, it will be created.
+				    &#x2022; forcecommit - Controls whether a transaction will be automatically committed when the channel hangs up. 
+				      Defaults to false. If a transaction ID is specified in the optional argument, the property will be applied to 
+				      that ID, otherwise to the current active ID.
+				  &#x2022; argument">
+				<Param name="STRING property" />
+				<Param name="[STRING argument]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ODBC_ANIBLOCK" func="yes">
+			<Overload retVal="Function" descr="
+				[Synopsis]
+				
+				[Description]
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1729,15 +2739,26 @@
 		<KeyWord name="ODBC_FETCH" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Fetch a row from a multirow query.
 				
 				[Description]
-					
+				For queries which are marked as mode=multirow, the original query returns a result-id from which results 
+				may be fetched. This function implements the actual fetch of the results.
+				
+				This also sets ODBC_FETCH_STATUS.
+				
+				  &#x2022; ODBC_FETCH_STATUS
+				    &#x2022; SUCESS - If rows are available.
+				    &#x2022; FAILURE - If no rows are available.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				ODBC_FETCH(result-id)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; result-id">
+				<Param name="STRING result-id" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ODBC_SQL" func="yes">
@@ -1745,7 +2766,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1759,7 +2780,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1771,113 +2792,285 @@
 		<KeyWord name="PASSTHRU" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Pass the given argument back as a value.
 				
 				[Description]
-					
+				Literally returns the given string. The intent is to permit other dialplan functions which take a variable 
+				name as an argument to be able to take a literal string, instead.
+				
+				NOte:
+				The functions which take a variable name need to be passed var and not ${var}. Similarly, 
+				use PASSTHRU() and not ${PASSTHRU()}.
+				
+				Example: ${CHANNEL} contains SIP/321-1
+				${CUT(PASSTHRU(${CUT(CHANNEL,-,1)}),/,2)}) will return 321
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				PASSTHRU([string])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; string">
+				<Param name="STRING string" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="PERIODIC_HOOK" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Execute a periodic dialplan hook into the audio of a call.
 				
 				[Description]
-					
+				For example, you could use this function to enable playing a periodic beep sound in a call.
+				
+				To turn on:
+				Set(BEEPID=${PERIODIC_HOOK(hooks,beep,180)})
+				
+				To turn off:
+				Set(PERIODIC_HOOK(${BEEPID})=off)
+				
+				To turn back on again later:
+				Set(PERIODIC_HOOK(${BEEPID})=on)
+				
+				It is important to note that the hook does not actually run on the channel itself. It runs asynchronously 
+				on a new channel. Any audio generated by the hook gets injected into the call for the channel 
+				PERIODIC_HOOK() was set on.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				PERIODIC_HOOK(context,extension,interval,hook_id)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; context - (On Read Only) Context for the hook extension.
+				  &#x2022; extension - (On Read Only) The hook extension.
+				  &#x2022; interval - (On Read Only) Number of seconds in between hook runs. Whole seconds only.
+				  &#x2022; hook_id - (On Write Only) The hook ID.">
+				<Param name="STRING context" />
+				<Param name="STRING extension" />
+				<Param name="STRING interval" />
+				<Param name="STRING hook_id" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="PITCH_SHIFT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Pitch shift both tx and rx audio streams on a channel.
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				PITCH_SHIFT(channel direction)
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				exten => 1,1,Set(PITCH_SHIFT(tx)=highest); raises pitch an octave
+				exten => 1,1,Set(PITCH_SHIFT(rx)=higher) ; raises pitch more
+				exten => 1,1,Set(PITCH_SHIFT(both)=high) ; raises pitch
+				exten => 1,1,Set(PITCH_SHIFT(rx)=low) ; lowers pitch
+				exten => 1,1,Set(PITCH_SHIFT(tx)=lower) ; lowers pitch more
+				exten => 1,1,Set(PITCH_SHIFT(both)=lowest) ; lowers pitch an octave
+				exten => 1,1,Set(PITCH_SHIFT(rx)=0.8) ; lowers pitch
+				exten => 1,1,Set(PITCH_SHIFT(tx)=1.5) ; raises pitch
+				
+				[Arguments]
+				  &#x2022; channel direction - Direction can be either rx, tx, or both. The direction can either be set to a valid 
+				    floating point number between 0.1 and 4.0 or one of the enum values listed below. A value of 1.0 has 
+				    no effect. Greater than 1 raises the pitch. Lower than 1 lowers the pitch.
+				
+				    The pitch amount can also be set by the following values
+				      &#x2022; highest
+				      &#x2022; higher
+				      &#x2022; high
+				      &#x2022; low
+				      &#x2022; lower
+				      &#x2022; lowest">
+				<Param name="STRING channel direction" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="PJSIP_AOR" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Get information about a PJSIP AOR
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				PJSIP_AOR(name,field)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; name - The name of the AOR to query.
+				  &#x2022; field - The configuration option for the AOR to query for. Supported options are those fields on 
+				    the aor object in pjsip.conf.
+				    &#x2022; contact - Permanent contacts assigned to AoR
+				    &#x2022; default_expiration - Default expiration time in seconds for contacts that are dynamically 
+				      bound to an AoR.
+				    &#x2022; mailboxes - Allow subscriptions for the specified mailbox(es)
+				    &#x2022; maximum_expiration - Maximum time to keep an AoR
+				    &#x2022; max_contacts - Maximum number of contacts that can bind to an AoR
+				    &#x2022; minimum_expiration - Minimum keep alive time for an AoR
+				    &#x2022; remove_existing - Determines whether new contacts replace existing ones.
+				    &#x2022; type - Must be of type 'aor'.
+				    &#x2022; qualify_frequency - Interval at which to qualify an AoR
+				    &#x2022; authenticate_qualify - Authenticates a qualify request if needed
+				    &#x2022; outbound_proxy - Outbound proxy used when sending OPTIONS request
+				    &#x2022; support_path - Enables Path support for REGISTER requests and Route support for other requests.">
+				<Param name="STRING name" />
+				<Param name="STRING field" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="PJSIP_CONTACT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Get information about a PJSIP contact
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				PJSIP_CONTACT(name,field)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; name - The name of the contact to query.
+				  &#x2022; field - The configuration option for the contact to query for. Supported options are those fields on the contact object.
+				    &#x2022; type - Must be of type 'contact'.
+				    &#x2022; uri - SIP URI to contact peer
+				    &#x2022; expiration_time - Time to keep alive a contact
+				    &#x2022; qualify_frequency - Interval at which to qualify a contact
+				    &#x2022; outbound_proxy - Outbound proxy used when sending OPTIONS request
+				    &#x2022; path - Stored Path vector for use in Route headers on outgoing requests.
+				    &#x2022; user_agent - User-Agent header from registration.">
+				<Param name="STRING name" />
+				<Param name="STRING field" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="PJSIP_DIAL_CONTACTS" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Return a dial string for dialing all contacts on an AOR.
 				
 				[Description]
-					
+				Returns a properly formatted dial string for dialing all contacts on an AOR.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				PJSIP_DIAL_CONTACTS(endpoint[,aor[,request_user]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; endpoint - Name of the endpoint
+				  &#x2022; aor - Name of an AOR to use, if not specified the configured AORs on the endpoint are used
+				  &#x2022; request_user - Optional request user to use in the request URI">
+				<Param name="STRING endpoint" />
+				<Param name="[STRING aor" />
+				<Param name="[STRING request_user]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="PJSIP_ENDPOINT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Get information about a PJSIP endpoint
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				PJSIP_ENDPOINT(name,field)
 				
-				[Arguments]">
-				<Param name="" />
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Function_PJSIP_ENDPOINT
+				
+				[Arguments]
+				  &#x2022; name - The name of the endpoint to query.
+				  &#x2022; field - The configuration option for the endpoint to query for. Supported options are those fields on the 
+				    endpoint object in pjsip.conf.
+				      &#x2022; 100rel
+				      &#x2022; aggregate_mwi
+				      &#x2022; allow
+				      &#x2022; aors
+				      &#x2022; auth
+				      &#x2022; callerid
+				      &#x2022; callerid_privacy
+				      &#x2022; callerid_tag
+				      &#x2022; context
+				      &#x2022; direct_media_glare_mitigation
+				      &#x2022; direct_media_method
+				      &#x2022; connected_line_method
+				      &#x2022; direct_media
+				      &#x2022; disable_direct_media_on_nat
+				      &#x2022; disallow
+				      &#x2022; dtmf_mode
+				      &#x2022; media_address
+				      &#x2022; force_rport
+				      &#x2022; ice_support
+				      &#x2022; identify_by
+				      &#x2022; redirect_method
+				      &#x2022; mailboxes
+				      &#x2022; moh_suggest
+				      &#x2022; outbound_auth
+				      &#x2022; outbound_proxy
+				      &#x2022; rewrite_contact
+				      &#x2022; rtp_ipv6
+				
+				      More fields...
+				
+				    See Help for full list of fields.">
+				<Param name="STRING name" />
+				<Param name="STRING field" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="PJSIP_HEADER" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets, adds, updates or removes the specified SIP header from a PJSIP session.
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				PJSIP_HEADER(action,name[,number])
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				; Set 'somevar' to the value of the 'From' header.
+				exten => 1,1,Set(somevar=${PJSIP_HEADER(read,From)})
+				
+				; Set 'via2' to the value of the 2nd 'Via' header.
+				exten => 1,1,Set(via2=${PJSIP_HEADER(read,Via,2)})
+				
+				; Add an 'X-Myheader' header with the value of 'myvalue'.
+				exten => 1,1,Set(PJSIP_HEADER(add,X-MyHeader)=myvalue)
+				
+				; Update the value of the header named 'X-Myheader' to 'newvalue'.
+				; 'X-Myheader' must already exist or the call will fail.
+				exten => 1,1,Set(PJSIP_HEADER(update,X-MyHeader)=newvalue)
+				
+				; Remove all headers that begin with 'X-My'.
+				exten => 1,1,Set(PJSIP_HEADER(remove,X-My*)=)
+				
+				[Help]
+				https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Function_PJSIP_HEADER
+				
+				[Arguments]
+				  &#x2022; action
+				    &#x2022; read - Returns instance number of header name.
+				    &#x2022; add - Adds a new header name to this session.
+				    &#x2022; update - Updates instance number of header name to a new value. The header must already exist.
+				    &#x2022; remove - Removes all instances of previously added headers whose names match name. A {} may be 
+				      appended to name to remove all headers *beginning with name. name may be set to a single {} to clear *all 
+				      previously added headers. In all cases, the number of headers actually removed is returned.
+				  &#x2022; name - The name of the header.
+				  &#x2022; number - If there's more than 1 header with the same name, this 
+				    specifies which header to read or update. If not specified, defaults to 1 meaning 
+				    the first matching header. Not valid for add or remove.">
+				<Param name="STRING action" />
+				<Param name="[STRING name" />
+				<Param name="[STRING number]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="PJSIP_MEDIA_OFFER" func="yes">
@@ -1885,7 +3078,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1899,7 +3092,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1913,7 +3106,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1927,7 +3120,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1941,7 +3134,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1955,7 +3148,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1969,7 +3162,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1983,7 +3176,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -1997,7 +3190,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2011,7 +3204,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2025,7 +3218,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2039,7 +3232,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2053,7 +3246,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2067,7 +3260,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2081,7 +3274,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2095,7 +3288,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2109,7 +3302,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2123,7 +3316,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2137,7 +3330,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2151,7 +3344,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2165,7 +3358,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2179,7 +3372,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2193,7 +3386,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2207,7 +3400,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2221,7 +3414,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2235,7 +3428,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2249,7 +3442,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2263,7 +3456,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2277,7 +3470,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2291,7 +3484,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2305,7 +3498,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2319,7 +3512,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2333,7 +3526,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2347,7 +3540,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2361,7 +3554,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2375,7 +3568,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2389,7 +3582,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2403,7 +3596,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2417,7 +3610,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2431,7 +3624,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2445,7 +3638,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2459,7 +3652,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2473,7 +3666,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2487,7 +3680,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2501,7 +3694,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2515,7 +3708,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2529,7 +3722,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2543,7 +3736,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2557,7 +3750,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2571,7 +3764,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2585,7 +3778,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2599,7 +3792,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2613,7 +3806,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2627,7 +3820,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2641,7 +3834,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2655,7 +3848,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2669,7 +3862,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2683,7 +3876,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2697,7 +3890,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2711,7 +3904,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2725,7 +3918,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2739,7 +3932,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2753,7 +3946,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2767,7 +3960,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2781,7 +3974,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2795,7 +3988,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2809,7 +4002,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2823,7 +4016,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2837,7 +4030,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2851,7 +4044,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2866,9 +4059,9 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
-				1.0+
+				(1.0+)
 				
 				[Syntax]
 				
@@ -2881,9 +4074,9 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
-				1.4+
+				(1.4+)
 				
 				[Syntax]
 				
@@ -2896,9 +4089,9 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
-				1.0+
+				(1.0+)
 				
 				[Syntax]
 				
@@ -2930,7 +4123,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2949,35 +4142,35 @@
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				Dynamically adds queue members
-
+				
 				[Description]
 				Dynamically adds interface to an existing queue. If the interface is already in the queue it will return an error.
 				
 				This application sets the following channel variable upon completion:
-				&#x20;&#x2022; AQMSTATUS - The status of the attempt to add a queue member as a text string.
-					&#x20;&#x20;&#x20;&#x2022; ADDED
-					&#x20;&#x20;&#x20;&#x2022; MEMBERALREADY
-					&#x20;&#x20;&#x20;&#x2022; NOSUCHQUEUE
+				 &#x2022; AQMSTATUS - The status of the attempt to add a queue member as a text string.
+					   &#x2022; ADDED
+					   &#x2022; MEMBERALREADY
+					   &#x2022; NOSUCHQUEUE
 				
 				[Asterisk Version]
-				1.0+
+				(1.0+)
 				
 				[Syntax]
 				AddQueueMember(queuename,[interface,[penalty,[options,[membername,[stateinterface]]]]])
 				
 				[Usage]		
-				AddQueueMember(queuename[|interface[|penalty]]): (1.0)
-				AddQueueMember(queuename[|interface[|penalty[|options]]]): (1.2)
-				AddQueueMember(queuename[|interface[|penalty[|options[|membername]]]]): (1.4)
-				AddQueueMember(queuename[,interface[,penalty[,options[,membername[,stateinterface]]]]])): (1.6+)
+				AddQueueMember(queuename[|interface[|penalty]]): - Asterisk 1.0
+				AddQueueMember(queuename[|interface[|penalty[|options]]]): - Asterisk 1.2
+				AddQueueMember(queuename[|interface[|penalty[|options[|membername]]]]): - Asterisk 1.4
+				AddQueueMember(queuename[,interface[,penalty[,options[,membername[,stateinterface]]]]])): - Asterisk 1.6+
 				
 				[Arguments]
-				&#x20;&#x2022; queuename
-				&#x20;&#x2022; interface
-				&#x20;&#x2022; penalty
-				&#x20;&#x2022; options
-				&#x20;&#x2022; membername
-				&#x20;&#x2022; stateinterface">
+				 &#x2022; queuename
+				 &#x2022; interface
+				 &#x2022; penalty
+				 &#x2022; options
+				 &#x2022; membername
+				 &#x2022; stateinterface">
 				<Param name="STRING queuename" />
 				<Param name="[STRING interface" />
 				<Param name="[STRING penalty" />
@@ -2989,13 +4182,20 @@
 		<KeyWord name="AgentCallBackLogin" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Call agent callback login
 				
 				[Description]
-					
+				Asks the agent to login to the system with callback.
+				The agent's callback extension is called with the specified context. The context must be specified, 
+				however the system will prompt for the Agent number, password, and extension if they have not been supplied.
+				
 				[Asterisk Version]
-				1.0+
+				Deprecated in 1.4
+				Removed in 1.6
 				
 				[Syntax]
+				AgentCallbackLogin([AgentNo][|exten]@context) - Asterisk 1.0
+				AgentCallbackLogin([AgentNo][|Options[|exten[@context]]]) - Asterisk 1.2+
 				
 				[Arguments]">
 				<Param name="" />
@@ -3006,9 +4206,9 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
-				1.0+
+				(1.0+)
 				
 				[Syntax]
 				
@@ -3021,9 +4221,9 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
-				1.0+
+				(1.0+)
 				
 				[Syntax]
 				
@@ -3036,7 +4236,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3050,7 +4250,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3064,7 +4264,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3078,7 +4278,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3092,7 +4292,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3106,7 +4306,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3120,7 +4320,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3134,7 +4334,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3148,7 +4348,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3162,7 +4362,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3176,7 +4376,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3190,7 +4390,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3204,7 +4404,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3218,7 +4418,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3232,7 +4432,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3246,7 +4446,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3260,7 +4460,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3274,7 +4474,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3288,7 +4488,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3302,7 +4502,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3316,7 +4516,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3330,7 +4530,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3344,7 +4544,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3358,7 +4558,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3372,7 +4572,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3386,7 +4586,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3412,7 +4612,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3426,7 +4626,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3440,7 +4640,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3454,7 +4654,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3468,7 +4668,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3482,7 +4682,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3496,7 +4696,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3510,7 +4710,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3524,7 +4724,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3538,7 +4738,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3552,7 +4752,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3566,7 +4766,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3580,7 +4780,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3594,7 +4794,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3614,7 +4814,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3628,7 +4828,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3650,7 +4850,7 @@
 				requested will then be hung up.
 				
 				[Asterisk Version]
-				1.0+
+				(1.0+)
 				
 				[Syntax]
 				Dial(Technology/Resource&#x26;[Technology2/Resource2[&#x26;...]],[timeout,[options,[URL]]])
@@ -3660,10 +4860,10 @@
 				exten => _3XXXXXXXXX,5,Dial(SIP/${EXTEN},30)
 				
 				[Arguments]
-				&#x20;&#x2022; Technology/Resource
-				&#x20;&#x2022; timeout
-				&#x20;&#x2022; options (A,a,B,b,C,c,D,d,e,F,f,g,G,H,h,I,i,K,k,L,M,m,N,n,O,o,P,p,R,r,S,s,T,t,U,u,W,w,X,x,z)
-				&#x20;&#x2022; URL">
+				 &#x2022; Technology/Resource
+				 &#x2022; timeout
+				 &#x2022; options (A,a,B,b,C,c,D,d,e,F,f,g,G,H,h,I,i,K,k,L,M,m,N,n,O,o,P,p,R,r,S,s,T,t,U,u,W,w,X,x,z)
+				 &#x2022; URL">
 				<Param name="STRING Technology/Resource" />
 				<Param name="[INTEGER timeout" />
 				<Param name="[STRING options" />
@@ -3675,7 +4875,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3689,7 +4889,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3703,7 +4903,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3717,7 +4917,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3731,7 +4931,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3745,7 +4945,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3759,7 +4959,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3773,7 +4973,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3799,7 +4999,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3813,7 +5013,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3827,7 +5027,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3841,7 +5041,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3855,7 +5055,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3869,7 +5069,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3883,7 +5083,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3897,7 +5097,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3911,7 +5111,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3925,7 +5125,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3945,7 +5145,7 @@
 				text to speech.
 				
 				[Asterisk Version]
-				1.6+
+				(1.6+)
 				
 				[Syntax]
 				Flite(text[,intkeys])
@@ -3960,8 +5160,8 @@
 				exten => 1234,n,Hangup()
 				
 				[Arguments]
-				&#x20;&#x2022; text
-				&#x20;&#x2022; intkeys">
+				 &#x2022; text
+				 &#x2022; intkeys">
 				<Param name="STRING text"/>
 				<Param name="STRING intkeys"/>
 			</Overload>
@@ -3971,7 +5171,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3985,7 +5185,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -3999,7 +5199,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4013,7 +5213,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4027,7 +5227,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4041,7 +5241,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4055,7 +5255,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4069,7 +5269,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4083,7 +5283,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4097,7 +5297,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4111,7 +5311,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4125,7 +5325,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4139,7 +5339,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4153,7 +5353,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4167,7 +5367,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4181,7 +5381,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4195,7 +5395,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4209,7 +5409,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4229,7 +5429,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4243,7 +5443,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4257,7 +5457,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4271,21 +5471,7 @@
 				[Synopsis]
 				
 				[Description]
-					
-				[Asterisk Version]
 				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="JabberJoin_res_xmpp" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-					
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4299,21 +5485,7 @@
 				[Synopsis]
 				
 				[Description]
-					
-				[Asterisk Version]
 				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="JabberLeave_res_xmpp" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-					
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4327,7 +5499,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4341,35 +5513,7 @@
 				[Synopsis]
 				
 				[Description]
-					
-				[Asterisk Version]
 				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="JabberSendGroup_res_xmpp" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-					
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="JabberSend_res_xmpp" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-					
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4383,21 +5527,7 @@
 				[Synopsis]
 				
 				[Description]
-					
-				[Asterisk Version]
 				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="JabberStatus_res_xmpp" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-					
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4411,7 +5541,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4425,7 +5555,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4439,7 +5569,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4453,7 +5583,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4467,7 +5597,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4487,7 +5617,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4501,7 +5631,21 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MWI" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4529,7 +5673,7 @@
 				MYSQL(Clear ${resultid})
 				MYSQL(Disconnect ${connid})
 				
-				[Examples]
+				[Example]
 				exten => _X.,1,MYSQL(Connect connid localhost dbuser dbpass dbname)
 				exten => _X.,2,MYSQL(Query resultid ${connid} SELECT\ scriptname\ from\ mac2pin\ where\ userid=${CALLERIDNAME})
 				exten => _X.,3,MYSQL(Fetch fetchid ${resultid} AGIScript)
@@ -4540,7 +5684,7 @@
 				exten => _X.,8,MYSQL(Clear ${resultid})
 				exten => _X.,9,MYSQL(Disconnect ${connid})
 				exten => _X.,10,Hangup">
-				<Param name="Command params" />
+				<Param name="COMMAND params" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Macro" func="yes">
@@ -4548,7 +5692,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4562,7 +5706,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4576,7 +5720,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4590,7 +5734,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4616,7 +5760,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4630,7 +5774,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4644,7 +5788,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4658,7 +5802,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4672,7 +5816,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4686,7 +5830,21 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MiniVM" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4700,7 +5858,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4714,7 +5872,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4728,7 +5886,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4742,7 +5900,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4756,7 +5914,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4770,7 +5928,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4790,7 +5948,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4804,7 +5962,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4818,7 +5976,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4832,7 +5990,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4846,7 +6004,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4860,7 +6018,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4874,7 +6032,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4888,7 +6046,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4902,7 +6060,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4916,7 +6074,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4930,7 +6088,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4944,7 +6102,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4958,7 +6116,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4972,7 +6130,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -4986,7 +6144,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5000,7 +6158,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5014,7 +6172,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5028,7 +6186,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5042,7 +6200,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5056,7 +6214,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5070,7 +6228,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5084,7 +6242,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5098,7 +6256,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5112,7 +6270,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5126,7 +6284,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5140,7 +6298,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5154,7 +6312,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5168,7 +6326,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5182,7 +6340,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5196,7 +6354,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5210,7 +6368,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5224,7 +6382,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5238,7 +6396,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5252,7 +6410,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5266,7 +6424,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5280,7 +6438,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5294,7 +6452,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5308,7 +6466,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5322,7 +6480,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5336,7 +6494,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5356,7 +6514,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5370,35 +6528,7 @@
 				[Synopsis]
 				
 				[Description]
-					
-				[Asterisk Version]
 				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="ReceiveFAX_app_fax" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-					
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="ReceiveFAX_res_fax" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-					
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5412,7 +6542,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5426,7 +6556,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5440,7 +6570,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5454,7 +6584,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5468,7 +6598,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5482,7 +6612,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5496,7 +6626,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5510,7 +6640,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5524,7 +6654,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5561,8 +6691,8 @@
 				SCCPSetMessage(message text [,timeout])
 				
 				[Arguments]
-				&#x20;&#x2022; message
-				&#x20;&#x2022; timeout">
+				 &#x2022; message
+				 &#x2022; timeout">
 				<Param name="STRING message" />
 				<Param name="[INTEGER timeout]" />
 			</Overload>
@@ -5572,8 +6702,9 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
+				(1.4+)
 				
 				[Syntax]
 				
@@ -5586,7 +6717,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5599,7 +6730,7 @@
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				Change the dtmfmode for a SIP call
-
+				
 				[Description]
 				Changes the dtmfmode for a SIP call, i.e. calls originating in a SIP channel,
 				not calls TO a SIP channel originating in another type of channel, like a ZAP channel.
@@ -5608,15 +6739,15 @@
 				
 				[Syntax]
 				SIPDtmfMode(mode)
-
+				
 				[Example]
 				SIPDtmfMode(inband)
 				
 				[Arguments]
-				&#x20;&#x2022; mode
-				&#x20;&#x20;&#x20;&#x2022; inband
-				&#x20;&#x20;&#x20;&#x2022; info
-				&#x20;&#x20;&#x20;&#x2022; rfc2833">
+				 &#x2022; mode
+				   &#x2022; inband
+				   &#x2022; info
+				   &#x2022; rfc2833">
 				<Param name="STRING mode" />
 			</Overload>
 		</KeyWord>
@@ -5625,7 +6756,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5639,7 +6770,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5653,7 +6784,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5667,7 +6798,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5681,7 +6812,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5695,7 +6826,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5709,7 +6840,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5723,7 +6854,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5737,7 +6868,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5751,7 +6882,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5765,7 +6896,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5779,7 +6910,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5793,7 +6924,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5807,7 +6938,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5821,7 +6952,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5835,7 +6966,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5849,35 +6980,7 @@
 				[Synopsis]
 				
 				[Description]
-					
-				[Asterisk Version]
 				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SendFAX_app_fax" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-					
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SendFAX_res_fax" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-					
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5891,7 +6994,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5905,7 +7008,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5919,7 +7022,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5933,7 +7036,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5947,7 +7050,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5961,7 +7064,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5975,7 +7078,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -5989,7 +7092,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6003,7 +7106,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6023,7 +7126,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6037,7 +7140,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6051,7 +7154,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6065,7 +7168,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6079,7 +7182,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6099,7 +7202,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6113,7 +7216,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6133,7 +7236,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6147,7 +7250,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6161,7 +7264,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6175,7 +7278,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6189,7 +7292,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6209,7 +7312,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6223,7 +7326,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6237,7 +7340,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6251,7 +7354,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6265,7 +7368,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6279,7 +7382,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6293,7 +7396,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6307,7 +7410,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6321,7 +7424,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6335,7 +7438,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6349,7 +7452,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6363,7 +7466,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6377,7 +7480,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6391,7 +7494,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6405,7 +7508,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6419,7 +7522,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6433,7 +7536,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6447,7 +7550,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6461,7 +7564,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6475,7 +7578,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6489,7 +7592,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6503,7 +7606,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6517,7 +7620,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6537,7 +7640,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6551,7 +7654,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6571,7 +7674,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6585,7 +7688,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6599,7 +7702,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6613,7 +7716,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6627,7 +7730,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6641,7 +7744,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6655,7 +7758,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6669,7 +7772,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6682,8 +7785,7 @@
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
-				[Description]
-					
+				[Description]				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6697,7 +7799,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6711,7 +7813,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6725,7 +7827,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6737,15 +7839,48 @@
 		<KeyWord name="VoiceMailMain" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Check Voicemail messages
 				
 				[Description]
-					
+				This application allows the calling party to check voicemail messages. A specific mailbox, 
+				and optional corresponding context, may be specified. If a mailbox is not provided, 
+				the calling party will be prompted to enter one. If a context is not specified, the default 
+				context will be used.
+				
+				The VoiceMailMain application will exit if the following DTMF digit is entered as Mailbox 
+				or Password, and the extension exists:
+				
+				 &#x2022; * - Jump to the a extension in the current dialplan context.
+				
 				[Asterisk Version]
 				
 				[Syntax]
+				VoiceMailMain([mailbox@[context]],[options])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				 &#x2022; mailbox
+				   &#x2022; mailbox
+				   &#x2022; context
+				 &#x2022; options
+				   &#x2022; p - Consider the mailbox parameter as a prefix to the mailbox that is entered by the caller.
+				   &#x2022; g - Use the specified amount of gain when recording a voicemail message. The units are 
+				&#x20;&#x20;&#x20;&#x20; whole-number decibels (dB). 
+				     &#x2022; #
+				   &#x2022; s - Skip checking the passcode for the mailbox.
+				   &#x2022; a - Skip folder prompt and go directly to folder specified. Defaults to INBOX (or 0).
+				     &#x2022; folder
+				     &#x2022; 0 - INBOX
+				     &#x2022; 1 - Old
+				     &#x2022; 2 - Work
+				     &#x2022; 3 - Family
+				     &#x2022; 4 - Friends
+				     &#x2022; 5 - Cust1
+				     &#x2022; 6 - Cust2
+				     &#x2022; 7 - Cust3
+				     &#x2022; 8 - Cust4
+				     &#x2022; 9 - Cust5">
+				<Param name="STRING mailbox@context" />
+				<Param name="[STRING options]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="VoiceMailPlayMsg" func="yes">
@@ -6753,7 +7888,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6767,7 +7902,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6781,7 +7916,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6795,7 +7930,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6809,7 +7944,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6823,7 +7958,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6837,7 +7972,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6851,7 +7986,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6865,7 +8000,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6879,7 +8014,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6893,7 +8028,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6907,7 +8042,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6921,7 +8056,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6935,7 +8070,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6949,7 +8084,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -6963,7 +8098,7 @@
 				[Synopsis]
 				
 				[Description]
-					
+				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -7314,7 +8449,7 @@
 		<KeyWord name="eventextra" />
 		<KeyWord name="eventtime" />
 		<KeyWord name="eventtype" />
-		<!-- SYSTEM CONSTANTS AND SYSTEM EVENTS -->
+		<!-- CONSTANTS AND SYSTEM EVENTS -->
 		<KeyWord name="3K1AUDIO" />
 		<KeyWord name="3WAY_END" />
 		<KeyWord name="3WAY_START" />
@@ -7526,4 +8661,3 @@
 		<KeyWord name="mISDN" />
 	</AutoComplete>
 </NotepadPlus>
-
