@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252" ?>
 <!--
 @author www.xilitium.com
-@version 2.0
+@version 3.0
 -->
 <NotepadPlus>
 	<AutoComplete language="Asterisk_Dialplan" >
@@ -102,14 +102,22 @@
 		<KeyWord name="AMI_CLIENT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Checks attributes of manager accounts
 				
 				[Description]
+				Currently, the only supported parameter is 'sessions' which will return the current number of active
+				sessions for this AMI account.
 				
 				[Asterisk Version]
+				11
 				
 				[Syntax]
+				AMI_CLIENT(loginname,field)
 				
-				[Arguments]">
+				[Arguments]
+				  &#x2022; loginname - Login name, specified in manager.conf
+				  &#x2022; field - The manager account attribute to return
+				    &#x2022; sessions - The number of sessions for this AMI account">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
@@ -793,7 +801,7 @@
 				  &#x2022; i - If set, this will prevent the channel from sending out protocol messages because 
 				    of the value being set">
 				<Param name="STRING datatype" />
-				<Param name="STRING i" />
+				<Param name="OPTION i" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CSV_QUOTE" func="yes">
@@ -1627,7 +1635,7 @@
 				    &#x2022; d - DOS newline format.
 				    &#x2022; m - Macintosh newline format.
 				
-				&#x20;&#x20; Note: If not specified, an attempt will be made to determine the newline format type.">
+				  Note: If not specified, an attempt will be made to determine the newline format type.">
 				<Param name="STRING filename" />
 				<Param name="STRING format" />
 			</Overload>
@@ -2200,15 +2208,30 @@
 		<KeyWord name="JACK_HOOK" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Creates an audiohook and attaches it to the channel. 
 				
 				[Description]
+				In this case, instead of the JACK interface being the endpoint of the phone call, it is simply hooked in 
+				to the audio path for a phone call to something else. Audio that comes from a caller gets sent out the 
+				JACK output port, and whatever audio that comes back in on the input port gets sent on as the caller’s 
+				audio. This allows for cool applications that do analysis and manipulation of the audio in a phone call.
+				One example is that I can now write custom vocoders in Pd.
 				
 				[Asterisk Version]
 				
 				[Syntax]
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				exten => 1234,1,Answer
+				exten => 1234,n,JACK()
+				
+				exten => _1NXXNXXXXXX,1,Answer
+				exten => _1NXXNXXXXXX,n,Set(JACK_HOOK(manipulate)=on)
+				exten => _1NXXNXXXXXX,n,Dial(IAX2/myprovider/${EXTEN})
+				
+				[Arguments]
+				  &#x2022; manipulate">
+				<Param name="STRING manipulate" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="JITTERBUFFER" func="yes">
@@ -2259,6 +2282,74 @@
 				    &#x2022; adaptive - Set an adaptive jitterbuffer on the channel.
 				    &#x2022; disabled - Remove a previously set jitterbuffer from the channel.">
 				<Param name="STRING jitterbuffer" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JSONCOMPRESS" func="yes">
+			<Overload retVal="Function" descr="
+				[Synopsis]
+				Formats a json string for minimum footprint
+				
+				[Description]
+				Formats a json string for minimum footprint (eliminates all unnecessary characters). cosmetic 
+				functionality only
+			
+				[Asterisk Version]
+				
+				[Syntax]
+				JSONCOMPRESS(doc)
+				
+				[Help]
+				See: https://github.com/drivefast/asterisk-res_json
+				
+				[Arguments]
+				  &#x2022; doc - The name (not the contents!) of a variable that contains the json struct">
+				<Param name="STRING doc" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JSONELEMENT" func="yes">
+			<Overload retVal="Function" descr="
+				[Synopsis]
+				Gets the value of an element at a given path in a json document
+				
+				[Description]
+				Returns the value of an element at the given path. the element type is returned in the dialplan 
+				variable JSONTYPE.
+			
+				[Asterisk Version]
+				
+				[Syntax]
+				JSONELEMENT(doc,path)
+				
+				[Help]
+				See: https://github.com/drivefast/asterisk-res_json
+				
+				[Arguments]
+				  &#x2022; doc - The name (not the contents!) of a variable that contains the json struct
+				  &#x2022; path -  path to the element we're looking for (like /path/to/element, or /path/to/element/3 to identify the 
+				    element with index 3 in an array)">
+				<Param name="STRING doc" />
+				<Param name="STRING path" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="JSONPRETTY" func="yes">
+			<Overload retVal="Function" descr="
+				[Synopsis]
+				Nicely formats a json string for printing
+				
+				[Description]
+				Nicely formats a json string for printing. Cosmetic functionality only.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				JSONPRETTY(doc)
+				
+				[Help]
+				See: https://github.com/drivefast/asterisk-res_json
+				
+				[Arguments]
+				  &#x2022; doc - The name (not the contents!) of a variable that contains the json struct">
+				<Param name="STRING doc" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="KEYPADHASH" func="yes">
@@ -2559,7 +2650,6 @@
 				If you want to set an outbound message to carry data in the current message, do 
 				Set(MESSAGE_DATA( key)=${MESSAGE_DATA(key)}).
 				
-				
 				[Asterisk Version]
 				
 				[Syntax]
@@ -2657,7 +2747,6 @@
 				
 				Deprecated. Use CHANNEL function instead
 				
-				
 				[Asterisk Version]
 				Removed in Asterisk 1.6
 				
@@ -2722,20 +2811,6 @@
 				<Param name="[STRING argument]" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="ODBC_ANIBLOCK" func="yes">
-			<Overload retVal="Function" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
 		<KeyWord name="ODBC_FETCH" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
@@ -2764,6 +2839,7 @@
 		<KeyWord name="ODBC_SQL" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Executes the specified SQL query and returns the result, if any.
 				
 				[Description]
 				
@@ -2771,22 +2847,55 @@
 				
 				[Syntax]
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				; Query:
+				exten => 123,1,Set(Name=${ODBC_SQL(SELECT name FROM list WHERE number='123')})
+
+				; Set:
+				exten => 123,1,Set(ODBC_SQL(UPDATE list SET name='Robert' WHERE number='123'))
+				
+				[Arguments]
+				  &#x2022; query">
+				<Param name="STRING query" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ODBC_USER_DATABASE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Runs the SQL query defined in func_odbc.conf and returns the result, if any.
 				
 				[Description]
+				The values defined in func_odbc.conf, such as ${VAL1}, ${VAL2}, ..., ${ARG1}, ${ARG2}, ... are replaced 
+				by the corresponding values provided when the function is called.
+				
+				func_odbc.conf:
+				
+				  [USER_DATABASE]
+				  dsn=my_database
+				  read=SELECT name FROM list WHERE number='${ARG1}'
+				  write=UPDATE list SET name=${ARG1} WHERE number='${VAL1}'
+				
+				extensions.conf:
+				
+				  ; Query (read):
+				  exten => 123,1,Set(Name=${ODBC_USER_DATABASE(${EXTEN})})
+				  
+				  ; Update (write):
+				  exten => 123,1,Set(ODBC_USER_DATABASE(${CALLERID(name)})=1000)
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ODBC_USER_DATABASE(var1[,var2[,...]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; var1
+				  &#x2022; var2
+				  ...
+				  &#x2022; varn">
+				<Param name="STRING var1" />
+				<Param name="[STRING var2" />
+				<Param name="[...]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="PASSTHRU" func="yes">
@@ -2989,36 +3098,23 @@
 				  &#x2022; name - The name of the endpoint to query.
 				  &#x2022; field - The configuration option for the endpoint to query for. Supported options are those fields on the 
 				    endpoint object in pjsip.conf.
-				      &#x2022; 100rel
-				      &#x2022; aggregate_mwi
-				      &#x2022; allow
-				      &#x2022; aors
-				      &#x2022; auth
-				      &#x2022; callerid
-				      &#x2022; callerid_privacy
-				      &#x2022; callerid_tag
-				      &#x2022; context
-				      &#x2022; direct_media_glare_mitigation
-				      &#x2022; direct_media_method
-				      &#x2022; connected_line_method
-				      &#x2022; direct_media
-				      &#x2022; disable_direct_media_on_nat
-				      &#x2022; disallow
-				      &#x2022; dtmf_mode
-				      &#x2022; media_address
-				      &#x2022; force_rport
-				      &#x2022; ice_support
-				      &#x2022; identify_by
-				      &#x2022; redirect_method
-				      &#x2022; mailboxes
-				      &#x2022; moh_suggest
-				      &#x2022; outbound_auth
-				      &#x2022; outbound_proxy
-				      &#x2022; rewrite_contact
-				      &#x2022; rtp_ipv6
-				
-				      More fields...
-				
+				      &#x2022; 100rel               &#x2022; aggregate_mwi        &#x2022; allow                &#x2022; aors
+				      &#x2022; auth                 &#x2022; callerid             &#x2022; callerid_privacy     &#x2022; callerid_tag
+				      &#x2022; context              &#x2022; direct_media_method  &#x2022; direct_media         &#x2022; direct_media_glare_mitigation
+				      &#x2022; disallow             &#x2022; dtmf_mode            &#x2022; media_address        &#x2022; connected_line_method
+				      &#x2022; force_rport          &#x2022; ice_support          &#x2022; identify_by          &#x2022; disable_direct_media_on_nat
+				      &#x2022; redirect_method      &#x2022; mailboxes            &#x2022; moh_suggest          &#x2022; outbound_auth
+				      &#x2022; outbound_proxy       &#x2022; rewrite_contact      &#x2022; rtp_ipv6             &#x2022; rtp_symmetric
+				      &#x2022; send_diversion       &#x2022; send_pai             &#x2022; send_rpid            &#x2022; rpid_immediate
+				      &#x2022; timers_min_se        &#x2022; timers               &#x2022; timers_sess_expires  &#x2022; transport
+				      &#x2022; trust_id_inbound     &#x2022; trust_id_outbound    &#x2022; type                 &#x2022; use_ptime
+				      &#x2022; use_avpf             &#x2022; force_avp            &#x2022; media_encryption     &#x2022; media_use_received_transport
+				      &#x2022; inband_progress      &#x2022; call_group           &#x2022; pickup_group         &#x2022; media_encryption_optimistic
+				      &#x2022; named_call_group     &#x2022; named_pickup_group   &#x2022; t38_udptl            &#x2022; device_state_busy_at
+				      &#x2022; t38_udptl_ec         &#x2022; fax_detect           &#x2022; t38_udptl_nat        &#x2022; t38_udptl_maxdatagram 
+							
+				     More fields...
+							
 				    See Help for full list of fields.">
 				<Param name="STRING name" />
 				<Param name="STRING field" />
@@ -3076,586 +3172,1144 @@
 		<KeyWord name="PJSIP_MEDIA_OFFER" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Media and codec offerings to be set on an outbound SIP channel prior to dialing.
 				
 				[Description]
+				Returns the codecs offered based upon the media choice
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				PJSIP_MEDIA_OFFER(media)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; media - types of media offered">
+				<Param name="STRING media" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="POP" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Removes and returns the last item off of a variable containing delimited text
 				
 				[Description]
+				Example:
+				
+				exten => s,1,Set(array=one,two,three)
+				exten => s,n,While($[&#x22;${SET(var=${POP(array)})}&#x22; != &#x22;&#x22;])
+				exten => s,n,NoOp(var is ${var})
+				exten => s,n,EndWhile
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				POP(varname[,delimiter])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname
+				  &#x2022; delimiter">
+				<Param name="STRING varname" />
+				<Param name="[STRING delimiter]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="PP_EACH_EXTENSION" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Execute specified template for each extension.
 				
 				[Description]
+				Output the specified template for each extension associated with the specified MAC address.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				PP_EACH_EXTENSION(mac,template_file)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; mac
+				  &#x2022; template_file">
+				<Param name="STRING mac" />
+				<Param name="STRING template_file" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="PP_EACH_USER" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Generate a string for each phoneprov user.
 				
 				[Description]
+				Pass in a string, with phoneprov variables you want substituted in the format of %{VARNAME}, and you will 
+				get the string rendered for each user in phoneprov excluding ones with MAC address exclude_mac. 
+				Probably not useful outside of res_phoneprov.
+				
+				Example: ${PP_EACH_USER(<item><fn>%{DISPLAY_NAME}</fn></item>|${MAC})
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				PP_EACH_USER(string,exclude_mac)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; string
+				  &#x2022; exclude_mac">
+				<Param name="STRING string" />
+				<Param name="STRING exclude_mac" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="PRESENCE_STATE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Get or Set a presence state.
 				
 				[Description]
+				The PRESENCE_STATE function can be used to retrieve the presence from any presence provider. For example:
+				NoOp(SIP/mypeer has presence ${PRESENCE_STATE(SIP/mypeer,value)})
+				NoOp(Conference number 1234 has presence message ${PRESENCE_STATE(MeetMe:1234,message)})
+				
+				The PRESENCE_STATE function can also be used to set custom presence state from the dialplan. 
+				The CustomPresence: prefix must be used. For example:
+				
+				Set(PRESENCE_STATE(CustomPresence:lamp1)=away,temporary,Out to lunch)
+				Set(PRESENCE_STATE(CustomPresence:lamp2)=dnd,,Trying to get work done)
+				Set(PRESENCE_STATE(CustomPresence:lamp3)=xa,T24gdmFjYXRpb24=,,e)
+				Set(BASE64_LAMP3_PRESENCE=${PRESENCE_STATE(CustomPresence:lamp3,subtype,e)})
+				
+				You can subscribe to the status of a custom presence state using a hint in the dialplan:
+				exten => 1234,hint,,CustomPresence:lamp1
+				
+				The possible values for both uses of this function are:
+				not_set | unavailable | available | away | xa | chat | dnd
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				PRESENCE_STATE(provider,field[,options])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; provider - The provider of the presence, such as CustomPresence
+				  &#x2022; field - Which field of the presence state information is wanted.
+				    &#x2022; value - The current presence, such as away
+				    &#x2022; subtype - Further information about the current presence
+				    &#x2022; message - A custom message that may indicate further details about the presence
+				  &#x2022; options
+				    &#x2022; e - On Write - Use this option when the subtype and message provided are Base64 encoded. 
+				      The values will be stored encoded within Asterisk, but all consumers of the presence state
+				      (e.g. the SIP presence event package) will receive decoded values.
+				      On Read - Retrieves unencoded message/subtype in Base64 encoded form.">
+				<Param name="STRING provider" />
+				<Param name="STRING field" />
+				<Param name="[STRING options]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="PUSH" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Appends one or more values to the end of a variable containing delimited text
 				
 				[Description]
+				Example: Set(PUSH(array)=one,two,three) would append one, two, and three to the end of the values stored
+				in the variable &#x22;array&#x22;.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				PUSH(varname[,delimiter])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname
+				  &#x2022; delimiter">
+				<Param name="STRING varname" />
+				<Param name="[STRING delimiter]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="QUEUEAGENTCOUNT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Count number of members answering a queue
 				
 				[Description]
+				By agent, this function really refers to queue members, which are the operators answering a queue (as 
+				opposed to the callers). This function has been renamed in 1.3dev as QUEUE_MEMBER_COUNT to increase 
+				clarity of purpose. QUEUE_MEMBER_LIST (a list of members answering a queue, in comma-separated format) 
+				is also now available in 1.3dev.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				QUEUEAGENTCOUNT(queuename)
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				exten => s,1,Set(foo=${QUEUEAGENTCOUNT(q1)})
+				
+				[Arguments]
+				  &#x2022; queuename">
+				<Param name="STRING queuename" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="QUEUE_EXISTS" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Check if a named queue exists on this server
 				
 				[Description]
+				Returns 1 if the specified queue exists, 0 if it does not
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				QUEUE_EXISTS(queuename)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; queuename">
+				<Param name="STRING queuename" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="QUEUE_MEMBER" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Count number of members answering a queue.
 				
 				[Description]
+				Allows access to queue counts [R] and member information [R/W].
+				queuename is required for all operations interface is required for all member operations.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				QUEUE_MEMBER(queuename,option[,interface])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; queuename
+				  &#x2022; option
+				    &#x2022; logged - Returns the number of logged-in members for the specified queue.
+				    &#x2022; free - Returns the number of logged-in members for the specified queue that either can take calls 
+				      or are currently wrapping up after a previous call.
+				    &#x2022; ready - Returns the number of logged-in members for the specified queue that are immediately available 
+				      to answer a call.
+				    &#x2022; count - Returns the total number of members for the specified queue.
+				    &#x2022; penalty - Gets or sets queue member penalty.
+				    &#x2022; paused - Gets or sets queue member paused status.
+				    &#x2022; ringinuse - Gets or sets queue member ringinuse.
+				  &#x2022; interface">
+				<Param name="STRING queuename" />
+				<Param name="STRING option" />
+				<Param name="[STRING interface]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="QUEUE_MEMBER_COUNT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Count number of members answering a queue.
 				
 				[Description]
+				Returns the number of members currently associated with the specified queuename.
+				
+				Warning:
+				This function has been deprecated in favor of the QUEUE_MEMBER() function
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				QUEUE_MEMBER_COUNT(queuename)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; queuename">
+				<Param name="STRING queuename" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="QUEUE_MEMBER_LIST" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Returns a list of interfaces on a queue.
 				
 				[Description]
+				Returns a comma-separated list of members associated with the specified queuename.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				QUEUE_MEMBER_LIST(queuename)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; queuename">
+				<Param name="STRING queuename" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="QUEUE_MEMBER_PENALTY" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets or sets queue members penalty.
 				
 				[Description]
+				Warning:
+				This function has been deprecated in favor of the QUEUE_MEMBER() function
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				QUEUE_MEMBER_PENALTY(queuename,interface)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; queuename
+				  &#x2022; interface">
+				<Param name="STRING queuename" />
+				<Param name="STRING interface" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="QUEUE_VARIABLES" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Return Queue information in variables.
 				
 				[Description]
+				Makes the following queue variables available.
+				Returns 0 if queue is found and setqueuevar is defined, -1 otherwise.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				QUEUE_VARIABLES(queuename)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; queuename
+				    &#x2022; QUEUEMAX - Maxmimum number of calls allowed.
+				    &#x2022; QUEUESTRATEGY - The strategy of the queue.
+				    &#x2022; QUEUECALLS - Number of calls currently in the queue.
+				    &#x2022; QUEUEHOLDTIME - Current average hold time.
+				    &#x2022; QUEUECOMPLETED - Number of completed calls for the queue.
+				    &#x2022; QUEUEABANDONED - Number of abandoned calls.
+				    &#x2022; QUEUESRVLEVEL - Queue service level.
+				    &#x2022; QUEUESRVLEVELPERF - Current service level performance.">
+				<Param name="STRING queuename" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="QUEUE_WAITING_COUNT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Count number of calls currently waiting in a queue.
 				
 				[Description]
+				Returns the number of callers currently waiting in the specified queuename.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				QUEUE_WAITING_COUNT(queuename)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; queuename">
+				<Param name="STRING queuename" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="QUOTE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Quotes a given string, escaping embedded quotes as necessary
 				
 				[Description]
+				Example: ${QUOTE(ab&#x22;c&#x22;de)} will return &#x22;&#x22;ab\&#x22;c\&#x22;de&#x22;&#x22;
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				QUOTE(string)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; string">
+				<Param name="STRING string" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="RAND" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Choose a random number in a range.
 				
 				[Description]
+				Choose a random number between min and max. min defaults to 0, if not specified, while max defaults to 
+				RAND_MAX (2147483647 on many systems).
+				
+				Example: Set(junky=${RAND(1,8)}); Sets junky to a random number between 1 and 8, inclusive.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				RAND(min,max)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; min
+				  &#x2022; max">
+				<Param name="STRING min" />
+				<Param name="STRING max" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="REALTIME" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				RealTime Read/Write Functions.
 				
 				[Description]
+				This function will read or write values from/to a RealTime repository. REALTIME(....) will read names/values
+				from the repository, and REALTIME(....)= will write a new value/field to the repository. On a read, this 
+				function returns a delimited text string. The name/value pairs are delimited by delim1, and the name and 
+				value are delimited between each other with delim2. If there is no match, NULL will be returned by the 
+				function. On a write, this function will always return NULL.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				REALTIME(family,fieldmatch,matchvalue,delim1|field,delim2)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; family
+				  &#x2022; fieldmatch
+				  &#x2022; matchvalue
+				  &#x2022; delim1|field - Use delim1 with delim2 on read and field without delim2 on write
+				    If we are reading and delim1 is not specified, defaults to ,
+				  &#x2022; delim2 - Parameter only used when reading, if not specified defaults to =">
+				<Param name="STRING family" />
+				<Param name="STRING fieldmatch" />
+				<Param name="STRING matchvalue" />
+				<Param name="STRING delim1|field" />
+				<Param name="STRING delim2" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="REALTIME_DESTROY" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				RealTime Destroy Function.
 				
 				[Description]
+				This function acts in the same way as REALTIME(....) does, except that it destroys the matched record in 
+				the RT engine.
+				
+				Note:
+				If live_dangerously in asterisk.conf is set to no, this function can only be read from the dialplan,
+				and not directly from external protocols. It can, however, be executed as a write operation 
+				(REALTIME_DESTROY(family, fieldmatch)=ignored)
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				REALTIME_DESTROY(family,fieldmatch,matchvalue,delim1,delim2)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; family
+				  &#x2022; fieldmatch
+				  &#x2022; matchvalue
+				  &#x2022; delim1
+				  &#x2022; delim2">
+				<Param name="STRING family" />
+				<Param name="STRING fieldmatch" />
+				<Param name="STRING matchvalue" />
+				<Param name="STRING delim1" />
+				<Param name="STRING delim2" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="REALTIME_FIELD" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				RealTime query function.
 				
 				[Description]
+				This function retrieves a single item, fieldname from the RT engine, where fieldmatch contains the value 
+				matchvalue. When written to, the REALTIME_FIELD() function performs identically to the REALTIME() function.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				REALTIME_FIELD(family,fieldmatch,matchvalue,fieldname)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; family
+				  &#x2022; fieldmatch
+				  &#x2022; matchvalue
+				  &#x2022; fieldname">
+				<Param name="STRING family" />
+				<Param name="STRING fieldmatch" />
+				<Param name="STRING matchvalue" />
+				<Param name="STRING fieldname" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="REALTIME_HASH" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				RealTime query function.
 				
 				[Description]
+				This function retrieves a single record from the RT engine, where fieldmatch contains the value matchvalue 
+				and formats the output suitably, such that it can be assigned to the HASH() function. The HASH() function 
+				then provides a suitable method for retrieving each field value of the record.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				REALTIME_HASH(family,fieldmatch,matchvalue)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; family
+				  &#x2022; fieldmatch
+				  &#x2022; matchvalue">
+				<Param name="STRING family" />
+				<Param name="STRING fieldmatch" />
+				<Param name="STRING matchvalue" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="REALTIME_STORE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				RealTime Store Function.
 				
 				[Description]
+				This function will insert a new set of values into the RealTime repository. If RT engine provides an 
+				unique ID of the stored record, REALTIME_STORE(...)=.. creates channel variable named RTSTOREID, which 
+				contains value of unique ID. Currently, a maximum of 30 field/value pairs is supported.
 				
 				[Asterisk Version]
+				(1.6+)
 				
 				[Syntax]
+				REALTIME_STORE(family,field1,field2,...,field30) = value1,value2,...,value30
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				; Save values with REALTIME_STORE()
+				exten => 123,1,Answer()
+				exten => 123,n,Set(REALTIME_STORE(sip_users,ext,secret)=1337,geheim)
+				exten => 123,n,Hangup()
+				
+				[Arguments]
+				  &#x2022; family
+				  &#x2022; field1
+				  &#x2022; field2
+				  &#x2022; ...
+				  &#x2022; field30">
+				<Param name="STRING family" />
+				<Param name="STRING field1" />
+				<Param name="[STRING field2" />
+				<Param name="[..." />
+				<Param name="[STRING field30]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="REDIRECTING" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets or sets Redirecting data on the channel.
 				
 				[Description]
+				The allowable values for the reason and orig-reason fields are the following:
+				  &#x2022; unknown - Unknown
+				  &#x2022; cfb - Call Forwarding Busy
+				  &#x2022; cfnr - Call Forwarding No Reply
+				  &#x2022; unavailable - Callee is Unavailable
+				  &#x2022; time_of_day - Time of Day
+				  &#x2022; dnd - Do Not Disturb
+				  &#x2022; deflection - Call Deflection
+				  &#x2022; follow_me - Follow Me
+				  &#x2022; out_of_order - Called DTE Out-Of-Order
+				  &#x2022; away - Callee is Away
+				  &#x2022; cf_dte - Call Forwarding By The Called DTE
+				  &#x2022; cfu - Call Forwarding Unconditional
+				
+				The allowable values for the xxx-name-charset field are the following:
+				  &#x2022; unknown - Unknown
+				  &#x2022; iso8859-1 - ISO8859-1
+				  &#x2022; withdrawn - Withdrawn
+				  &#x2022; iso8859-2 - ISO8859-2
+				  &#x2022; iso8859-3 - ISO8859-3
+				  &#x2022; iso8859-4 - ISO8859-4
+				  &#x2022; iso8859-5 - ISO8859-5
+				  &#x2022; iso8859-7 - ISO8859-7
+				  &#x2022; bmp - ISO10646 Bmp String
+				  &#x2022; utf8 - ISO10646 UTF-8 String
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				REDIRECTING(datatype,i)
 				
-				[Arguments]">
-				<Param name="" />
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Function_REDIRECTING
+				
+				[Arguments]
+				  &#x2022; datatype - The allowable datatypes are:
+				    &#x2022; orig-all             &#x2022; orig-name             &#x2022; orig-name-valid
+				    &#x2022; orig-name-charset    &#x2022; orig-name-pres        &#x2022; orig-num
+				    &#x2022; orig-num-valid       &#x2022; orig-num-plan         &#x2022; orig-num-pres
+				    &#x2022; orig-subaddr         &#x2022; orig-subaddr-valid    &#x2022; orig-subaddr-type
+				    &#x2022; orig-subaddr-odd     &#x2022; orig-tag              &#x2022; orig-reason
+				    &#x2022; from-all             &#x2022; from-name             &#x2022; from-name-valid
+				    &#x2022; from-name-charset    &#x2022; from-name-pres        &#x2022; from-num
+				
+				    More datatypes...
+				
+				    See Help for full list of datatypes.
+				
+				  &#x2022; i - If set, this will prevent the channel from sending out protocol messages because of the value being set">
+				<Param name="STRING datatype" />
+				<Param name="OPTION i" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="REGEX" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Check string against a regular expression.
 				
 				[Description]
+				Return 1 on regular expression match or 0 otherwise
+				
+				Please note that the space following the double quotes separating the regex from the data is optional and if present, 
+				is skipped. If a space is desired at the beginning of the data, then put two spaces there; the second will not 
+				be skipped.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				REGEX('regular expression' string)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; 'regular expression'
+				  &#x2022; string">
+				<Param name="STRING 'regular expression'" />
+				<Param name="STRING string" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="REPLACE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Replace a set of characters in a given string with another character.
 				
 				[Description]
+				Iterates through a string replacing all the find-chars with replace-char. replace-char may be either empty or contain 
+				one character. If empty, all find-chars will be deleted from the output.
+				
+				Note:
+				The replacement only occurs in the output. The original variable is not altered.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				REPLACE(varname,find-chars[,replace-char])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname
+				  &#x2022; find-chars
+				  &#x2022; replace-char">
+				<Param name="STRING varname" />
+				<Param name="STRING find-chars" />
+				<Param name="STRING replace-char" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SCCPCHANNEL" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve information about an SCCP channel
 				
 				[Description]
+				The first param can be either 'current' or a callid assigned to the channel.
+				
+				The second param defines the information to be retrieved and can be on of these: callid, format, isCodecFix,
+				codecs, capability, calledPartyName, calledPartyNumber, callingPartyName, callingPartyNumber 
+				originalCallingPartyName, originalCallingPartyNumber, originalCalledPartyName, originalCalledPartyNumber, 
+				lastRedirectingPartyName, lastRedirectingPartyNumber, cgpnVoiceMailbox, cdpnVoiceMailbox, originalCdpnVoiceMailbox,
+				lastRedirectingVoiceMailbox, passthrupartyid, state, previous_state, calltype, dialed_number, device, line, 
+				answered_elsewhere, privacy, monitorEnabled, parent, recvip, peerip
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SCCPCHANNEL([current|callid],[option])
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				Set(my_channel_callid=${SCCPCHANNEL(current,callid)});
+				Set(my_channel_device=${SCCPCHANNEL(current,device)});
+				Set(my_channel_line=${SCCPCHANNEL(current,line)});
+				Set(my_channel_capability=${SCCPCHANNEL(current,capability)});
+				Set(my_channel_called=${SCCPCHANNEL(current,calledPartyName)});
+				Set(my_channel_calling=${SCCPCHANNEL(current,callingPartyName)});
+				Set(my_channel_state=${SCCPCHANNEL(current,state)});
+				Set(my_channel_calltype=${SCCPCHANNEL(current,calltype)});
+				Set(my_channel_dialed_number=${SCCPCHANNEL(current,dialed_number)});
+				Set(other_channel_dialed_number=${SCCPCHANNEL(4,dialed_number)});
+				
+				[Arguments]
+				  &#x2022; 'current' or callid
+				  &#x2022; option">
+				<Param name="STRING [current|callid]" />
+				<Param name="STRING option" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SCCPDEVICE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve information about an SCCP Device
 				
 				[Description]
+				The first param can be either 'current' or a device ID like 'SEP????????????'
+				
+				The second param defines the information to be retrieved and can be on of these: ip, id, status, description, 
+				config_type, skinny_type, tz_offset, image_version, accessory_status, registration_state codecs, state, 
+				lines_registered, lines_count, last_number, capability, early_rtp, channel_count, supported_protocol_version, 
+				used_protocol_version, mwi_light, dynamic|realtime, active_channel, transfer_channel, conference_id, 
+				allow_conference, conf_play_general_announce, allow_conference, conf_play_part_announce, conf_mute_on_entry, 
+				conf_music_on_hold_class, current_line button_config, pending_update, pending_delete, chanvar[varname], 
+				codec[codecname]
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SCCPDEVICE([deviceId|current],[option])
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				Set(my_ip=${SCCPDEVICE(current,ip)});
+				Set(my_id=${SCCPDEVICE(current,id)});
+				Set(my_codecs=${SCCPDEVICE(current,codecs)});
+				Set(my_codec_g792=${SCCPDEVICE(current,codec[g792])});
+				Set(my_button_config=${SCCPDEVICE(current,button_config)});
+				Set(other_button_config=${SCCPDEVICE(SEP001122334455,button_config)});
+				
+				[Arguments]
+				  &#x2022; deviceId or 'current'
+				  &#x2022; option">
+				<Param name="STRING [deviceId|current]" />
+				<Param name="STRING option" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SCCPLINE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve information about an SCCP Line
 				
 				[Description]
-				
+				The first param can be either 'current', 'parent' or a line name assigned to the line. 'parent' refers to the
+				line who forwarded the call to you and is only filled if this channel has been forwarded.
+
+				The second param defines the information to be retrieved and can be on of these: id, name, description, label,
+				vmnum, trnsfvm, meetme, meetmenum, meetmeopts, context, language, accountcode, musicclass, amaflags,
+				callgroup, pickupgroup, cid_name, cid_num, incoming_limit, channel_count, dynamic|realtime, pending_delete,
+				pending_update, regexten, regcontext, adhoc_number, newmsgs, oldmsgs, num_lines, lines, chanvar[varname]
+
 				[Asterisk Version]
 				
 				[Syntax]
+				SCCPLINE([current|parent|linename],[option])
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				Set(my_line_name=${SCCPDEVICE(current,name)});
+				Set(my_line_descr=${SCCPLINE(current,description)});
+				Set(my_line_devices=${SCCPLINE(current,devices)});
+				Set(parent_line_id=${SCCPLINE(parent,id)});
+				Set(other_line_id=${SCCPLINE(98011,id)});
+				Set(other_line_devices=${SCCPLINE(98011,devices)});
+				
+				[Arguments]
+				  &#x2022; 'current', 'parent' or linename
+				  &#x2022; option">
+				<Param name="STRING [current|parent|linename]" />
+				<Param name="STRING option" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SET" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				SET assigns a value to a channel variable.
 				
 				[Description]
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SET(varname=value)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname
+				  &#x2022; value">
+				<Param name="STRING varname" />
+				<Param name="STRING value" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SHA1" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Computes a SHA1 digest.
 				
 				[Description]
+				Generate a SHA1 digest via the SHA1 algorythm.
 				
+				Example: Set(sha1hash=${SHA1(junky)})
+				
+				Sets the asterisk variable sha1hash to the string 60fa5675b9303eb62f99a9cd47f9f5837d18f9a0 
+				which is known as his hash
+			
 				[Asterisk Version]
 				
 				[Syntax]
+				SHA1(data)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; data - Input string">
+				<Param name="STRING data" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SHARED" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets or sets the shared variable specified.
 				
 				[Description]
+				Implements a shared variable area, in which you may share variables between channels.
+				
+				The variables used in this space are separate from the general namespace of the channel and thus 
+				SHARED(foo) and foo represent two completely different variables, despite sharing the same name.
+				
+				Finally, realize that there is an inherent race between channels operating at the same time, 
+				fiddling with each 	others' internal variables, which is why this special variable namespace exists; 
+				it is to remind you that variables in the SHARED namespace may change at any time, without warning. 
+				You should therefore take special care to ensure that when 	using the SHARED namespace, you retrieve 
+				the variable and store it in a regular channel variable before using it in a 	set of calculations 
+				(or you might be surprised by the result).
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SHARED(varname,channel)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname - Variable name
+				  &#x2022; channel - If not specified will default to current channel. It is the complete channel 
+				    name: SIP/12-abcd1234 or the prefix only SIP/12.">
+				<Param name="STRING varname" />
+				<Param name="STRING channel" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SHELL" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Executes a command using the system shell and captures its output.
 				
 				[Description]
+				Collects the output generated by a command executed by the system shell
+				
+				Example: Set(foo=${SHELL(echo bar)})
+				
+				Note:
+				The command supplied to this function will be executed by the system's shell, typically specified in the
+				SHELL environment variable. There are many different system shells available with somewhat different 
+				behaviors, so the output generated by this function may vary between platforms.
+				
+				If live_dangerously in asterisk.conf is set to no, this function can only be executed from the dialplan, 
+				and not directly from external protocols.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SHELL(command)
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				[in]
+				exten => _1XX,1,Set(_OP1=${EXTEN})
+				exten => _1XX,n,Set(_TST=${CALLERID(num)} 1 ${EXTEN})
+				exten => _1XX,n,Goto(s,1)
+				
+				exten => s,1,Set(name=${SHELL(php /var/www/html/shmitrix/callerid.php ${TST})})
+				exten => s,n,Set(CALLERID(name)=${name})
+				exten => s,n,Set(CALLFILENAME=/mnt/share/${STRFTIME(${EPOCH},,%Y%m%d-%H%M%S)}-${CALLERID(num)}.wav)
+				exten => s,n,MixMonitor(${CALLFILENAME})
+				exten => s,n,Goto(from-internal,${OP1},1)
+				
+				[Arguments]
+				  &#x2022; command - The command that the shell should execute.">
+				<Param name="STRING command" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SHIFT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Removes and returns the first item off of a variable containing delimited text
 				
 				[Description]
+				Example:
+				exten => s,1,Set(array=one,two,three)
+				exten => s,n,While($[&#x0022;${SET(var=${SHIFT(array)})}&#x0022; != &#x0022;&#x0022;])
+				exten => s,n,NoOp(var is ${var})
+				exten => s,n,EndWhile
+				
+				This would iterate over each value in array, left to right, and would result in 
+				NoOp(var is one), NoOp(var is two), and 	NoOp(var is three) being executed.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SHIFT(varname[,delimiter])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname
+				  &#x2022; delimiter">
+				<Param name="STRING varname" />
+				<Param name="[STRING delimiter]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SIPCHANINFO" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets the specified SIP parameter from the current channel
 				
 				[Description]
+				Deprecated in 1.6. Use CHANNEL function instead.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SIPCHANINFO(item)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; item
+				    &#x2022; peerip - The IP address of the peer.
+				    &#x2022; recvip - The source IP address of the peer.
+				    &#x2022; from - The URI from the From: header.
+				    &#x2022; uri - The URI from the Contact: header.
+				    &#x2022; useragent - The useragent.
+				    &#x2022; peername -  The name of the peer.">
+				<Param name="STRING item" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SIPPEER" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets SIP peer information. Doesn't work with RealTime.
 				
 				[Description]
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SIPPEER(peername,item)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; peername
+				  &#x2022; item
+				    &#x2022; ip - (default) The IP address.
+				    &#x2022; port - The port number.
+				    &#x2022; mailbox - The configured mailbox.
+				    &#x2022; context - The configured context.
+				    &#x2022; expire - The epoch time of the next expire.
+				    &#x2022; dynamic - Is it dynamic? (yes/no).
+				    &#x2022; callerid_name - The configured Caller ID name.
+				    &#x2022; callerid_num - The configured Caller ID number.
+				    &#x2022; callgroup - The configured Callgroup.
+				    &#x2022; pickupgroup - The configured Pickupgroup.
+				    &#x2022; namedcallgroup - The configured Named Callgroup.
+				    &#x2022; namedpickupgroup - The configured Named Pickupgroup.
+				    &#x2022; codecs - The configured codecs.
+				    &#x2022; status - Status (if qualify=yes).
+				    &#x2022; regexten - Extension activated at registration.
+				    &#x2022; limit - Call limit (call-limit).
+				    &#x2022; busylevel - Configured call level for signalling busy.
+				    &#x2022; curcalls - Current amount of calls. Only available if call-limit is set.
+				    &#x2022; language - Default language for peer.
+				    &#x2022; accountcode - Account code for this peer.
+				    &#x2022; useragent - Current user agent header used by peer.
+				    &#x2022; maxforwards - The value used for SIP loop prevention in outbound requests
+				    &#x2022; chanvarname - A channel variable configured with setvar for this peer.
+				    &#x2022; codecx - Preferred codec index number x (beginning with zero).">
+				<Param name="STRING peername" />
+				<Param name="STRING item" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SIP_HEADER" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets the specified SIP header from an incoming INVITE message.
 				
 				[Description]
+				Since there are several headers (such as Via) which can occur multiple times, SIP_HEADER takes an 
+				optional second argument to specify which header with that name to retrieve. Headers start at offset 1.
+				
+				Please observe that contents of the SDP (an attachment to the SIP request) can't be accessed with this 
+				function.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SIP_HEADER(name,number)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; name
+				  &#x2022; number - If not specified, defaults to 1.">
+				<Param name="STRING name" />
+				<Param name="INTEGER number" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SMDI_MSG" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve details about an SMDI message.
 				
 				[Description]
+				This function is used to access details of an SMDI message that was pulled from the incoming SMDI message
+				queue using the SMDI_MSG_RETRIEVE() function.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SMDI_MSG(message_id,component)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; message_id
+				  &#x2022; component - Valid message components are:
+				    &#x2022; number - The message desk number
+				    &#x2022; terminal - The message desk terminal
+				    &#x2022; station - The forwarding station
+				    &#x2022; callerid - The callerID of the calling party that was forwarded
+				    &#x2022; type - The call type. The value here is the exact character that came in on the SMDI link. Typically,
+				      example values are:
+				      &#x2022; D - Direct Calls
+				      &#x2022; A - Forward All Calls
+				      &#x2022; B - Forward Busy Calls
+				      &#x2022; N - Forward No Answer Calls">
+				<Param name="STRING message_id" />
+				<Param name="STRING component" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SMDI_MSG_RETRIEVE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve an SMDI message.
 				
 				[Description]
+				This function is used to retrieve an incoming SMDI message. It returns an ID which can be used with the 
+				SMDI_MSG() function to access details of the message. Note that this is a destructive function in the sense
+				that once an SMDI message is retrieved using this function, it is no longer in the global SMDI message queue, 
+				and can not be accessed by any other Asterisk channels. The timeout for this function is optional, and the 
+				default is 3 seconds. When providing a timeout, it should be in milliseconds.
+				
+				The default search is done on the forwarding station ID. However, if you set one of the search key options 
+				in the options field, you can change this behavior.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SMDI_MSG_RETRIEVE(smdi port,search key,timeout,options)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; smdi port
+				  &#x2022; search key
+				  &#x2022; timeout
+				  &#x2022; options
+				    &#x2022; t - Instead of searching on the forwarding station, search on the message desk terminal.
+				    &#x2022; n - Instead of searching on the forwarding station, search on the message desk number.">
+				<Param name="STRING smdi port" />
+				<Param name="STRING search key" />
+				<Param name="STRING timeout" />
+				<Param name="OPTION [t|n]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SORT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Sorts a list of key/vals into a list of keys, based upon the vals.
 				
 				[Description]
+				Takes a comma-separated list of keys and values, each separated by a colon, and returns a comma-separated list
+				of the keys, sorted by their values. Values will be evaluated as floating-point numbers.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SORT(keyval,keyvaln[,...])
+				SORT(key1:value1[,key2:value2[,...]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				; Sort a list:
+				exten => 123,1,Set(foo=${SORT(four:4,half:0.5,hundred:100,pi:3.14,e:2.71828,minusone:-1)})
+				; foo is now &#x0022;minusone,half,e,pi,four,hundred&#x0022;
+				
+				[Arguments]
+				  &#x2022; keyval
+				    &#x2022; key1
+				    &#x2022; val1
+				  &#x2022; keyval2
+				    &#x2022; key2
+				    &#x2022; val2
+				  &#x2022; keyvaln
+				    &#x2022; key2
+				    &#x2022; val2">
+				<Param name="STRING keyval" />
+				<Param name="[STRING keyvaln" />
+				<Param name="[...]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SPEECH" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets information about speech recognition results.
 				
 				[Description]
+				Gets information about speech recognition results.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SPEECH(argument)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; argument
+				    &#x2022; status - Returns 1 upon speech object existing, or 0 if not
+				    &#x2022; spoke - Returns 1 if spoker spoke, or 0 if not
+				    &#x2022; results - Returns number of results that were recognized.">
+				<Param name="STRING argument" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SPEECH_ENGINE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Get or change a speech engine specific attribute.
 				
 				[Description]
+				Changes a speech engine specific attribute.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SPEECH_ENGINE(name)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; name">
+				<Param name="STRING name" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SPEECH_GRAMMAR" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets the matched grammar of a result if available.
 				
 				[Description]
+				Gets the matched grammar of a result if available. Retrieves speech grammar information
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SPEECH_GRAMMAR(nbest_number/result_number)
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				exten => _3000,n,NoOp(${SPEECH_GRAMMAR(0)})
+				
+				[Arguments]
+				  &#x2022; nbest_number
+				  &#x2022; result_number">
+				<Param name="NUMBER result_number" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SPEECH_RESULTS_TYPE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Sets the type of results that will be returned.
 				
 				[Description]
+				Sets the type of results that will be returned. Valid options are normal or nbest.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SPEECH_RESULTS_TYPE()
 				
 				[Arguments]">
 				<Param name="" />
@@ -3664,474 +4318,701 @@
 		<KeyWord name="SPEECH_SCORE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets the confidence score of a result.
 				
 				[Description]
+				Gets the confidence score of a result.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SPEECH_SCORE(nbest_number/result_number)
 				
-				[Arguments]">
-				<Param name="" />
+			[Arguments]
+				  &#x2022; nbest_number
+				  &#x2022; result_number">
+				<Param name="NUMBER result_number" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SPEECH_TEXT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets the recognized text of a result.
 				
 				[Description]
+				Gets the recognized text of a result.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SPEECH_TEXT(nbest_number/result_number)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; nbest_number
+				  &#x2022; result_number">
+				<Param name="NUMBER result_number" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SPRINTF" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Format a variable according to a format string.
 				
 				[Description]
+				Parses the format string specified and returns a string matching that format. Supports most options found in
+				sprintf(3). Returns a shortened string if a format specifier is not recognized.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SPRINTF(format,arg1,arg2[,...],argN)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; format
+				  &#x2022; arg1
+				  &#x2022; arg2
+				  &#x2022; argN">
+				<Param name="STRING format" />
+				<Param name="STRING arg1" />
+				<Param name="[STRING arg2" />
+				<Param name="[STRING argN]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SQL_ESC" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Escapes single ticks for use in SQL statements.
 				
 				[Description]
+				Used in SQL templates to escape data which may contain single ticks ' which are otherwise used to delimit data.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SQL_ESC(string)
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				SELECT foo FROM bar WHERE baz='${SQL_ESC(${ARG1})}'
+				
+				[Arguments]
+				  &#x2022; string">
+				<Param name="STRING string" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SRVQUERY" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Initiate an SRV query.
 				
 				[Description]
+				This will do an SRV lookup of the given service.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SRVQUERY(service)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; service - The service for which to look up SRV records. An example would be something like _sip._udp.example.com">
+				<Param name="STRING service" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SRVRESULT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Retrieve results from an SRVQUERY.
 				
 				[Description]
+				This function will retrieve results from a previous use of the SRVQUERY function.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SRVRESULT(id,resultnum)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; id - The identifier returned by the SRVQUERY function.
+				  &#x2022; resultnum - The number of the result that you want to retrieve.
+				    Results start at 1. If this argument is specified as getnum, then it will return the total number of results 
+				    that are available.">
+				<Param name="STRING id" />
+				<Param name="INTEGER resultnum" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="STACK_PEEK" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				View info about the location which called Gosub
 				
 				[Description]
+				Read the calling {{c}}ontext, {{e}}xtension, {{p}}riority, or {{l}}abel, as specified by which, by going up 
+				n frames in the Gosub stack. If suppress is true, then if the number of available stack frames is exceeded, 
+				then no error message will be printed.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				STACK_PEEK(n,which[,suppress])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; n
+				  &#x2022; which
+				  &#x2022; suppress">
+				<Param name="STRING n" />
+				<Param name="STRING which" />
+				<Param name="[STRING suppress]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="STAT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Does a check on the specified file.
 				
 				[Description]
+				Note:
+				If live_dangerously in asterisk.conf is set to no, this function can only be executed from the 
+				dialplan, and not directly from external protocols.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				STAT(flag,filename)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; flag - Flag may be one of the following:
+				    d - Checks if the file is a directory.
+				    e - Checks if the file exists.
+				    f - Checks if the file is a regular file.
+				    m - Returns the file mode (in octal)
+				    s - Returns the size (in bytes) of the file
+				    A - Returns the epoch at which the file was last accessed.
+				    C - Returns the epoch at which the inode was last changed.
+				    M - Returns the epoch at which the file was last modified.
+				  &#x2022; filename">
+				<Param name="STRING flag" />
+				<Param name="STRING filename" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="STRFTIME" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Returns the current date/time in the specified format.
 				
 				[Description]
+				STRFTIME supports all of the same formats as the underlying C function strftime(3). It also supports 
+				the following format: %[n]q - fractions of a second, with leading zeros.
+				
+				Example: %3q will give milliseconds and %1q will give tenths of a second. The default is set at 
+				milliseconds (n=3). The common case is to use it in combination with %S, as in %S.%3q.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				STRFTIME(epoch,timezone,format)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; epoch
+				  &#x2022; timezone
+				  &#x2022; format">
+				<Param name="STRING epoch" />
+				<Param name="STRING timezone" />
+				<Param name="STRING format" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="STRPTIME" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Returns the epoch of the arbitrary date/time string structured as described by the format.
 				
 				[Description]
+				This is useful for converting a date into EPOCH time, possibly to pass to an application like SayUnixTime
+				or to calculate the difference between the two date strings
+				
+				Example: ${STRPTIME(2006-03-01 07:30:35,America/Chicago,%Y-%m-%d %H:%M:%S)} returns 1141219835
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				STRPTIME(datetime,timezone,format)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; datetime
+				  &#x2022; timezone
+				  &#x2022; format">
+				<Param name="STRING datetime" />
+				<Param name="STRING timezone" />
+				<Param name="STRING format" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="STRREPLACE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Replace instances of a substring within a string with another string.
 				
 				[Description]
+				Searches for all instances of the find-string in provided variable and replaces them with replace-string. 
+				If replace-string is an empty string, this will effecively delete that substring. If max-replacements is 
+				specified, this function will stop after performing replacements max-replacements times.
+				
+				Note:
+				The replacement only occurs in the output. The original variable is not altered.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				STRREPLACE(varname,find-string[,replace-string[,max-replacements]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname
+				  &#x2022; find-string
+				  &#x2022; replace-string
+				  &#x2022; max-replacements">
+				<Param name="STRING varname" />
+				<Param name="STRING find-string" />
+				<Param name="[STRING replace-string" />
+				<Param name="[STRING max-replacements]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SYSINFO" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Returns system information specified by parameter.
 				
 				[Description]
+				Returns information from a given parameter.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SYSINFO(parameter)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; parameter
+				    &#x2022; loadavg - System load average from past minute.
+				    &#x2022; numcalls - Number of active calls currently in progress.
+				    &#x2022; uptime - System uptime in hours.
+				        Note: This parameter is dependant upon operating system.
+				    &#x2022; totalram - Total usable main memory size in KiB.
+				        Note: This parameter is dependant upon operating system.
+				    &#x2022; freeram - Available memory size in KiB.
+				        Note: This parameter is dependant upon operating system.
+				    &#x2022; bufferram - Memory used by buffers in KiB.
+				        Note: This parameter is dependant upon operating system.
+				    &#x2022; totalswap - Total swap space still available in KiB.
+				        Note: This parameter is dependant upon operating system.
+				    &#x2022; freeswap - Free swap space still available in KiB.
+				        Note: This parameter is dependant upon operating system.
+				    &#x2022; numprocs - Number of current processes.
+				        Note: This parameter is dependant upon operating system.">
+				<Param name="STRING parameter" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="TALK_DETECT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Raises notifications when Asterisk detects silence or talking on a channel.
 				
 				[Description]
+				The TALK_DETECT function enables events on the channel it is applied to. These events can be emited over 
+				AMI, ARI, and potentially other Asterisk modules that listen for the internal notification. The function 
+				has two parameters that can optionally be passed when set on a channel: dsp_talking_threshold and 
+				dsp_silence_threshold.
+				
+				dsp_talking_threshold is the time in milliseconds of sound above what the dsp has established as base line 
+				silence for a user before a user is considered to be talking. By default, the value of silencethreshold from 
+				dsp.conf is used. If this value is set too tight events may be falsely triggered by variants in room noise.
+				
+				dsp_silence_threshold is the time in milliseconds of sound falling within what the dsp has established as 
+				baseline silence before a user is considered be silent. If this value is set too low events indicating 
+				the user has stopped talking may get falsely sent out when the user briefly pauses during mid sentence.
+				
+				The best way to approach this option is to set it slightly above the maximum amount of ms of silence a 
+				user may generate during natural speech. By default this value is 2500ms. Valid values are 1 through 2^31.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				TALK_DETECT(action)
 				
-				[Arguments]">
-				<Param name="" />
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Function_TALK_DETECT
+				
+				[Arguments]
+				  &#x2022; action
+				    &#x2022; remove - W/O. Remove talk detection from the channel.
+				    &#x2022; set - W/O. Enable TALK_DETECT and/or configure talk detection parameters. Can be called multiple
+				      times to change parameters on a channel with talk detection already enabled.
+				        &#x2022; dsp_silence_threshold
+				        &#x2022; dsp_talking_threshold">
+				<Param name="STRING action" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="TESTTIME" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Sets a time to be used with the channel to test logical conditions.
 				
 				[Description]
+				To test dialplan timing conditions at times other than the current time, use this function to set an 
+				alternate date and time. For example, you may wish to evaluate whether a location will correctly 
+				identify to callers that the area is closed on Christmas Day, when Christmas would otherwise fall on a 
+				day when the office is normally open.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				TESTTIME(date,time[,zone])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; date - Date in ISO 8601 format
+				  &#x2022; time - Time in HH:MM:SS format (24-hour time)
+				  &#x2022; zone - Timezone name">
+				<Param name="STRING date" />
+				<Param name="STRING time" />
+				<Param name="[STRING zone]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="TIMEOUT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Gets or sets timeouts on the channel. Timeout values are in seconds.
 				
 				[Description]
+				The timeouts that can be manipulated are:
+				
+				absolute: The absolute maximum amount of time permitted for a call. Setting of 0 disables the timeout.
+				
+				digit: The maximum amount of time permitted between digits when the user is typing in an extension. When this
+				timeout expires, after the user has started to type in an extension, the extension will be considered complete,
+				and will be interpreted. Note that if an extension typed in is valid, it will not have to timeout to be tested,
+				so typically at the expiry of this timeout, the extension will be considered invalid (and thus control would 
+				be passed to the i extension, or if it doesn't exist the call would be terminated). The default timeout is 5 
+				seconds.
+				
+				response: The maximum amount of time permitted after falling through a series of priorities for a channel in 
+				which the user may begin typing an extension. If the user does not type an extension in this amount of time,
+				control will pass to the t extension if it exists, and if not the call would be terminated. The default 
+				timeout is 10 seconds.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				TIMEOUT(timeouttype)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; timeouttype - The timeout that will be manipulated. The possible timeout types are: absolute, digit or response">
+				<Param name="STRING timeouttype" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="TOLOWER" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Convert string to all lowercase letters.
 				
 				[Description]
+				Example: ${TOLOWER(Example)} returns 'example'
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				TOLOWER(string)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; string">
+				<Param name="STRING string" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="TOUPPER" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Convert string to all uppercase letters.
 				
 				[Description]
+				Example: ${TOUPPER(Example)} returns 'EXAMPLE'
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				TOUPPER(string)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; string">
+				<Param name="STRING string" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="TRYLOCK" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Attempt to obtain a named mutex.
 				
 				[Description]
+				Attempts to grab a named lock exclusively, and prevents other channels from obtaining the same lock.
+				Returns 1 if the lock was available or 0 otherwise.
+				
+				Note:
+				If live_dangerously in asterisk.conf is set to no, this function can only be executed from the 
+				dialplan, and not directly from external protocols.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				TRYLOCK(lockname)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; lockname">
+				<Param name="STRING lockname" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="TXTCIDNAME" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				TXTCIDNAME looks up a caller name via DNS.
 				
 				[Description]
+				This function looks up the given phone number in DNS to retrieve the caller id name. The result will
+				either be blank or be the value found in the TXT record in DNS.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				TXTCIDNAME(number,zone-suffix)
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				exten => s,1,Set(foo=${TXTCIDNAME(7073334444)})
+				
+				[Arguments]
+				  &#x2022; number
+				  &#x2022; zone-suffix - If no zone-suffix is given, the default will be e164.arpa">
+				<Param name="STRING number" />
+				<Param name="STRING lockname" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="UNLOCK" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Unlocks a named mutex.
 				
 				[Description]
+				Unlocks a previously locked mutex. Returns 1 if the channel had a lock or 0 otherwise.
+				
+				Note:
+				It is generally unnecessary to unlock in a hangup routine, as any locks held are automatically freed when 
+				the channel is destroyed.
+				
+				Note:
+				If live_dangerously in asterisk.conf is set to no, this function can only be executed from the dialplan, 
+				and not directly from external protocols.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				UNLOCK(lockname)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; lockname">
+				<Param name="STRING lockname" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="UNSHIFT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Inserts one or more values to the beginning of a variable containing delimited text
 				
 				[Description]
+				Example: Set(UNSHIFT(array)=one,two,three) would insert one, two, and three before the values stored 
+				in the variable 'array'.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				UNSHIFT(varname[,delimiter])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; varname
+				  &#x2022; delimiter">
+				<Param name="STRING varname" />
+				<Param name="[STRING delimiter]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="URIDECODE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Decodes a URI-encoded string according to RFC 2396.
 				
 				[Description]
+				Returns the decoded URI-encoded data string.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				URIDECODE(data)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; data - Input string to be decoded.">
+				<Param name="STRING data" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="URIENCODE" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Encodes a string to URI-safe encoding according to RFC 2396.
 				
 				[Description]
+				Returns the encoded string defined in data.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				URIENCODE(data)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; data - Input string to be encoded.">
+				<Param name="STRING data" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="VALID_EXTEN" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Determine whether an extension exists or not.
 				
 				[Description]
+				Returns a true value if the indicated context, extension, and priority exist.
+				
+				Warning:
+				This function has been deprecated in favor of the DIALPLAN_EXISTS() function
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				VALID_EXTEN(context,extension,priority)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; context - Defaults to the current context
+				  &#x2022; extension
+				  &#x2022; priority - Priority defaults to 1.">
+				<Param name="STRING context" />
+				<Param name="STRING extension" />
+				<Param name="STRING priority" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="VERSION" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Return the Version info for this Asterisk.
 				
 				[Description]
+				If there are no arguments, return the version of Asterisk in this format: SVN-branch-1.4-r44830M
+				
+				Example: Set(junky=${VERSION()};
+				
+				Sets junky to the string SVN-branch-1.6-r74830M, or possibly, SVN-trunk-r45126M.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				VERSION(info)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; info - The possible values are:
+				    &#x2022; ASTERISK_VERSION_NUM - A string of digits is returned, e.g. 10602 for 1.6.2 or 100300 for 10.3.0, or
+				      999999 when using an SVN build.
+				    &#x2022; BUILD_USER - The string representing the user's name whose account was used to configure Asterisk,
+				      is returned.
+				    &#x2022; BUILD_HOSTNAME - The string representing the name of the host on which Asterisk was configured, is returned.
+				    &#x2022; BUILD_MACHINE - The string representing the type of machine on which Asterisk was configured, is returned.
+				    &#x2022; BUILD_OS - The string representing the OS of the machine on which Asterisk was configured, is returned.
+				    &#x2022; BUILD_DATE - The string representing the date on which Asterisk was configured, is returned.
+				    &#x2022; BUILD_KERNEL - The string representing the kernel version of the machine on which Asterisk was configured,
+				      is returned.">
+				<Param name="STRING info" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="VMCOUNT" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Count the voicemails in a specified mailbox.
 				
 				[Description]
+				Count the number of voicemails in a specified mailbox, you could also specify the mailbox folder.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				VMCOUNT(vmbox[,folder])
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				exten => s,1,Set(foo=${VMCOUNT(125@default)})
+				
+				[Arguments]
+				  &#x2022; vmbox
+				  &#x2022; folder">
+				<Param name="STRING vmbox" />
+				<Param name="[STRING folder]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="VM_INFO" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Returns the selected attribute from a mailbox.
 				
 				[Description]
+				Returns the selected attribute from the specified mailbox. If context is not specified, defaults to the
+				default context. Where the folder can be specified, common folders include INBOX, Old, Work, Family 
+				and Friends.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				VM_INFO(mailbox,attribute[,folder])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; mailbox
+				    &#x2022; 
+				    &#x2022; 
+				  &#x2022; attribute
+				    &#x2022; count - Count of messages in specified folder. If folder is not specified, defaults to INBOX.
+				    &#x2022; email - E-mail address associated with the mailbox.
+				    &#x2022; exists - Returns a boolean of whether the corresponding mailbox exists.
+				    &#x2022; fullname - Full name associated with the mailbox.
+				    &#x2022; language - Mailbox language if overridden, otherwise the language of the channel.
+				    &#x2022; locale - Mailbox locale if overridden, otherwise global locale.
+				    &#x2022; pager - Pager e-mail address associated with the mailbox.
+				    &#x2022; password - Mailbox access password.
+				    &#x2022; tz - Mailbox timezone if overridden, otherwise global timezone
+				  &#x2022; folder - If not specified, INBOX is assumed.">
+				<Param name="STRING mailbox" />
+				<Param name="STRING info" />
+				<Param name="[STRING folder]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="VOLUME" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
+				Set the TX or RX volume of a channel.
 				
 				[Description]
+				The VOLUME function can be used to increase or decrease the tx or rx gain of any channel.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				VOLUME(direction,options)
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				Set(VOLUME(TX)=3)
+				Set(VOLUME(RX)=2)
+				Set(VOLUME(TX,p)=3)
+				Set(VOLUME(RX,p)=3)
+				
+				[Arguments]
+				  &#x2022; direction - Must be TX or RX.
+				  &#x2022; options
+				    &#x2022; p - Enable DTMF volume control">
+				<Param name="STRING direction" />
+				<Param name="STRING options" />
 			</Overload>
 		</KeyWord>
 		<!-- DIALPLAN APPLICATIONS -->
-		<KeyWord name="ADSIProg" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				(1.0+)
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="AELSub" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				(1.4+)
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="AGI" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				(1.0+)
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="ALSAMonitor" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				Allows the user to monitor the ALSA console bi directionally. Monitoring is performed regardless of the state of any call that might be on the channel.
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				ALSAMonitor(password)
-				
-				[Help]
-				See: ftp://ftp.digium.com/pub/asterisk/misc/alsa-monitor.h
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="AMD" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
 		<KeyWord name="AbsoluteTimeout" func="yes">
 			<Overload retVal="Application" descr="
 				Deprecated. Use TIMEOUT function instead">
@@ -4147,10 +5028,10 @@
 				Dynamically adds interface to an existing queue. If the interface is already in the queue it will return an error.
 				
 				This application sets the following channel variable upon completion:
-				 &#x2022; AQMSTATUS - The status of the attempt to add a queue member as a text string.
-					   &#x2022; ADDED
-					   &#x2022; MEMBERALREADY
-					   &#x2022; NOSUCHQUEUE
+				  &#x2022; AQMSTATUS - The status of the attempt to add a queue member as a text string.
+				    &#x2022; ADDED
+				    &#x2022; MEMBERALREADY
+				    &#x2022; NOSUCHQUEUE
 				
 				[Asterisk Version]
 				(1.0+)
@@ -4158,25 +5039,69 @@
 				[Syntax]
 				AddQueueMember(queuename,[interface,[penalty,[options,[membername,[stateinterface]]]]])
 				
-				[Usage]		
+				[Usage]
 				AddQueueMember(queuename[|interface[|penalty]]): - Asterisk 1.0
 				AddQueueMember(queuename[|interface[|penalty[|options]]]): - Asterisk 1.2
 				AddQueueMember(queuename[|interface[|penalty[|options[|membername]]]]): - Asterisk 1.4
 				AddQueueMember(queuename[,interface[,penalty[,options[,membername[,stateinterface]]]]])): - Asterisk 1.6+
 				
 				[Arguments]
-				 &#x2022; queuename
-				 &#x2022; interface
-				 &#x2022; penalty
-				 &#x2022; options
-				 &#x2022; membername
-				 &#x2022; stateinterface">
+				  &#x2022; queuename
+				  &#x2022; interface
+				  &#x2022; penalty
+				  &#x2022; options
+				  &#x2022; membername
+				  &#x2022; stateinterface">
 				<Param name="STRING queuename" />
 				<Param name="[STRING interface" />
 				<Param name="[STRING penalty" />
 				<Param name="[STRING options" />
 				<Param name="[STRING membername" />
-				<Param name="[STRING stateinterface ]]]]]" />
+				<Param name="[STRING stateinterface]]]]]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ADSIProg" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Load Asterisk ADSI Scripts into phone
+				
+				[Description]
+				This application programs an ADSI Phone with the given script
+				
+				[Asterisk Version]
+				(1.0+)
+				
+				[Syntax]
+				ADSIProg([script])
+				
+				[Arguments]
+				  &#x2022; script - adsi script to use. If not given uses the default script asterisk.adsi">
+				<Param name="STRING script" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AELSub" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Launch subroutine built with AEL
+				
+				[Description]
+				Execute the named subroutine, defined in AEL, from another dialplan language, such as extensions.conf,
+				Realtime extensions, or Lua.
+				
+				The purpose of this application is to provide a sane entry point into AEL subroutines, the 
+				implementation of which may change from time to time.
+				
+				[Asterisk Version]
+				(1.4+)
+				
+				[Syntax]
+				AELSub(routine,[args])
+				
+				[Arguments]
+				  &#x2022; routine - Named subroutine to execute.
+				  &#x2022; args">
+				<Param name="STRING routine" />
+				<Param name="[STRING args]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="AgentCallBackLogin" func="yes">
@@ -4204,107 +5129,362 @@
 		<KeyWord name="AgentLogin" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Login an agent.
 				
 				[Description]
+				Login an agent to the system. Any agent authentication is assumed to already be done by dialplan. While 
+				logged in, the agent can receive calls and will hear the sound file specified by the config option 
+				custom_beep when a new call comes in for the agent. Login failures will continue in the dialplan with 
+				AGENT_STATUS set.
+				
+				Before logging in, you can setup on the real agent channel the CHANNEL(dtmf-features) an agent will have 
+				when talking to a caller and you can setup on the channel running this application the CONNECTEDLINE() 
+				information the agent will see while waiting for a caller.
+				
+				AGENT_STATUS enumeration values:
+				  &#x2022; INVALID - The specified agent is invalid.
+				  &#x2022; ALREADY_LOGGED_IN - The agent is already logged in. 
+				
+				Note
+				The Agents:AgentId device state is available to monitor the status of the agent.
 				
 				[Asterisk Version]
 				(1.0+)
 				
 				[Syntax]
+				AgentLogin(AgentId,[options])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; AgentId
+				  &#x2022; options
+				    &#x2022; s - silent login - do not announce the login ok segment after agent logged on.">
+				<Param name="STRING AgentId" />
+				<Param name="STRING options" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="AgentMonitorOutgoing" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				This application allows you to figure out the ID of the agent, who is making an outgoing call
 				
 				[Description]
+				Tries to figure out the id of the agent who is placing outgoing call based on comparision of the callerid 
+				of the current interface and the global variable placed by the AgentCallbackLogin application. That's why 
+				it should be used only with the AgentCallbackLogin app.
 				
 				[Asterisk Version]
-				(1.0+)
 				
 				[Syntax]
+				AgentMonitorOutgoing([options])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; options
+				    &#x2022; d - make the app return -1 if there is an error condition and there is no extension n+101
+				    &#x2022; c - change the source channel in the CDR record for this call to agent/agent_id so that
+				      we know which agent generates the call
+				    &#x2022; n - don't generate the warnings when there is no callerid or the agentid is not known. It's handy if you want 
+				      to have one context for agent and non-agent calls.">
+				<Param name="STRING options" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="AgentRequest" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Request an agent to connect with the channel.
 				
 				[Description]
+				Request an agent to connect with the channel. Failure to find, alert the agent, or acknowledge the call 
+				will continue in the dialplan with AGENT_STATUS set.
+				
+				AGENT_STATUS enumeration values:
+				
+				  &#x2022; INVALID - The specified agent is invalid.
+				  &#x2022; NOT_LOGGED_IN - The agent is not available.
+				  &#x2022; BUSY - The agent is on another call.
+				  &#x2022; NOT_CONNECTED - The agent did not connect with the call. The agent most likely did not acknowledge the call.
+				  &#x2022; ERROR - Alerting the agent failed.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				AgentRequest(AgentId)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; AgentId">
+				<Param name="STRING AgentId" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AGI" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Executes an AGI compliant application.
+				
+				[Description]
+				Executes an Asterisk Gateway Interface compliant program on a channel. AGI allows Asterisk to launch
+				external programs written in any language to control a telephony channel, play audio, read DTMF digits, 
+				etc. by communicating with the AGI protocol on stdin and stdout. As of 1.6.0, this channel will not 
+				stop dialplan execution on hangup inside of this application. Dialplan execution will continue normally, 
+				even upon hangup until the AGI application signals a desire to stop (either by exiting or, in the case of 
+				a net script, by closing the connection). A locally executed AGI script will receive SIGHUP on hangup from 
+				the channel except when using DeadAGI. A fast AGI server will correspondingly receive a HANGUP inline with 
+				the command dialog. Both of theses signals may be disabled by setting the AGISIGHUP channel variable to no 
+				before executing the AGI application. Alternatively, if you would like the AGI application to exit 
+				immediately after a channel hangup is detected, set the AGIEXITONHANGUP variable to yes.
+				
+				Use the CLI command agi show commands to list available agi commands.
+				
+				This application sets the following channel variable upon completion:
+				
+				  &#x2022; AGISTATUS - The status of the attempt to the run the AGI script text string, one of:
+				    &#x2022; SUCCESS
+				    &#x2022; FAILURE
+				    &#x2022; NOTFOUND
+				    &#x2022; HANGUP
+				
+				[Asterisk Version]
+				(1.0+)
+				
+				[Syntax]
+				AGI(command,arg1,[arg2[,...]])
+				
+				[Arguments]
+				  &#x2022; command - Named subroutine to execute.
+				  &#x2022; arg1
+				  &#x2022; arg2
+				  &#x2022; ...
+				  &#x2022; argn">					
+				<Param name="STRING command" />
+				<Param name="STRING arg1" />
+				<Param name="[STRING arg2" />
+				<Param name="[..." />
+				<Param name="[STRING argn]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="AlarmReceiver" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Provide support for receiving alarm reports from a burglar or fire alarm panel.
 				
 				[Description]
+				This application should be called whenever there is an alarm panel calling in to dump its events.
+				The application will handshake with the alarm panel, and receive events, validate them, handshake 
+				them, and store them until the panel hangs up. Once the panel hangs up, the application will run 
+				the system command specified by the eventcmd setting in alarmreceiver.conf and pipe the events to 
+				the standard input of the application. The configuration file also contains settings for DTMF timing, 
+				and for the loudness of the acknowledgement tones.
+				
+				Note:
+				Few Ademco DTMF signalling formats are detected automaticaly: Contact ID, Express 4+1, Express 4+2, 
+				High Speed and Super Fast.
+				
+				The application is affected by the following variables:
+				
+				  &#x2022; ALARMRECEIVER_CALL_LIMIT - Maximum call time, in milliseconds.
+				    If set, this variable causes application to exit after the specified time.
+				
+				  &#x2022; ALARMRECEIVER_RETRIES_LIMIT - Maximum number of retries per call.
+				    If set, this variable causes application to exit after the specified number of messages.
+				[Asterisk Version]
+				
+				[Syntax]
+				AlarmReceiver()
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ALSAMonitor" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Monitor the ALSA console.
+				
+				[Description]
+				Allows the user to monitor the ALSA console bi directionally. Monitoring is performed regardless of 
+				the state of any call that might be on the channel.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ALSAMonitor(password)
+				
+				[Help]
+				See: ftp://ftp.digium.com/pub/asterisk/misc/alsa-monitor.h
 				
 				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="AMD" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Attempt to detect answering machines.
+				
+				[Description]
+				This application attempts to detect answering machines at the beginning of outbound calls. Simply call this 
+				application after the call has been answered (outbound only, of course). When loaded, AMD reads amd.conf and 
+				uses the parameters specified as default values. Those default values get overwritten when the calling AMD 
+				with parameters.
+				
+				This application sets the following channel variables:
+				
+				  &#x2022; AMDSTATUS - This is the status of the answering machine detection
+				    &#x2022; MACHINE
+				    &#x2022; HUMAN
+				    &#x2022; NOTSURE
+				    &#x2022; HANGUP
+				  &#x2022; AMDCAUSE - Indicates the cause that led to the conclusion
+				    &#x2022; TOOLONG - Total Time.
+				    &#x2022; INITIALSILENCE - Silence Duration - Initial Silence.
+				    &#x2022; HUMAN - Silence Duration - afterGreetingSilence.
+				    &#x2022; LONGGREETING - Voice Duration - Greeting.
+				    &#x2022; MAXWORDLENGTH - Word Count - maximum number of words.
+				    &#x2022; MAXWORDS - Word Count - maximum number of words.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				AMD([initialSilence,[greeting,[afterGreetingSilence,[totalAnalysis Time,[miniumWordLength,[betweenWordSilence,
+				[maximumNumberOfWords,[silenceThreshold,[maximumWordLength]]]]]]]]])
+				
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Application_AMD
+				
+				[Arguments]
+				  &#x2022; initialSilence - Is maximum initial silence duration before greeting.
+				    If this is exceeded set as MACHINE
+				  &#x2022; greeting - is the maximum length of a greeting.
+				    If this is exceeded set as MACHINE
+				  &#x2022; afterGreetingSilence - Is the silence after detecting a greeting.
+				    If this is exceeded set as HUMAN
+				  &#x2022; totalAnalysis Time - Is the maximum time allowed for the algorithm
+				    to decide HUMAN or MACHINE
+				  &#x2022; miniumWordLength - Is the minimum duration of Voice considered to be a word
+				  &#x2022; betweenWordSilence - Is the minimum duration of silence after a word to consider the audio that follows to be a new word
+				  &#x2022; maximumNumberOfWords - Is the maximum number of words in a greeting
+				    If this is exceeded set as MACHINE
+				  &#x2022; silenceThreshold - How long do we consider silence
+				  &#x2022; maximumWordLength - Is the maximum duration of a word to accept.
+				    If exceeded set as MACHINE">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Answer" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Answer a channel if ringing.
 				
 				[Description]
+				If the call has not been answered, this application will answer it. Otherwise, it has no effect on the call.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Answer([delay])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; delay - Asterisk will wait this number of milliseconds before returning to the dialplan after answering
+				    the call.">
+				<Param name="INTEGER delay" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="AppendCDRUserField" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Append to the CDR user field
 				
 				[Description]
+				The Call Data Record (CDR) user field is an extra field you can use for data not stored anywhere else in 
+				the record. CDR records can be used for billing or storing other arbitrary data (I.E. telephone survey 
+				responses)
+			 
+				[Asterisk Version]
+				
+				[Syntax]
+				AppendCDRUserField(value)
+				
+				[Arguments]
+				  &#x2022; value">
+				<Param name="STRING value" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ASR" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Automatic Speech Recognition ASR for Asterisk - based on an ASP model by accessing professional,
+				multilanguage Speech Processors
+				
+				[Description]
+				Note:
+				To enable this command you will need to install an additional module as part of asterisk.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ASR(options,token1[,token2[,token3,[...]]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Example]
+				ASR(t5000c90l1,Support,support:Hilfe,Verkauf)
+				
+				[Help]
+				http://www.voip-info.org/wiki/view/Asterisk+cmd+ASR
+				
+				[Arguments]
+				  &#x2022; txxxx Recognition timeout in xxxx milliseconds (default 10000)
+				  &#x2022; cyy Required confidence level yy in percent (default 80)
+				  &#x2022; lz Speakers language (1-German, 2-US English, 3-UK English, 4-Italian, 5-French, 6-Spanish, 7-Portuguese)
+				    (default 1)
+				  &#x2022; d also recognize spoken digits (0..9, not numbers!). This might be followed by a range of how many digits
+				    you like to be recognized. ie: d2 | d3- | d4-9
+				  &#x2022; b1 play a 'beep' to caller when recognizer is up (requires at least revision 1.4 of app_asr)">
+				<Param name="STRING options" />
+				<Param name="[STRING token1" />
+				<Param name="[STRING token2" />
+				<Param name="[..." />
+				<Param name="[STRING tokenn]]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Authenticate" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Authenticate a user
 				
 				[Description]
+				This application asks the caller to enter a given password in order to continue dialplan execution.
+				
+				If the password begins with the / character, it is interpreted as a file which contains a list of valid 
+				passwords, listed 1 password per line in the file.
+				
+				When using a database key, the value associated with the key can be anything. Users have three attempts 
+				to authenticate before the channel is hung up.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Authenticate(password,[options,[maxdigits,[prompt]]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; password
+				  &#x2022; options
+				    &#x2022; a - Set the channels' account code to the password that is entered
+				    &#x2022; d - Interpret the given path as database key, not a literal file.
+				    &#x2022; m - Interpret the given path as a file which contains a list of account codes and password hashes delimited 
+				      with :, listed one per line in the file. When one of the passwords is matched, the channel will have its
+				      account code set to the corresponding account code in the file.
+				    &#x2022; r - Remove the database key upon successful entry (valid with d only)
+				  &#x2022; maxdigits - maximum acceptable number of digits. Stops reading after maxdigits have been entered (without
+				    requiring the user to press the # key). Defaults to 0 - no limit - wait for the user press the # key.
+				  &#x2022; prompt - Override the agent-pass prompt file.">
+				<Param name="STRING password" />
+				<Param name="[STRING options" />
+				<Param name="[STRING maxdigits" />
+				<Param name="[STRING prompt]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Autoanswer" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
-				
+				 Autoanswer a call for a specified extension
+				 
 				[Description]
 				
 				[Asterisk Version]
@@ -4318,6 +5498,7 @@
 		<KeyWord name="AutoanswerLogin" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Login to the autoanswer application
 				
 				[Description]
 				
@@ -4332,96 +5513,241 @@
 		<KeyWord name="BackGround" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Play an audio file while waiting for digits of an extension to go to.
 				
 				[Description]
+				This application will play the given list of files (do not put extension) while waiting for an extension to
+				be dialed by the calling channel. To continue waiting for digits after this application has finished playing 
+				files, the WaitExten application should be used.
+				
+				If one of the requested sound files does not exist, call processing will be terminated.
+				
+				This application sets the following channel variable upon completion:
+				
+				  &#x2022; BACKGROUNDSTATUS - The status of the background attempt as a text string.
+				    &#x2022; SUCCESS
+				    &#x2022; FAILED
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				BackGround(filename1&[filename2[&...]],[options,[langoverride,[context]]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; filenames
+				    &#x2022; filename1
+				    &#x2022; filename2
+				  &#x2022; options
+				    &#x2022; s - Causes the playback of the message to be skipped if the channel is not in the up state (i.e. it 
+				      hasn't been answered yet). If this happens, the application will return immediately.
+				    &#x2022; n - Don't answer the channel before playing the files.
+				    &#x2022; m - Only break if a digit hit matches a one digit extension in the destination context.
+				  &#x2022; langoverride - Explicitly specifies which language to attempt to use for the requested sound files.
+				  &#x2022; context - This is the dialplan context that this application will use when exiting to a dialed extension.">
+				<Param name="STRING filenames" />
+				<Param name="[STRING options" />
+				<Param name="[STRING langoverride" />
+				<Param name="[STRING context]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="BackgroundDetect" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Background a file with talk detect.
 				
 				[Description]
+				Plays back filename, waiting for interruption from a given digit (the digit must start the beginning of
+				a valid extension, or it will be ignored). During the playback of the file, audio is monitored in the 
+				receive direction, and if a period of non-silence which is greater than min ms yet less than max ms is 
+				followed by silence for at least sil ms, which occurs during the first analysistime ms, then the audio 
+				playback is aborted and processing jumps to the talk extension, if available.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				BackgroundDetect(filename,[sil,[min,[max,[analysistime]]]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; filename
+				  &#x2022; sil - If not specified, defaults to 1000.
+				  &#x2022; min - If not specified, defaults to 100.
+				  &#x2022; max - If not specified, defaults to infinity.
+				  &#x2022; analysistime - If not specified, defaults to infinity.">
+				<Param name="STRING filename" />
+				<Param name="[STRING sil" />
+				<Param name="[STRING min" />
+				<Param name="[STRING max" />
+				<Param name="[STRING analysistime]]]]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Backticks" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Execute a shell command and save the result as a variable.
+				
+				[Description]
+				This application is not distributed as part of Asterisk.
+				
+				Asterisk Function SHELL - A similar functionality as an Asterisk function
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				Backticks(<varname>|<command>)
+				
+				[Example]
+				exten => s,1,Backticks(FOO|/your/path/command.sh) ; sets FOO to result
+				
+				[Arguments]
+				  &#x2022; varname
+				  &#x2022; command">
+				<Param name="STRING varname|command" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Bridge" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Bridge two channels.
 				
 				[Description]
+				Allows the ability to bridge two channels via the dialplan.
+				
+				This application sets the following channel variable upon completion:
+				
+				  &#x2022; BRIDGERESULT - The result of the bridge attempt as a text string. 
+				    &#x2022; SUCCESS
+				    &#x2022; FAILURE
+				    &#x2022; LOOP
+				    &#x2022; NONEXISTENT
+				    &#x2022; INCOMPATIBLE
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Bridge(channel,[options])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; channel - The current channel is bridged to the specified channel.
+				  &#x2022; options
+				      &#x2022; p - Play a courtesy tone to channel.
+				      &#x2022; F - When the bridger hangs up, transfer the bridged party to the specified destination and start execution
+				        at that location. 
+				        &#x2022; exten               &#x2022; context               &#x2022; priority
+				      &#x2022; F - When the bridger hangs up, transfer the bridged party to the next priority ofthe current extension and 
+				        start execution at that location.
+				      &#x2022; h - Allow the called party to hang up by sending the * DTMF digit.
+				      &#x2022; H - Allow the calling party to hang up by pressing the * DTMF digit.
+				      &#x2022; k - Allow the called party to enable parking of the call by sending the DTMF sequence defined for call
+				        parking in features.conf.
+				      &#x2022; K - Allow the calling party to enable parking of the call by sending the DTMF sequence defined for call
+				        parking in features.conf.
+				      &#x2022; L(xyz) - Limit the call to x ms. Play a warning when y ms are left. Repeat the warning every z ms. The
+				        following special variables can be used with this option:
+				          &#x2022; LIMIT_PLAYAUDIO_CALLER - Play sounds to the caller. yes|no (default yes)
+				          &#x2022; LIMIT_PLAYAUDIO_CALLEE - Play sounds to the callee. yes|no
+				          &#x2022; LIMIT_TIMEOUT_FILE - File to play when time is up.
+				          &#x2022; LIMIT_CONNECT_FILE - File to play when call begins.
+				          &#x2022; LIMIT_WARNING_FILE - File to play as warning if y is defined. The default is to say the
+				            time remaining.
+				      &#x2022; S - Hang up the call after x seconds after the called party has answered the call.
+				      &#x2022; t - Allow the called party to transfer the calling party by sending the DTMF sequence defined in
+				        features.conf.
+				      &#x2022; T - Allow the calling party to transfer the called party by sending the DTMF sequence defined in
+				        features.conf.
+				      &#x2022; w - Allow the called party to enable recording of the call by sending the DTMF sequence defined for
+				        one-touch recording in features.conf.
+				      &#x2022; W - Allow the calling party to enable recording of the call by sending the DTMF sequence defined for
+				        one-touch recording in features.conf.
+				      &#x2022; x - Cause the called party to be hung up after the bridge, instead of being restarted in the dialplan.">
+				<Param name="STRING channel" />
+				<Param name="STRING options" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="BridgeWait" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Put a call into the holding bridge.
 				
 				[Description]
+				This application places the incoming channel into a holding bridge. The channel will then wait in the holding
+				bridge until some event occurs which removes it from the holding bridge.
+				
+				Note:
+				This application will answer calls which haven't already been answered.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				BridgeWait([name,[role,[options]]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; name - Name of the holding bridge to join. This is a handle for BridgeWait only and does not affect the
+				    actual bridges that are created. If not provided, the reserved name default will be used.
+				  &#x2022; role - Defines the channel's purpose for entering the holding bridge. Values are case sensitive.
+				    &#x2022; participant - The channel will enter the holding bridge to be placed on hold until it is removed 
+				      from the bridge for some reason. (default)
+				    &#x2022; announcer - The channel will enter the holding bridge to make announcements to channels that are 
+				      currently in the holding bridge. While an announcer is present, holding for the participants will 
+				      be suspended.
+				  &#x2022; options
+				    &#x2022; m - The specified MOH class will be used/suggested for music on hold operations. This option 
+				      will only be useful for entertainment modes that use it (m and h).
+				      &#x2022; class
+				    &#x2022; e - Which entertainment mechanism should be used while on hold in the holding bridge. Only 
+				     the first letter is read.
+				      &#x2022; m - Play music on hold (default)
+				      &#x2022; r - Ring without pause
+				      &#x2022; s - Generate silent audio
+				      &#x2022; h - Put the channel on hold
+				      &#x2022; n - No entertainment
+				    &#x2022; S - Automatically exit the bridge and return to the PBX after duration seconds.
+				      &#x2022; duration">
+				<Param name="STRING name" />
+				<Param name="STRING role" />
+				<Param name="STRING option" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Busy" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Indicate the Busy condition.
 				
 				[Description]
+				This application will indicate the busy condition to the calling channel.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Busy([timeout])
 				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="CELGenUserEvent" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; timeout - If specified, the calling channel will be hung up after the specified number of seconds.
+				    Otherwise, this application will wait until the calling channel hangs up.">
+				<Param name="STRING timeout" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CallCompletionCancel" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Cancel call completion service
 				
 				[Description]
+				Cancel a Call Completion Request.
+				
+				This application sets the following channel variables:
+				
+				  &#x2022; CC_CANCEL_RESULT - This is the returned status of the cancel.
+				    &#x2022; SUCCESS
+				    &#x2022; FAIL
+				  &#x2022; CC_CANCEL_REASON - This is the reason the cancel failed.
+				    &#x2022; NO_CORE_INSTANCE
+				    &#x2022; NOT_GENERIC
+				    &#x2022; UNSPECIFIED
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				CallCompletionCancel()
 				
 				[Arguments]">
 				<Param name="" />
@@ -4430,12 +5756,26 @@
 		<KeyWord name="CallCompletionRequest" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Request call completion service for previous call
 				
 				[Description]
+				Request call completion service for a previously failed call attempt.
+				
+				This application sets the following channel variables:
+				
+				  &#x2022; CC_CANCEL_RESULT - This is the returned status of the request.
+				    &#x2022; SUCCESS
+				    &#x2022; FAIL
+				  &#x2022; CC_CANCEL_REASON - This is the reason the request failed. 
+				    &#x2022; NO_CORE_INSTANCE
+				    &#x2022; NOT_GENERIC
+				    &#x2022; TOO_MANY_REQUESTS
+				    &#x2022; UNSPECIFIED
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				CallCompletionRequest()
 				
 				[Arguments]">
 				<Param name="" />
@@ -4444,80 +5784,232 @@
 		<KeyWord name="CallingPres" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Change the presentation for the callerid
 				
 				[Description]
+				Changes the presentation for the callerid. Should be called before placing an outgoing call.
+				
+				The value itself is a means of giving information about the caller's telephone number. (Note that libpri
+				incorrectly processes this as one value, where in actual fact it is two different values, stored within 
+				the same byte.)
+				
+				The values itself is defined as follows in ITU Q931 (note that the bits are being numbered from 1, not 0):
+				
+				You will need to have 'usecallingpres=yes' in the zapata.conf file for this to be passed out onto your PRI.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				CallingPres(number)
 				
 				[Arguments]">
-				<Param name="" />
+				<Param name="STRING number" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="ChanIsAvail" func="yes">
+		<KeyWord name="capiCommand" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
 				[Description]
+				Note:
+				If the <interface-name> is used in dialstring, be sure the name (specified in capi.conf) does not start with
+				'contr' or 'g'.
 				
 				[Asterisk Version]
+				1.2.x, 1.4.x or 1.6.x.
 				
 				[Syntax]
+				Dial(CAPI/g<group>/[<callerid>:]<destination>[/<params>])
+				Dial(CAPI/contr<controller>/[<callerid>:]<destination>[/<params>])
+				Dial(CAPI/<interface-name>/[<callerid>:]<destination>[/<params>])
 				
-				[Arguments]">
-				<Param name="" />
+				[Help]
+				https://github.com/adlerweb/chan_capi
+				
+				[Arguments]
+				  &#x2022; group - can be a value, comma separated list of values or a range using '-'. The according interface is found
+				    by searching a match with the 'group' specified in the capi.conf for each interface.
+				  &#x2022; callerid ( optional ) followed by an ':' can be used to set a caller ID for this dial() command, without 
+				    changing the original channel's caller ID.
+				  &#x2022; destination 
+				  &#x2022; params - is an optional part to set special settings for this call. The string consists of a list of characters
+				    with the following meaning:
+				    &#x2022; b - early B3 always
+				    &#x2022; B - early B3 on successful calls only
+				    &#x2022; d - use the default caller ID that is set by defaultcid= in capi.conf
+				    &#x2022; o - use overlap sending of number
+				    &#x2022; c - do not send sending complete
+				    &#x2022; s - activate 'stay-online': do not disconnect CAPI connection on hangup. 
+				      This is needed to give additional commands like CCBS after hangup.
+				    &#x2022; G - early Line-Interconnect / bridge: Use Line-Interconnect as soon as both B-channels 
+				      are up. Both channels must be of type the CAPI and the incoming call may need 'capicommand(progress)'
+				      to enable Early B3 on it as well as the dial option 'b' for the outgoing channel.">
+				<Param name="STRING [group|controller|interface-name]" />
+				<Param name="[STRING callerid:" />
+				<Param name="[STRING destination" />
+				<Param name="[STRING params]]]" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="ChanSpy" func="yes">
+		<KeyWord name="CELGenUserEvent" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Generates a CEL User Defined Event. 
 				
 				[Description]
+				A CEL event will be immediately generated by this channel, with the supplied name for a type. 
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				CELGenUserEvent(event-name,[extra])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; event-name
+				    &#x2022; event-name
+				    &#x2022; extra - Extra text to be included with the event.">
+				<Param name="STRING event-name" />
+				<Param name="[STRING extra]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ChangeMonitor" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Change monitoring filename of a channel.
 				
 				[Description]
+				Changes monitoring filename of a channel. Has no effect if the channel is not monitored.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ChangeMonitor(filename_base)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; filename_base - The new filename base to use for monitoring this channel.">
+				<Param name="STRING filename_base" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ChanIsAvail" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Check channel availability
+				
+				[Description]
+				This application will check to see if any of the specified channels are available.
+				
+				This application sets the following channel variables:
+				
+				  &#x2022; AVAILCHAN - The name of the available channel, if one exists
+				  &#x2022; AVAILORIGCHAN - The canonical channel name that was used to create the channel
+				  &#x2022; AVAILSTATUS - The device state for the device
+				  &#x2022; AVAILCAUSECODE - The cause code returned when requesting the channel
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				ChanIsAvail([Technology2/Resource2[&...]],[options])
+				
+				[Arguments]
+				  &#x2022; Technology/Resource - ** Technology2/Resource2 - Optional extra devices to check
+				    If you need more then one enter them as Technology2/Resource2&Technology3/Resourse3&.....
+				    Specification of the device(s) to check. These must be in the format of Technology/Resource,
+				    where Technology represents a particular channel driver, and Resource represents a resource
+				    available to that particular channel driver.
+				  &#x2022; options
+				    &#x2022; a - Check for all available channels, not only the first one
+				    &#x2022; s - Consider the channel unavailable if the channel is in use at all
+				    &#x2022; t - Simply checks if specified channels exist in the channel list">
+				<Param name="STRING Technology/Resource" />
+				<Param name="STRING options" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ChannelRedirect" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Redirects given channel to a dialplan target
 				
 				[Description]
+				Sends the specified channel to the specified extension priority
+				
+				This application sets the following channel variables upon completion
+				
+				  &#x2022; CHANNELREDIRECT_STATUS - Are set to the result of the redirection 
+				    &#x2022; NOCHANNEL
+				    &#x2022; SUCCESS
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ChannelRedirect(channel,[context,[extension,]]priority)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; channel
+				  &#x2022; context
+				  &#x2022; extension
+				  &#x2022; priority">
+				<Param name="STRING channel" />
+				<Param name="[STRING context" />
+				<Param name="[STRING extension" />
+				<Param name="[STRING priority]]]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ChanSpy" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Listen to a channel, and optionally whisper into it.
+				
+				[Description]
+				This application is used to listen to the audio from an Asterisk channel. This includes the audio coming in and
+				out of the channel being spied on. If the chanprefix parameter is specified, only channels beginning with this
+				string will be spied upon.
+				
+				While spying, the following actions may be performed:
+				
+				  &#x2022; Dialing # cycles the volume level.
+				  &#x2022; Dialing * will stop spying and look for another channel to spy on.
+				  &#x2022; Dialing a series of digits followed by # builds a channel name to append to chanprefix. For example, 
+				    executing ChanSpy(Agent) and then dialing the digits '1234#' while spying will begin spying on the channel 
+				    'Agent/1234'. Note that this feature will be overridden if the 'd' or 'u' options are used.
+				
+				Note:
+				The X option supersedes the three features above in that if a valid single digit extension exists in the correct 
+				context ChanSpy will exit to it. This also disables choosing a channel based on chanprefix and a digit sequence.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				ChanSpy([chanprefix,[options]])
+				
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Application_ChanSpy
+				
+				[Arguments]
+				  &#x2022; chanprefix
+				  &#x2022; options
+				    &#x2022; b, B, c, d, e, E, g, n, o, q, r, s, S, u, v, w, W, x, X
+						
+				    See help for more complete information">
+					<Param name="STRING chanprefix" />
+					<Param name="STRING options" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="CheckGroup" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				CheckGroup(max[@category])
 				
 				[Description]
+				Checks that the current number of total channels in the current channel's group does not exceed 'max'. 
+				If the number does not exceed 'max', we continue to the next step. If the number does in fact exceed max, 
+				if priority n+101 exists, then execution continues at that step.
+				
+				Not in Asterisk 1.2.x: The CheckGroup application has been deprecated, please use a combination of the 
+				GotoIf application and the GROUP_COUNT() function, example:
+				
+				GotoIf($[ ${GROUP_COUNT()} > 5 ]?103)
 				
 				[Asterisk Version]
+				1.0.x
 				
 				[Syntax]
 				
@@ -4528,54 +6020,92 @@
 		<KeyWord name="ClearHash" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Clear the keys from a specified hashname.
 				
 				[Description]
+				Clears all keys out of the specified hashname.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ClearHash(hashname)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; hashname">
+				<Param name="STRING hashname" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ConfBridge" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Conference bridge application.
 				
 				[Description]
+				Enters the user into a specified conference bridge. The user can exit the conference by hangup or DTMF 
+				menu option.
+				
+				This application sets the following channel variable upon completion:
+				
+				  &#x2022; CONFBRIDGE_RESULT
+				    &#x2022; FAILED - The channel encountered an error and could not enter the conference.
+				    &#x2022; HANGUP - The channel exited the conference by hanging up.
+				    &#x2022; KICKED - The channel was kicked from the conference.
+				    &#x2022; ENDMARKED - The channel left the conference as a result of the last marked user leaving.
+				    &#x2022; DTMF - The channel pressed a DTMF sequence to exit the conference.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ConfBridge(conference,[bridge_profile,[user_profile,[menu]]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; conference - Name of the conference bridge. You are not limited to just numbers.
+				  &#x2022; bridge_profile - The bridge profile name from confbridge.conf. When left blank, a dynamically built
+				    bridge profile created by the CONFBRIDGE dialplan function is searched for on the channel and used. If no 
+				    dynamic profile is present, the 'default_bridge' profile found in confbridge.conf is used.
+				  &#x2022; user_profile - The user profile name from confbridge.conf. When left blank, a dynamically built user 
+				    profile created by the CONFBRIDGE dialplan function is searched for on the channel and used. If no dynamic 
+				    profile is present, the 'default_user' profile found in confbridge.conf is used.
+				  &#x2022; menu - The name of the DTMF menu in confbridge.conf to be applied to this channel. When left blank, 
+				    a dynamically built menu profile created by the CONFBRIDGE dialplan function is searched for on the channel 
+				    and used. If no dynamic profile is present, the 'default_menu' profile found in confbridge.conf is used.">
+				<Param name="STRING conference" />
+				<Param name="[STRING bridge_profile" />
+				<Param name="[STRING user_profile" />
+				<Param name="[STRING menu]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Congestion" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Indicate the Congestion condition.
 				
 				[Description]
+				This application will indicate the congestion condition to the calling channel.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Congestion([timeout])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; timeout - If specified, the calling channel will be hung up after the specified number of seconds.
+				    Otherwise, this application will wait until the calling channel hangs up.">
+				<Param name="STRING timeout" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ContinueWhile" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Restart a While loop.
 				
 				[Description]
+				Returns to the top of the while loop and re-evaluates the conditional.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ContinueWhile()
 				
 				[Arguments]">
 				<Param name="" />
@@ -4584,15 +6114,46 @@
 		<KeyWord name="ControlPlayback" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Play a file with fast forward and rewind.
 				
 				[Description]
+				This application will play back the given filename.
+				
+				It sets the following channel variables upon completion:
+				
+				  &#x2022; CPLAYBACKSTATUS - Contains the status of the attempt as a text string 
+				    &#x2022; SUCCESS
+				    &#x2022; USERSTOPPED
+				    &#x2022; REMOTESTOPPED
+				    &#x2022; ERROR
+				  &#x2022; CPLAYBACKOFFSET - Contains the offset in ms into the file where playback was at when it stopped. -1 is 
+				    end of file.
+				  &#x2022; CPLAYBACKSTOPKEY - If the playback is stopped by the user this variable contains the key that was pressed.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ControlPlayback(filename,[skipms,[ff,[rew,[stop,[pause,[restart,[options]]]]]]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; filename
+				  &#x2022; skipms - This is number of milliseconds to skip when rewinding or fast-forwarding.
+				  &#x2022; ff - Fast-forward when this DTMF digit is received. (defaults to #)
+				  &#x2022; rew - Rewind when this DTMF digit is received. (defaults to *)
+				  &#x2022; stop - Stop playback when this DTMF digit is received.
+				  &#x2022; pause - Pause playback when this DTMF digit is received.
+				  &#x2022; restart - Restart playback when this DTMF digit is received.
+				  &#x2022; options
+				    &#x2022; o
+				      &#x2022; time - Start at time ms from the beginning of the file.">
+				<Param name="STRING filename" />
+				<Param name="[STRING skipms" />
+				<Param name="[STRING ff" />
+				<Param name="[STRING rew" />
+				<Param name="[STRING stop" />
+				<Param name="[STRING pause" />
+				<Param name="[STRING restart" />
+				<Param name="[STRING options]]]]]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Curl" func="yes">
@@ -4602,7 +6163,7 @@
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Cut" func="yes">
-			<Overload retVal="" descr="
+			<Overload retVal="Application" descr="
 				Deprecated. Use CUT function instead">
 				<Param name="" />
 			</Overload>
@@ -4610,60 +6171,186 @@
 		<KeyWord name="DAHDIAcceptR2Call" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Accept an R2 call if its not already accepted (you still need to answer it)
 				
 				[Description]
+				This application will Accept the R2 call either with charge or no charge.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				DAHDIAcceptR2Call(charge)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; charge - Yes or No.
+				    Whether you want to accept the call with charge or without charge.">
+				<Param name="STRING charge" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DAHDIBarge" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Barge in (monitor) DAHDI channel
 				
 				[Description]
+				Barges in on a specified DAHDI channel or prompts if one is not specified.  Returns -1 when caller user
+				hangs up and is independent of the state of the channel being monitored.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				DAHDIBarge([channel])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; channel">
+				<Param name="[STRING channel]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DAHDIRAS" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Executes DAHDI ISDN RAS application.
 				
 				[Description]
+				Executes a RAS server using pppd on the given channel. The channel must be a clear channel (i.e. PRI source)
+				and a DAHDI channel to be able to use this function (No modem emulation is included).
+				
+				Your pppd must be patched to be DAHDI aware.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				DAHDIRAS(args)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; args - A list of parameters to pass to the pppd daemon, separated by , characters.">
+				<Param name="STRING args" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DAHDIScan" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Scan DAHDI channels to monitor calls.
 				
 				[Description]
+				Allows a call center manager to monitor DAHDI channels in a convenient way. Use # to select the next channel
+				and use * to exit.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				DAHDIScan([group])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; group - Limit scanning to a channel group by setting this option.">
+				<Param name="[STRING group]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DAHDISendCallreroutingFacility" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Send an ISDN call rerouting/deflection facility message.
+				
+				[Description]
+				This application will send an ISDN switch specific call rerouting/deflection facility message over the 
+				current channel. Supported switches depend upon the version of libpri in use.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				DAHDISendCallreroutingFacility(destination,[original,[reason]])
+				
+				[Arguments]
+				  &#x2022; destination - Destination number.
+				  &#x2022; original - Original called number.
+				  &#x2022; reason - Diversion reason, if not specified defaults to unknown">
+				<Param name="STRING destination" />
+				<Param name="[STRING original" />
+				<Param name="[STRING reason]]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DAHDISendKeypadFacility" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Send digits out of band over a PRI.
+				
+				[Description]
+				This application will send the given string of digits in a Keypad Facility IE over the current channel.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				DAHDISendKeypadFacility(digits)
+				
+				[Arguments]
+				  &#x2022; digits">
+				<Param name="STRING digits" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DateTime" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Says a specified time in a custom format.
+				
+				[Description]
+				Say the date and time in a specified format.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				DateTime([unixtime,[timezone,[format]]])
+				
+				[Arguments]
+				  &#x2022; unixtime - time, in seconds since Jan 1, 1970. May be negative. Defaults to now.
+				  &#x2022; timezone - timezone, see /usr/share/zoneinfo for a list. Defaults to machine default.
+				  &#x2022; format - a format the time is to be said in. See voicemail.conf. Defaults to ABdY 'digits/at' IMp">
+				<Param name="STRING unixtime" />
+				<Param name="[STRING timezone" />
+				<Param name="[STRING format]]" />
+			</Overload>
+		</KeyWord>		
+		<KeyWord name="DBdel" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Delete a key from the asterisk database.
+				
+				[Description]
+				This application will delete a key from the Asterisk database.
+				
+				Note:
+				This application has been DEPRECATED in favor of the DB_DELETE function.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				DBdel(family/key)
+				
+				[Arguments]
+				  &#x2022; family
+				  &#x2022; key">
+				<Param name="STRING family/key" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DBdeltree" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Delete a family or keytree from the asterisk database.
+				
+				[Description]
+				This application will delete a family or keytree from the Asterisk database.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				DBdeltree(family/[keytree])
+				
+				[Arguments]
+				  &#x2022; family
+				  &#x2022; keytree">
+				<Param name="STRING family/[keytree]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DBget" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -4677,7 +6364,7 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="DAHDISendKeypadFacility" func="yes">
+		<KeyWord name="DBput" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -4710,110 +6397,7 @@
 				[Synopsis]
 				
 				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="DBdel" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="DBdeltree" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="DBget" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="DBput" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="DISA" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="DTMFToText" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="DUNDiLookup" func="yes">
-			<Overload retVal="Application" descr="
-				Deprecated. Use DUNDILOOKUP function instead">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="DateTime" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
+				Execute perl compatible regular expression and substitution out of a MySQL Database.
 				
 				[Asterisk Version]
 				
@@ -4834,6 +6418,12 @@
 				[Syntax]
 				
 				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Devstate" func="yes">
+			<Overload retVal="Application" descr="
+				Deprecated. Use DEVSTATE function instead">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
@@ -4912,6 +6502,34 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="DISA" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DTMFToText" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="DumpChan" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -4923,6 +6541,12 @@
 				[Syntax]
 				
 				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DUNDiLookup" func="yes">
+			<Overload retVal="Application" descr="
+				Deprecated. Use DUNDILOOKUP function instead">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
@@ -5064,7 +6688,7 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="ExternIVR" func="yes">
+		<KeyWord name="ExternalIVR" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -5078,7 +6702,7 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="ExternalIVR" func="yes">
+		<KeyWord name="ExternIVR" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -5210,15 +6834,7 @@
 		</KeyWord>
 		<KeyWord name="GetGroupCount" func="yes">
 			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
+				Deprecated. Use GROUP_COUNT function instead">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
@@ -5404,20 +7020,6 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="IVRDemo" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
 		<KeyWord name="Iconv" func="yes">
 			<Overload retVal="Application" descr="
 				Deprecated. Use ICONV function instead">
@@ -5452,7 +7054,7 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="JACK" func="yes">
+		<KeyWord name="IVRDemo" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -5536,6 +7138,139 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="JACK" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="jsonadd" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Adds a new element in a json document
+				
+				[Description]
+				The first parameter is interpreted as a variable name, and its contents is 
+				considered to be a json document. the json document is parsed and the path is followed 
+				to the insertion point. a new element of the given type, with the given name and value 
+				is created, then added to the element at the end of the path (or appended, if the element 
+				at the end of the path is an array). the contents of the json document variable is 
+				updated to reflect the element added.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				jsonadd(doc,path,elemtype,[name][,value])
+				
+				[Example]
+				exten => s,n,jsonadd(json,path/there,array,vec)
+				exten => s,n,jsonadd(json,path/there/vec,string,,abcd)
+				exten => s,n,jsonadd(json,path/there/vec,number,,1234)
+				exten => s,n,NoOp(${JSONELEMENT(json,path/there/vec/0)} & ${JSONELEMENT(json,path/there/vec/1)})
+				
+				[Help]
+				See: https://github.com/drivefast/asterisk-res_json
+				
+				[Arguments]
+				  &#x2022; doc - The name (not the contents!) of a variable that contains the json struct
+				  &#x2022; path -  path to the element we're looking for (like /path/to/element, or /path/to/element/3 to identify the 
+				    element with index 3 in an array)
+				  &#x2022; elemtype - Can be one of bool, null, number, string, node or array
+				  &#x2022; name
+				  &#x2022; value">
+				<Param name="STRING doc" />
+				<Param name="STRING path" />
+				<Param name="STRING elemtype" />
+				<Param name="[STRING name" />
+				<Param name="[STRING value]]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="jsonset" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Sets the value of the element in the json document at the given path.
+				
+				[Description]
+				The value of the variable that contains the json document (doc) is updated to reflect the change. 
+				the element that changes the value preserves its name and its type, and must be a boolean, number, 
+				or string. the new value is converted to the type of the existing document. that means, if you would 
+				try to set the value of a number element to abc, its resulting value will be 0, or if you try to 
+				set a boolean element to 13, you will end up with it being true. to set a &#x0022;false&#x0022; value to a bool element,
+				use an empty string, 0, n, no, f or false (case insensitive); anything else is interpreted as true.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				jsonset(doc,path,newvalue)
+				
+				[Arguments]
+				  &#x2022; doc - The name (not the contents!) of a variable that contains the json struct
+				  &#x2022; path -  path to the element we're looking for (like /path/to/element, or /path/to/element/3 to identify the 
+				    element with index 3 in an array)
+				  &#x2022; newvalue - value to be set">
+				<Param name="STRING doc" />
+				<Param name="STRING path" />
+				<Param name="STRING newvalue" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="jsondelete" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Removes an element from a json document
+				
+				[Description]
+				Delete the element at the given path, from the given document. the value of the variable that contains the
+				json document (doc)is updated to reflect the change. you may delete any type of element.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				jsondelete(doc,path)
+				
+				[Arguments]
+				  &#x2022; doc - The name (not the contents!) of a variable that contains the json struct
+				  &#x2022; path -  path to the element we're looking for (like /path/to/element, or /path/to/element/3 to identify the 
+				    element with index 3 in an array)">
+				<Param name="STRING doc" />
+				<Param name="STRING path" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="jsonvariables" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Parse a single-level json structure (key-value pairs) as dialplan variables
+				
+				[Description]
+				Reads a single level json document into dialplan variables with the same names. the json document is 
+				considered to be the representation of a dictionary, or key-value pairs, containing scalar values. 
+				for example {&#x0022;one&#x0022;:1,&#x0022;two&#x0022;:&#x0022;deuce&#x0022;,&#x0022;three&#x0022;:&#x0022;III&#x0022;} will set the values of the dialplan variables one, two and 
+				three to the values 1, deuce, and III respectively. depending on the type of each variable, their possible 
+				values are:
+				
+				True, False => 1, 0
+				NULL => resulting asterisk variable will contain an empty string
+				number, string => the number or the string
+				array => the string !array! (array values cannot be returned into a single variable)
+				object => string, the json representation of the underlying object parameters
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				jsonvariables(doc)
+				
+				[Arguments]
+				  &#x2022; doc - The name (not the contents!) of a variable that contains the json struct">
+				<Param name="STRING doc" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="KeepAlive" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -5606,87 +7341,6 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="MD5Check" func="yes">
-			<Overload retVal="Application" descr="
-				Deprecated. Use CHECK_MD5 function instead">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="MP3Player" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="MSet" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="MWI" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="MYSQL" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				Basic MYSQL Database Functionality
-				
-				[Description]
-				MYSQL(): Basic MYSQL Database Functionality
-				This is an ADD-ON of asterisk, is not installed by default and must be downloaded
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				MYSQL(Connect connid dhhost dbuser dbpass dbname)
-				MYSQL(Query resultid ${connid} query-string)
-				MYSQL(Fetch fetchid ${resultid} var1\ var2\ ...\ varN)
-				MYSQL(Nextresult resultid ${connid}) (New in Asterisk 1.8)
-				MYSQL(Clear ${resultid})
-				MYSQL(Disconnect ${connid})
-				
-				[Example]
-				exten => _X.,1,MYSQL(Connect connid localhost dbuser dbpass dbname)
-				exten => _X.,2,MYSQL(Query resultid ${connid} SELECT\ scriptname\ from\ mac2pin\ where\ userid=${CALLERIDNAME})
-				exten => _X.,3,MYSQL(Fetch fetchid ${resultid} AGIScript)
-				exten => _X.,4,GotoIf($[${AGIScript} = NULL]?5:7)
-				exten => _X.,5,AGI(${DefaultAGIScript},${EXTEN})
-				exten => _X.,6,Goto(_X.,8)
-				exten => _X.,7,AGI(${AGIScript},${EXTEN})
-				exten => _X.,8,MYSQL(Clear ${resultid})
-				exten => _X.,9,MYSQL(Disconnect ${connid})
-				exten => _X.,10,Hangup">
-				<Param name="COMMAND params" />
-			</Overload>
-		</KeyWord>
 		<KeyWord name="Macro" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -5752,6 +7406,12 @@
 		<KeyWord name="Math" func="yes">
 			<Overload retVal="Application" descr="
 				Deprecated. Use MATH function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MD5Check" func="yes">
+			<Overload retVal="Application" descr="
+				Deprecated. Use CHECK_MD5 function instead">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
@@ -5971,6 +7631,34 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="MP3Player" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MSet" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="MusicOnHold" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -5983,6 +7671,39 @@
 				
 				[Arguments]">
 				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MYSQL" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Basic MYSQL Database Functionality
+				
+				[Description]
+				MYSQL(): Basic MYSQL Database Functionality
+				This is an ADD-ON of asterisk, is not installed by default and must be downloaded
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				MYSQL(Connect connid dhhost dbuser dbpass dbname)
+				MYSQL(Query resultid ${connid} query-string)
+				MYSQL(Fetch fetchid ${resultid} var1\ var2\ ...\ varN)
+				MYSQL(Nextresult resultid ${connid}) (New in Asterisk 1.8)
+				MYSQL(Clear ${resultid})
+				MYSQL(Disconnect ${connid})
+				
+				[Example]
+				exten => _X.,1,MYSQL(Connect connid localhost dbuser dbpass dbname)
+				exten => _X.,2,MYSQL(Query resultid ${connid} SELECT\ scriptname\ from\ mac2pin\ where\ userid=${CALLERIDNAME})
+				exten => _X.,3,MYSQL(Fetch fetchid ${resultid} AGIScript)
+				exten => _X.,4,GotoIf($[${AGIScript} = NULL]?5:7)
+				exten => _X.,5,AGI(${DefaultAGIScript},${EXTEN})
+				exten => _X.,6,Goto(_X.,8)
+				exten => _X.,7,AGI(${AGIScript},${EXTEN})
+				exten => _X.,8,MYSQL(Clear ${resultid})
+				exten => _X.,9,MYSQL(Disconnect ${connid})
+				exten => _X.,10,Hangup">
+				<Param name="COMMAND params" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="NBScat" func="yes">
@@ -6069,6 +7790,20 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="Originate" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="OSPAuth" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -6112,48 +7847,6 @@
 			</Overload>
 		</KeyWord>
 		<KeyWord name="OSPNext" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="Originate" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="PHP" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="PPPD" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -6265,6 +7958,20 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="PHP" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="PickDown" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -6307,6 +8014,58 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="PicoTTS" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				TTS (Text To Speech) engine
+				
+				[Description]
+				Send a text string, get back the resulting waveform and play it to the user, allowing any given interrupt keys
+				to immediately terminate and return the value, or 'any' to allow any number back.
+				
+				It works with asterisk versions 1.6.x, 1.8, 10
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				PicoTTS(text.language[,intkeys])
+				
+				[Example]
+				;PicoTTS Demo
+				exten => 1234,1,Answer()
+				exten => 1234,n,PicoTTS(&#x0022;This is a simple test in english.&#x0022;,any,en-US)
+				exten => 1234,n,PicoTTS(&#x0022;Esto es una prueba en español.&#x0022;,any,es-ES)
+				exten => 1234,n,Hangup()
+				
+				[Arguments]
+				  &#x2022; string
+				  &#x2022; any
+				  &#x2022; language code. Avaible codes :
+				    &#x2022; en-US
+				    &#x2022; en-GB
+				    &#x2022; de-DE
+				    &#x2022; es-ES
+				    &#x2022; fr-FR
+				    &#x2022; it-IT">
+				<Param name="STRING string" />
+				<Param name="STRING any" />
+				<Param name="STRING language code" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Playback" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="PlayTones" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -6321,7 +8080,7 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="Playback" func="yes">
+		<KeyWord name="PPPD" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -6526,15 +8285,72 @@
 		<KeyWord name="ReceiveFAX" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Receive a Fax ( ReceiveFAX() - [app_fax] )
 				
 				[Description]
+				Receives a FAX from the channel into the given filename overwriting the file if it already exists.
+				
+				File created will be in TIFF format.
+				
+				This application sets the following channel variables:
+				
+				  &#x2022; LOCALSTATIONID - To identify itself to the remote end
+				  &#x2022; LOCALHEADERINFO - To generate a header line on each page
+				  &#x2022; FAXSTATUS
+				    &#x2022; SUCCESS
+				    &#x2022; FAILED
+				  &#x2022; FAXERROR - Cause of failure
+				  &#x2022; REMOTESTATIONID - The CSID of the remote side
+				  &#x2022; FAXPAGES - Number of pages sent
+				  &#x2022; FAXBITRATE - Transmission rate
+				  &#x2022; FAXRESOLUTION - Resolution of sent fax
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ReceiveFAX(filename,[c])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; filename - Filename of TIFF file save incoming fax
+				  &#x2022; c - Makes the application behave as the calling machine
+				    (Default behavior is as answering machine)">
+				<Param name="STRING filename" />
+				<Param name="[OPTION c]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ReceiveFax" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Receive a FAX and save as a TIFF/F file. ( ReceiveFAX() - [res_fax] )
+				
+				NOTE:
+				Called &#x22;ReceiveFax&#x22; to avoid confusion with the Application ReceiveFAX
+				Asterisk Documentation is inconsistent
+				
+				[Description]
+				This application is provided by res_fax, which is a FAX technology agnostic module that utilizes FAX 
+				technology resource modules to complete a FAX transmission.
+				
+				Session arguments can be set by the FAXOPT function and to check results of the ReceiveFax() application.
+				
+				[Asterisk Version]
+				ReceiveFax(filename[,options])
+				
+				[Syntax]
+				ReceiveFax(filename[,options])
+				
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Application_ReceiveFax
+				or https://wiki.asterisk.org/wiki/display/AST/Application_ReceiveFAX_res_fax
+				
+				[Arguments]
+				  &#x2022; filename
+				  &#x2022; options
+				    &#x2022; d - Enable FAX debugging.
+				    &#x2022; f - Allow audio fallback FAX transfer on T.38 capable channels.
+				    &#x2022; s - Send progress Manager events (overrides statusevents setting in res_fax.conf).">
+				<Param name="STRING filename" />
+				<Param name="STRING options" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Record" func="yes">
@@ -6663,178 +8479,6 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="SCCPSetCalledParty" func="yes">
-			<Overload retVal="Application" descr="
-				Deprecated. Use Set(CHANNEL(calledparty)=&#x0022;name &#x003C;exten&#x003E;&#x0022;) function instead">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SCCPSetCodec" func="yes">
-			<Overload retVal="Application" descr="
-				Deprecated. Use Set(CHANNEL(codec)=&#x0025;s) function instead">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SCCPSetMessage" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				Send a Message to the current Phone
-				
-				[Description]
-				Send a Message to the Calling Device (and remove after timeout, if timeout 
-				is ommited will stay until next/empty message). Use priority to set/clear 
-				priority notifications. Higher priority levels overrule lower ones.
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				SCCPSetMessage(message text [,timeout])
-				
-				[Arguments]
-				 &#x2022; message
-				 &#x2022; timeout">
-				<Param name="STRING message" />
-				<Param name="[INTEGER timeout]" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SIPAddHeader" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				(1.4+)
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SIPCallPickup" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SIPDtmfMode" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				Change the dtmfmode for a SIP call
-				
-				[Description]
-				Changes the dtmfmode for a SIP call, i.e. calls originating in a SIP channel,
-				not calls TO a SIP channel originating in another type of channel, like a ZAP channel.
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				SIPDtmfMode(mode)
-				
-				[Example]
-				SIPDtmfMode(inband)
-				
-				[Arguments]
-				 &#x2022; mode
-				   &#x2022; inband
-				   &#x2022; info
-				   &#x2022; rfc2833">
-				<Param name="STRING mode" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SIPGetHeader" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SIPRemoveHeader" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SIPSendCustomINFO" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SLAStation" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SLATrunk" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SMS" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
 		<KeyWord name="SayAlpha" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -6863,20 +8507,6 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="SayCountPL" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
 		<KeyWord name="SayCountedAdj" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -6892,6 +8522,20 @@
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SayCountedNoun" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SayCountPL" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -6961,6 +8605,54 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="SCCPSetCalledParty" func="yes">
+			<Overload retVal="Application" descr="
+				Deprecated. Use Set(CHANNEL(calledparty)=&#x0022;name &#x003C;exten&#x003E;&#x0022;) function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SCCPSetCodec" func="yes">
+			<Overload retVal="Application" descr="
+				Deprecated. Use Set(CHANNEL(codec)=&#x0025;s) function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SCCPSetMessage" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Send a Message to the current Phone
+				
+				[Description]
+				Send a Message to the Calling Device (and remove after timeout, if timeout 
+				is ommited will stay until next/empty message). Use priority to set/clear 
+				priority notifications. Higher priority levels overrule lower ones.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				SCCPSetMessage(message text [,timeout])
+				
+				[Arguments]
+				 &#x2022; message
+				 &#x2022; timeout">
+				<Param name="STRING message" />
+				<Param name="[INTEGER timeout]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Segfault" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="SendDTMF" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -6978,15 +8670,73 @@
 		<KeyWord name="SendFAX" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Send a Fax ( SendFAX() - [app_fax] )
 				
 				[Description]
+				Send a given TIFF file to the channel as a FAX.
+				
+				This application sets the following channel variables:
+				
+				  &#x2022; LOCALSTATIONID - To identify itself to the remote end
+				  &#x2022; LOCALHEADERINFO - To generate a header line on each page
+				  &#x2022; FAXSTATUS
+				    &#x2022; SUCCESS
+				    &#x2022; FAILED
+				  &#x2022; FAXERROR - Cause of failure
+				  &#x2022; REMOTESTATIONID - The CSID of the remote side
+				  &#x2022; FAXPAGES - Number of pages sent
+				  &#x2022; FAXBITRATE - Transmission rate
+				  &#x2022; FAXRESOLUTION - Resolution of sent fax
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SendFAX(filename,[a])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; filename - Filename of TIFF file to fax
+				  &#x2022; a - Makes the application behave as the answering machine
+				    (Default behavior is as calling machine)">
+				<Param name="STRING filename" />
+				<Param name="[OPTION a]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SendFax" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Sends a specified TIFF/F file as a FAX. ( SendFAX() - [res_fax] )
+				
+				NOTE:
+				Called &#x22;SendFax&#x22; to avoid confusion with the Application SendFAX
+				Asterisk Documentation is inconsistent
+				
+				[Description]
+				This application is provided by res_fax, which is a FAX technology agnostic module that utilizes FAX 
+				technology resource modules to complete a FAX transmission.
+				
+				Session arguments can be set by the FAXOPT function and to check results of the SendFax() application.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				SendFAX([filename2[&...]],[options])
+				
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Application_SendFax
+				or https://wiki.asterisk.org/wiki/display/AST/Application_SendFAX_res_fax
+				
+				
+				[Arguments]
+				  &#x2022; filename
+				    &#x2022; filename2 - TIFF file to send as a FAX.
+				  &#x2022; options
+				    &#x2022; d - Enable FAX debugging.
+				    &#x2022; f - Allow audio fallback FAX transfer on T.38 capable channels.
+				    &#x2022; F - Force usage of audio mode on T.38 capable channels.
+				    &#x2022; s - Send progress Manager events (overrides statusevents setting in res_fax.conf).
+				    &#x2022; z - Initiate a T.38 reinvite on the channel if the remote end does not.">
+				<Param name="STRING filename2" />
+				<Param name="[STRING options]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SendImage" func="yes">
@@ -7045,6 +8795,20 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="SetAccount" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="SetAMAFlags" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -7059,7 +8823,27 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="SetAccount" func="yes">
+		<KeyWord name="SetCalledParty" func="yes">
+			<Overload retVal="Application" descr="
+				Deprecated in favor of SCCPSetCalledParty">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetCallerID" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SetCallerPres" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -7102,40 +8886,6 @@
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SetCIDNum" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SetCalledParty" func="yes">
-			<Overload retVal="Application" descr="
-				Deprecated in favor of SCCPSetCalledParty">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SetCallerID" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="SetCallerPres" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -7259,6 +9009,102 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="SIPAddHeader" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				(1.4+)
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIPCallPickup" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIPDtmfMode" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Change the dtmfmode for a SIP call
+				
+				[Description]
+				Changes the dtmfmode for a SIP call, i.e. calls originating in a SIP channel,
+				not calls TO a SIP channel originating in another type of channel, like a ZAP channel.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				SIPDtmfMode(mode)
+				
+				[Example]
+				SIPDtmfMode(inband)
+				
+				[Arguments]
+				 &#x2022; mode
+				   &#x2022; inband
+				   &#x2022; info
+				   &#x2022; rfc2833">
+				<Param name="STRING mode" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIPGetHeader" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIPRemoveHeader" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIPSendCustomINFO" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="Skel" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -7274,6 +9120,48 @@
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SkelGuessNumber" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SLAStation" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SLATrunk" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SMS" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -7663,12 +9551,6 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="TXTCIDName" func="yes">
-			<Overload retVal="Application" descr="
-				Deprecated. Use TXTCIDNAME function instead">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
 		<KeyWord name="TestClient" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -7739,6 +9621,12 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="TXTCIDName" func="yes">
+			<Overload retVal="Application" descr="
+				Deprecated. Use TXTCIDNAME function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="UnpauseMonitor" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -7781,6 +9669,34 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="Verbose" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="VISDNOverlapDial" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="VMAuthenticate" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -7795,20 +9711,6 @@
 			</Overload>
 		</KeyWord>
 		<KeyWord name="VMSayName" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="Verbose" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -7864,7 +9766,7 @@
 				 &#x2022; options
 				   &#x2022; p - Consider the mailbox parameter as a prefix to the mailbox that is entered by the caller.
 				   &#x2022; g - Use the specified amount of gain when recording a voicemail message. The units are 
-				&#x20;&#x20;&#x20;&#x20; whole-number decibels (dB). 
+				     whole-number decibels (dB). 
 				     &#x2022; #
 				   &#x2022; s - Skip checking the passcode for the mailbox.
 				   &#x2022; a - Skip folder prompt and go directly to folder specified. Defaults to INBOX (or 0).
@@ -7895,6 +9797,45 @@
 				
 				[Arguments]">
 				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Vxml" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Execute a VoiceXML document over Asterisk (Based on the i6net VXI* VoiceXML browser).
+				The application use Asterisk internal API (Prompt / DTMF / Record) and installed applications.
+				
+				[Description]
+				Features:
+				- Audio (play and record gsm, wav, WAV files)
+				- Video (play and record h263, mp4, 3gp files)
+				- DTMF (bargein support)
+				- Transfer (use Dial/Transfer applications and to exchange with Asterisk function/variables too)
+				- Text To Speech (most TTS supported with HTTP connector, and Festival/Flite and unimrcp applications)
+				- Automatic Speech Recognition (Nuance, Lunenvox, Verbio, Vtech, VoiceInteraction, Vestec, use Asterisk
+				  Speech API or unimrcp )
+				- Accounts for hosting (ranges, url, stats, max limitations)
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				Vxml(url)
+				
+				[Example]
+				[incoming]
+				exten => s,1,Answer()
+				exten => s,n,Wait(1)
+				exten => s,n,Vxml(http://links.i6net.com/index.vxml)
+				exten => s,n,Hangup()
+				
+				[Help]
+				https://wiki.i6net.org/doku.php/vxi_installation_guide:start
+				https://wiki.i6net.org/doku.php/vxi_developer_guide:start
+				http://www.voip-info.org/wiki/view/Asterisk+cmd+Vxml
+				
+				[Arguments]
+				  &#x2022; url">
+				<Param name="STRING url" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Wait" func="yes">
@@ -8023,7 +9964,44 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="Zapateller" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="ZapBarge" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Listen to a Zap channel call
+				
+				[Description]
+				Lets you listens to the conversation on a specified Zap channel, or prompts if one is not specified. You can
+				hear them, but they can't hear you. No indication is given to the other parties that their call is being 
+				listened to.
+				
+				Multiple people can all use ZapBarge to listen in on the same channel.
+				
+				Returns -1 when caller user hangs up and is independent of the state of the channel being monitored.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				ZapBarge(channel)
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ZapCD" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -8040,6 +10018,21 @@
 		<KeyWord name="ZapEC" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ZapInband" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Inband call progress (pre-answer)
 				
 				[Description]
 				
@@ -8079,32 +10072,26 @@
 				<Param name="" />
 			</Overload>
 		</KeyWord>
-		<KeyWord name="Zapateller" func="yes">
+		<KeyWord name="ZapSendKeypadFacility" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Sends digits out of band in a Q.931 Keypad Facility information element (IE) on a Zap channel.
 				
 				[Description]
+				Send the given string of digits in a Q.931 Keypad Facility IE out of band over the current Zap channel
+				This command is not for use with analog lines.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ZapSendKeypadFacility(digits)
 				
-				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="capiCommand" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
+				[Example]
+				exten => 8159,1,ZapSendKeypadFacility(*123)
 				
-				[Description]
-				
-				[Asterisk Version]
-				
-				[Syntax]
-				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; digits">
+				<Param name="STRING digits" />
 			</Overload>
 		</KeyWord>
 		<!-- SYSTEM VARIABLES -->
@@ -8121,6 +10108,7 @@
 		<KeyWord name="AGENTWRAPUPTIME" />
 		<KeyWord name="AGENT_STATUS" />
 		<KeyWord name="AGIEXITONHANGUP" />
+		<KeyWord name="AGISIGHUP" />
 		<KeyWord name="AGISTATUS" />
 		<KeyWord name="ALARMRECEIVER_CALL_LIMIT" />
 		<KeyWord name="ALARMRECEIVER_RETRIES_LIMIT" />
@@ -8146,22 +10134,29 @@
 		<KeyWord name="AVAILORIGCHAN" />
 		<KeyWord name="AVAILSTATUS" />
 		<KeyWord name="BACKGROUNDSTATUS" />
+		<KeyWord name="BCHANNELINFO" />
 		<KeyWord name="BLINDTRANSFER" />
 		<KeyWord name="BRIDGEPEER" />
 		<KeyWord name="BRIDGEPVTCALLID" />
 		<KeyWord name="BRIDGERESULT" />
 		<KeyWord name="CALENDAR_SUCCESS" />
+		<KeyWord name="CALLEDSUBADDRESS" />
 		<KeyWord name="CALLEDTON" />
 		<KeyWord name="CALLERANI" />
 		<KeyWord name="CALLERIDNAME" />
 		<KeyWord name="CALLERIDNUM" />
+		<KeyWord name="CALLERTON" />
 		<KeyWord name="CALLINGANI2" />
 		<KeyWord name="CALLINGPRES" />
 		<KeyWord name="CALLINGSUBADDR" />
+		<KeyWord name="CALLINGSUBADDRESS" />
 		<KeyWord name="CALLINGTNS" />
 		<KeyWord name="CALLINGTON" />
 		<KeyWord name="CALLTYPE" />
+		<KeyWord name="CAPI_CIP" />
 		<KeyWord name="CAUSECODE" />
+		<KeyWord name="CCBSSTATUS" />
+		<KeyWord name="CCLINKAGEID" />
 		<KeyWord name="CC_CANCEL_REASON" />
 		<KeyWord name="CC_CANCEL_RESULT" />
 		<KeyWord name="CC_REQUEST_REASON" />
@@ -8173,6 +10168,7 @@
 		<KeyWord name="CONFNO" />
 		<KeyWord name="CONF_LIMIT_TIMEOUT_FILE" />
 		<KeyWord name="CONF_LIMIT_WARNING_FILE" />
+		<KeyWord name="CONNECTEDNUMBER" />
 		<KeyWord name="CONNECTED_LINE_CALLEE_SEND_MACRO" />
 		<KeyWord name="CONNECTED_LINE_CALLEE_SEND_MACRO_ARGS" />
 		<KeyWord name="CONNECTED_LINE_CALLER_SEND_MACRO" />
@@ -8190,6 +10186,7 @@
 		<KeyWord name="DIALEDTIME" />
 		<KeyWord name="DIALSTATUS" />
 		<KeyWord name="DIRECTORY_RESULT" />
+		<KeyWord name="DISCONNECT_IND_REASON" />
 		<KeyWord name="DISPLAY_NAME" />
 		<KeyWord name="DST_ENABLE" />
 		<KeyWord name="DST_END_HOUR" />
@@ -8207,12 +10204,20 @@
 		<KeyWord name="ENUM" />
 		<KeyWord name="ENUMSTATUS" />
 		<KeyWord name="EPOCH" />
+		<KeyWord name="eventextra" />
+		<KeyWord name="eventtime" />
+		<KeyWord name="eventtype" />
 		<KeyWord name="EXITCONTEXT" />
 		<KeyWord name="EXTEN" />
 		<KeyWord name="EXTENSION_LENGTH" />
 		<KeyWord name="FAXBITRATE" />
 		<KeyWord name="FAXERROR" />
 		<KeyWord name="FAXEXTEN" />
+		<KeyWord name="FAXFORMAT" />
+		<KeyWord name="FAXID" />
+		<KeyWord name="FAXRATE" />
+		<KeyWord name="FAXREASON" />
+		<KeyWord name="FAXREASONTEXT" />
 		<KeyWord name="FAXPAGES" />
 		<KeyWord name="FAXRESOLUTION" />
 		<KeyWord name="FAXSTATUS" />
@@ -8223,6 +10228,10 @@
 		<KeyWord name="HINTNAME" />
 		<KeyWord name="INVALID_EXTEN" />
 		<KeyWord name="IPADDR" />
+		<KeyWord name="ISDNPI1" />
+		<KeyWord name="ISDNPI2" />
+		<KeyWord name="JSONRESULT" />
+		<KeyWord name="JSONTYPE" />
 		<KeyWord name="LABEL" />
 		<KeyWord name="LIMIT_CONNECT_FILE" />
 		<KeyWord name="LIMIT_PLAYAUDIO_CALLEE" />
@@ -8368,15 +10377,19 @@
 		<KeyWord name="REASON" />
 		<KeyWord name="RECORDED_FILE" />
 		<KeyWord name="RECORD_STATUS" />
+		<KeyWord name="REDIRECTINGNUMBER" />
 		<KeyWord name="REDIRECTING_CALLEE_SEND_MACRO" />
 		<KeyWord name="REDIRECTING_CALLEE_SEND_MACRO_ARGS" />
 		<KeyWord name="REDIRECTING_CALLER_SEND_MACRO" />
 		<KeyWord name="REDIRECTING_CALLER_SEND_MACRO_ARGS" />
+		<KeyWord name="REDIRECTIONNUMBER" />
+		<KeyWord name="REDIRECTREASON" />
 		<KeyWord name="REMOTESTATIONID" />
 		<KeyWord name="REMOTE_HOST" />
 		<KeyWord name="RQMSTATUS" />
 		<KeyWord name="RTPAUDIOQOS" />
 		<KeyWord name="RTPVIDEOQOS" />
+		<KeyWord name="RTSTOREID" />
 		<KeyWord name="SAY_DTMF_INTERRUPT" />
 		<KeyWord name="SECRET" />
 		<KeyWord name="SENDIMAGESTATUS" />
@@ -8446,193 +10459,213 @@
 		<KeyWord name="WAITSTATUS" />
 		<KeyWord name="WAITUNTILSTATUS" />
 		<KeyWord name="ZAPATELLERSTATUS" />
-		<KeyWord name="eventextra" />
-		<KeyWord name="eventtime" />
-		<KeyWord name="eventtype" />
+		<KeyWord name="_CALLERHOLDID" />
 		<!-- CONSTANTS AND SYSTEM EVENTS -->
-		<KeyWord name="3K1AUDIO" />
-		<KeyWord name="3WAY_END" />
-		<KeyWord name="3WAY_START" />
-		<KeyWord name="ABORT" />
-		<KeyWord name="ABSOLUTETIMEOUT" />
-		<KeyWord name="ADDED" />
-		<KeyWord name="ALREADY_LOGGED_IN" />
-		<KeyWord name="ANSWER" />
-		<KeyWord name="ANSWERED" />
-		<KeyWord name="APPERROR" />
-		<KeyWord name="APP_END" />
-		<KeyWord name="APP_START" />
-		<KeyWord name="ASSISTANT" />
-		<KeyWord name="ASTERISK_VERSION_NUM" />
-		<KeyWord name="AST_DEVICE_BUSY" />
-		<KeyWord name="AST_DEVICE_INUSE" />
-		<KeyWord name="AST_DEVICE_INVALID" />
-		<KeyWord name="AST_DEVICE_NOT_INUSE" />
-		<KeyWord name="AST_DEVICE_ONHOLD" />
-		<KeyWord name="AST_DEVICE_RINGING" />
-		<KeyWord name="AST_DEVICE_RINGINUSE" />
-		<KeyWord name="AST_DEVICE_UNAVAILABLE" />
-		<KeyWord name="AST_DEVICE_UNKNOWN" />
-		<KeyWord name="ATTENDEDTRANSFER" />
-		<KeyWord name="BILLING" />
-		<KeyWord name="BRIDGE_END" />
-		<KeyWord name="BRIDGE_ENTER" />
-		<KeyWord name="BRIDGE_EXIT" />
-		<KeyWord name="BRIDGE_START" />
-		<KeyWord name="BRIDGE_UPDATE" />
-		<KeyWord name="BUILD_DATE" />
-		<KeyWord name="BUILD_HOSTNAME" />
-		<KeyWord name="BUILD_KERNEL" />
-		<KeyWord name="BUILD_MACHINE" />
-		<KeyWord name="BUILD_OS" />
-		<KeyWord name="BUILD_USER" />
-		<KeyWord name="BUSY" />
-		<KeyWord name="CANCEL" />
-		<KeyWord name="CHANNEL_END" />
-		<KeyWord name="CHANNEL_START" />
-		<KeyWord name="CHANUNAVAIL" />
-		<KeyWord name="CHAN_END" />
-		<KeyWord name="CHAN_START" />
-		<KeyWord name="CNG" />
-		<KeyWord name="CONF_END" />
-		<KeyWord name="CONF_ENTER" />
-		<KeyWord name="CONF_EXIT" />
-		<KeyWord name="CONF_START" />
-		<KeyWord name="CONGESTION" />
-		<KeyWord name="CONTINUE" />
-		<KeyWord name="CONTROL" />
-		<KeyWord name="DBGM_ALL" />
-		<KeyWord name="DBGM_APPL" />
-		<KeyWord name="DBGM_BC" />
-		<KeyWord name="DBGM_BCDATA" />
-		<KeyWord name="DBGM_CDATA" />
-		<KeyWord name="DBGM_CONN" />
-		<KeyWord name="DBGM_DDATA" />
-		<KeyWord name="DBGM_FSM" />
-		<KeyWord name="DBGM_ISDN" />
-		<KeyWord name="DBGM_L2" />
-		<KeyWord name="DBGM_L3" />
-		<KeyWord name="DBGM_L3DATA" />
-		<KeyWord name="DBGM_MAN" />
-		<KeyWord name="DBGM_MSG" />
-		<KeyWord name="DBGM_NET" />
-		<KeyWord name="DBGM_SDATA" />
-		<KeyWord name="DBGM_SOCK" />
-		<KeyWord name="DBGM_SOUND" />
-		<KeyWord name="DBGM_TEI" />
-		<KeyWord name="DBGM_TONE" />
-		<KeyWord name="DBGM_TOPLEVEL" />
-		<KeyWord name="DIGITAL" />
-		<KeyWord name="DIGITAL_W_TONES" />
-		<KeyWord name="DISABLED" />
-		<KeyWord name="DOCUMENTATION" />
-		<KeyWord name="DONTCALL" />
-		<KeyWord name="DTMF" />
-		<KeyWord name="DTMF_BEGIN" />
-		<KeyWord name="DTMF_END" />
-		<KeyWord name="ENABLED" />
-		<KeyWord name="ENDMARKED" />
-		<KeyWord name="ERROR" />
-		<KeyWord name="FAIL" />
-		<KeyWord name="FAILED" />
-		<KeyWord name="FAILURE" />
-		<KeyWord name="FORWARD" />
-		<KeyWord name="FREE" />
-		<KeyWord name="FULL" />
-		<KeyWord name="HANGUP" />
-		<KeyWord name="HOLDINUSE" />
-		<KeyWord name="HOOKFLASH" />
-		<KeyWord name="HTML" />
-		<KeyWord name="HUMAN" />
-		<KeyWord name="IMAGE" />
-		<KeyWord name="INCOMPATIBLE" />
-		<KeyWord name="INITIALSILENCE" />
-		<KeyWord name="INUSE" />
-		<KeyWord name="INVALID" />
-		<KeyWord name="INVALIDARGS" />
-		<KeyWord name="INVALID_PROTOCOL" />
-		<KeyWord name="INVALID_URI" />
-		<KeyWord name="JOINEMPTY" />
-		<KeyWord name="JOINUNAVAIL" />
-		<KeyWord name="KICKED" />
-		<KeyWord name="LEAVEEMPTY" />
-		<KeyWord name="LEAVEUNAVAIL" />
-		<KeyWord name="LINKEDID_END" />
-		<KeyWord name="LOCAL_OPTIMIZE" />
-		<KeyWord name="LOCAL_REINVITE" />
-		<KeyWord name="LOGGEDIN" />
-		<KeyWord name="LOGGEDOUT" />
-		<KeyWord name="LONGGREETING" />
-		<KeyWord name="LOOP" />
-		<KeyWord name="MACHINE" />
-		<KeyWord name="MAXWORDLENGTH" />
-		<KeyWord name="MEMBERALREADY" />
-		<KeyWord name="MODEM" />
-		<KeyWord name="NOANSWER" />
-		<KeyWord name="NOAPP" />
-		<KeyWord name="NOCHANNEL" />
-		<KeyWord name="NOLOAD" />
-		<KeyWord name="NONEXISTENT" />
-		<KeyWord name="NOPARSE" />
-		<KeyWord name="NOSUCHQUEUE" />
-		<KeyWord name="NOTDYNAMIC" />
-		<KeyWord name="NOTFOUND" />
-		<KeyWord name="NOTHING" />
-		<KeyWord name="NOTINQUEUE" />
-		<KeyWord name="NOTSURE" />
-		<KeyWord name="NOT_CONNECTED" />
-		<KeyWord name="NOT_GENERIC" />
-		<KeyWord name="NOT_INUSE" />
-		<KeyWord name="NOT_LOGGED_IN" />
-		<KeyWord name="NO_CORE_INSTANCE" />
-		<KeyWord name="NULL" />
-		<KeyWord name="OK" />
-		<KeyWord name="OMIT" />
-		<KeyWord name="ONHOLD" />
-		<KeyWord name="OPERATOR" />
-		<KeyWord name="PARKEDLOT" />
-		<KeyWord name="PARKER" />
-		<KeyWord name="PARKER_FLAT" />
-		<KeyWord name="PARKINGSLOT" />
-		<KeyWord name="PARKING_SPACE" />
-		<KeyWord name="PARK_END" />
-		<KeyWord name="PARK_START" />
-		<KeyWord name="PAST" />
-		<KeyWord name="PAUSED" />
-		<KeyWord name="PICKUP" />
-		<KeyWord name="REJECTED" />
-		<KeyWord name="REMOTESTOPPED" />
-		<KeyWord name="REMOTE_REINVITE" />
-		<KeyWord name="REMOVED" />
-		<KeyWord name="RESPONSETIMEOUT" />
-		<KeyWord name="RESTRICTED_DIGITAL" />
-		<KeyWord name="RINGING" />
-		<KeyWord name="RINGINUSE" />
-		<KeyWord name="RINGTIMEOUT" />
-		<KeyWord name="SELECTED" />
-		<KeyWord name="SILENCE" />
-		<KeyWord name="SKIP" />
-		<KeyWord name="SUCCESS" />
-		<KeyWord name="TENTATIVE" />
-		<KeyWord name="TEXT" />
-		<KeyWord name="TOOLONG" />
-		<KeyWord name="TOO_MANY_REQUESTS" />
-		<KeyWord name="TORTURE" />
-		<KeyWord name="TRANSFER" />
-		<KeyWord name="UNANSWERED" />
-		<KeyWord name="UNAVAILABLE" />
-		<KeyWord name="UNKNOWN" />
-		<KeyWord name="UNPAUSED" />
-		<KeyWord name="UNSPECIFIED" />
-		<KeyWord name="UNSUPPORTED" />
-		<KeyWord name="USEREXIT" />
-		<KeyWord name="USERSTOPPED" />
-		<KeyWord name="USER_DEFINED" />
-		<KeyWord name="VIDEO" />
-		<KeyWord name="VOICE" />
+		<KeyWord name="3K1AUDIOD" />
+		<KeyWord name="3WAY_ENDD" />
+		<KeyWord name="3WAY_STARTD" />
+		<KeyWord name="ABORTD" />
+		<KeyWord name="ABSOLUTETIMEOUTD" />
+		<KeyWord name="ADDEDD" />
+		<KeyWord name="ALREADY_LOGGED_IND" />
+		<KeyWord name="ANSWERD" />
+		<KeyWord name="ANSWEREDD" />
+		<KeyWord name="APPERRORD" />
+		<KeyWord name="APP_ENDD" />
+		<KeyWord name="APP_STARTD" />
+		<KeyWord name="ASSISTANTD" />
+		<KeyWord name="ASTERISK_VERSION_NUMD" />
+		<KeyWord name="ASTJSON_ADD_FAILEDD" />
+		<KeyWord name="ASTJSON_ARG_NEEDEDD" />
+		<KeyWord name="ASTJSON_DELETE_FAILEDD" />
+		<KeyWord name="ASTJSON_INVALID_TYPED" />
+		<KeyWord name="ASTJSON_NOTFOUNDD" />
+		<KeyWord name="ASTJSON_OKD" />
+		<KeyWord name="ASTJSON_PARSE_ERRORD" />
+		<KeyWord name="ASTJSON_SET_FAILEDD" />
+		<KeyWord name="ASTJSON_UNDECIDEDD" />
+		<KeyWord name="AST_AGI_DIRD" />
+		<KeyWord name="AST_CONFIG_DIRD" />
+		<KeyWord name="AST_CONFIG_FILED" />
+		<KeyWord name="AST_DATA_DIRD" />
+		<KeyWord name="AST_DEVICE_BUSYD" />
+		<KeyWord name="AST_DEVICE_INUSED" />
+		<KeyWord name="AST_DEVICE_INVALIDD" />
+		<KeyWord name="AST_DEVICE_NOT_INUSED" />
+		<KeyWord name="AST_DEVICE_ONHOLDD" />
+		<KeyWord name="AST_DEVICE_RINGINGD" />
+		<KeyWord name="AST_DEVICE_RINGINUSED" />
+		<KeyWord name="AST_DEVICE_UNAVAILABLED" />
+		<KeyWord name="AST_DEVICE_UNKNOWND" />
+		<KeyWord name="AST_KEY_DIRD" />
+		<KeyWord name="AST_LOG_DIRD" />
+		<KeyWord name="AST_MODULE_DIRD" />
+		<KeyWord name="AST_MONITOR_DIRD" />
+		<KeyWord name="AST_RUN_DIRD" />
+		<KeyWord name="AST_SPOOL_DIRD" />
+		<KeyWord name="AST_VAR_DIRD" />
+		<KeyWord name="ATTENDEDTRANSFERD" />
+		<KeyWord name="BILLINGD" />
+		<KeyWord name="BRIDGE_ENDD" />
+		<KeyWord name="BRIDGE_ENTERD" />
+		<KeyWord name="BRIDGE_EXITD" />
+		<KeyWord name="BRIDGE_STARTD" />
+		<KeyWord name="BRIDGE_UPDATED" />
+		<KeyWord name="BUILD_DATED" />
+		<KeyWord name="BUILD_HOSTNAMED" />
+		<KeyWord name="BUILD_KERNELD" />
+		<KeyWord name="BUILD_MACHINED" />
+		<KeyWord name="BUILD_OSD" />
+		<KeyWord name="BUILD_USERD" />
+		<KeyWord name="BUSYD" />
+		<KeyWord name="CANCELD" />
+		<KeyWord name="CHANNEL_ENDD" />
+		<KeyWord name="CHANNEL_STARTD" />
+		<KeyWord name="CHANUNAVAILD" />
+		<KeyWord name="CHAN_ENDD" />
+		<KeyWord name="CHAN_STARTD" />
+		<KeyWord name="CNGD" />
+		<KeyWord name="CONF_ENDD" />
+		<KeyWord name="CONF_ENTERD" />
+		<KeyWord name="CONF_EXITD" />
+		<KeyWord name="CONF_STARTD" />
+		<KeyWord name="CONGESTIOND" />
+		<KeyWord name="CONTINUED" />
+		<KeyWord name="CONTROLD" />
+		<KeyWord name="DBGM_ALLD" />
+		<KeyWord name="DBGM_APPLD" />
+		<KeyWord name="DBGM_BCD" />
+		<KeyWord name="DBGM_BCDATAD" />
+		<KeyWord name="DBGM_CDATAD" />
+		<KeyWord name="DBGM_CONND" />
+		<KeyWord name="DBGM_DDATAD" />
+		<KeyWord name="DBGM_FSMD" />
+		<KeyWord name="DBGM_ISDND" />
+		<KeyWord name="DBGM_L2D" />
+		<KeyWord name="DBGM_L3D" />
+		<KeyWord name="DBGM_L3DATAD" />
+		<KeyWord name="DBGM_MAND" />
+		<KeyWord name="DBGM_MSGD" />
+		<KeyWord name="DBGM_NETD" />
+		<KeyWord name="DBGM_SDATAD" />
+		<KeyWord name="DBGM_SOCKD" />
+		<KeyWord name="DBGM_SOUNDD" />
+		<KeyWord name="DBGM_TEID" />
+		<KeyWord name="DBGM_TONED" />
+		<KeyWord name="DBGM_TOPLEVELD" />
+		<KeyWord name="DIGITALD" />
+		<KeyWord name="DIGITAL_W_TONESD" />
+		<KeyWord name="DISABLEDD" />
+		<KeyWord name="DOCUMENTATIOND" />
+		<KeyWord name="DONTCALLD" />
+		<KeyWord name="DTMFD" />
+		<KeyWord name="DTMF_BEGIND" />
+		<KeyWord name="DTMF_ENDD" />
+		<KeyWord name="ENABLEDD" />
+		<KeyWord name="ENDMARKEDD" />
+		<KeyWord name="ERRORD" />
+		<KeyWord name="FAILD" />
+		<KeyWord name="FAILEDD" />
+		<KeyWord name="FAILURED" />
+		<KeyWord name="FORWARDD" />
+		<KeyWord name="FREED" />
+		<KeyWord name="FULLD" />
+		<KeyWord name="HANGUPD" />
+		<KeyWord name="HOLDINUSED" />
+		<KeyWord name="HOOKFLASHD" />
+		<KeyWord name="HTMLD" />
+		<KeyWord name="HUMAND" />
+		<KeyWord name="IMAGED" />
+		<KeyWord name="INCOMPATIBLED" />
+		<KeyWord name="INITIALSILENCED" />
+		<KeyWord name="INUSED" />
+		<KeyWord name="INVALIDD" />
+		<KeyWord name="INVALIDARGSD" />
+		<KeyWord name="INVALID_PROTOCOLD" />
+		<KeyWord name="INVALID_URID" />
+		<KeyWord name="JOINEMPTYD" />
+		<KeyWord name="JOINUNAVAILD" />
+		<KeyWord name="KICKEDD" />
+		<KeyWord name="LEAVEEMPTYD" />
+		<KeyWord name="LEAVEUNAVAILD" />
+		<KeyWord name="LINKEDID_ENDD" />
+		<KeyWord name="LOCAL_OPTIMIZED" />
+		<KeyWord name="LOCAL_REINVITED" />
+		<KeyWord name="LOGGEDIND" />
+		<KeyWord name="LOGGEDOUTD" />
+		<KeyWord name="LONGGREETINGD" />
+		<KeyWord name="LOOPD" />
+		<KeyWord name="MACHINED" />
+		<KeyWord name="MAXWORDLENGTHD" />
+		<KeyWord name="MAXWORDSD" />
+		<KeyWord name="MEMBERALREADYD" />
+		<KeyWord name="MODEMD" />
+		<KeyWord name="NOANSWERD" />
+		<KeyWord name="NOAPPD" />
+		<KeyWord name="NOCHANNELD" />
+		<KeyWord name="NOLOADD" />
+		<KeyWord name="NONEXISTENTD" />
+		<KeyWord name="NOPARSED" />
+		<KeyWord name="NOSUCHQUEUED" />
+		<KeyWord name="NOTDYNAMICD" />
+		<KeyWord name="NOTFOUNDD" />
+		<KeyWord name="NOTHINGD" />
+		<KeyWord name="NOTINQUEUED" />
+		<KeyWord name="NOTSURED" />
+		<KeyWord name="NOT_CONNECTEDD" />
+		<KeyWord name="NOT_GENERICD" />
+		<KeyWord name="NOT_INUSED" />
+		<KeyWord name="NOT_LOGGED_IND" />
+		<KeyWord name="NO_CORE_INSTANCED" />
+		<KeyWord name="NULLD" />
+		<KeyWord name="OKD" />
+		<KeyWord name="OMITD" />
+		<KeyWord name="ONHOLDD" />
+		<KeyWord name="OPERATORD" />
+		<KeyWord name="PARKEDLOTD" />
+		<KeyWord name="PARKERD" />
+		<KeyWord name="PARKER_FLATD" />
+		<KeyWord name="PARKINGSLOTD" />
+		<KeyWord name="PARKING_SPACED" />
+		<KeyWord name="PARK_ENDD" />
+		<KeyWord name="PARK_STARTD" />
+		<KeyWord name="PASTD" />
+		<KeyWord name="PAUSEDD" />
+		<KeyWord name="PICKUPD" />
+		<KeyWord name="REJECTEDD" />
+		<KeyWord name="REMOTESTOPPEDD" />
+		<KeyWord name="REMOTE_REINVITED" />
+		<KeyWord name="REMOVEDD" />
+		<KeyWord name="RESPONSETIMEOUTD" />
+		<KeyWord name="RESTRICTED_DIGITALD" />
+		<KeyWord name="RINGINGD" />
+		<KeyWord name="RINGINUSED" />
+		<KeyWord name="RINGTIMEOUTD" />
+		<KeyWord name="SELECTEDD" />
+		<KeyWord name="SILENCED" />
+		<KeyWord name="SKIPD" />
+		<KeyWord name="SUCCESSD" />
+		<KeyWord name="TENTATIVED" />
+		<KeyWord name="TEXTD" />
+		<KeyWord name="TOOLONGD" />
+		<KeyWord name="TOO_MANY_REQUESTSD" />
+		<KeyWord name="TORTURED" />
+		<KeyWord name="TRANSFERD" />
+		<KeyWord name="UNANSWEREDD" />
+		<KeyWord name="UNAVAILABLED" />
+		<KeyWord name="UNKNOWND" />
+		<KeyWord name="UNPAUSEDD" />
+		<KeyWord name="UNSPECIFIEDD" />
+		<KeyWord name="UNSUPPORTEDD" />
+		<KeyWord name="USEREXITD" />
+		<KeyWord name="USERSTOPPEDD" />
+		<KeyWord name="USER_DEFINEDD" />
+		<KeyWord name="VIDEOD" />
+		<KeyWord name="VOICED" />
 		<KeyWord name="ZAPPED" />
 		<!-- CHANNEL DRIVERS, CHANNEL TYPES AND TECHNOLOGIES -->
 		<KeyWord name="Agent" />
+		<KeyWord name="ALSA" />
 		<KeyWord name="CAPI" />
 		<KeyWord name="Console" />
 		<KeyWord name="DAHDI" />
@@ -8644,20 +10677,23 @@
 		<KeyWord name="JINGLE" />
 		<KeyWord name="Local" />
 		<KeyWord name="MGCP" />
+		<KeyWord name="mISDN" />
 		<KeyWord name="Mobile" />
 		<KeyWord name="Modem" />
 		<KeyWord name="Motif" />
 		<KeyWord name="MulticastRTP" />
+		<KeyWord name="NBS" />
 		<KeyWord name="OOH323" />
-		<KeyWord name="PJSIP" />
+		<KeyWord name="OSS" />
 		<KeyWord name="Phone" />
+		<KeyWord name="PJSIP" />
 		<KeyWord name="SCCP" />
 		<KeyWord name="SIP" />
 		<KeyWord name="Skinny" />
+		<KeyWord name="SS7" />
 		<KeyWord name="Unistim" />
 		<KeyWord name="VPB" />
 		<KeyWord name="XMPP" />
-		<KeyWord name="Zap" />
-		<KeyWord name="mISDN" />
+		<KeyWord name="ZAP" />
 	</AutoComplete>
 </NotepadPlus>
