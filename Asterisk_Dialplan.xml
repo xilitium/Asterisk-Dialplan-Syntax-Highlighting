@@ -3150,7 +3150,7 @@
 				exten => 1,1,Set(PJSIP_HEADER(remove,X-My*)=)
 				
 				[Help]
-				https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Function_PJSIP_HEADER
+				See: https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Function_PJSIP_HEADER
 				
 				[Arguments]
 				  &#x2022; action
@@ -5426,7 +5426,7 @@
 				ASR(t5000c90l1,Support,support:Hilfe,Verkauf)
 				
 				[Help]
-				http://www.voip-info.org/wiki/view/Asterisk+cmd+ASR
+				See: http://www.voip-info.org/wiki/view/Asterisk+cmd+ASR
 				
 				[Arguments]
 				  &#x2022; txxxx Recognition timeout in xxxx milliseconds (default 10000)
@@ -5824,7 +5824,7 @@
 				Dial(CAPI/<interface-name>/[<callerid>:]<destination>[/<params>])
 				
 				[Help]
-				https://github.com/adlerweb/chan_capi
+				See: https://github.com/adlerweb/chan_capi
 				
 				[Arguments]
 				  &#x2022; group - can be a value, comma separated list of values or a range using '-'. The according interface is found
@@ -6353,6 +6353,7 @@
 		<KeyWord name="DBget" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Get DB Entry
 				
 				[Description]
 				
@@ -6367,6 +6368,7 @@
 		<KeyWord name="DBput" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Put DB entry
 				
 				[Description]
 				
@@ -6381,6 +6383,7 @@
 		<KeyWord name="DBQuery" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Execute predefined queries against MySQL Servers, and get the result back into the dialplan.
 				
 				[Description]
 				
@@ -6395,9 +6398,9 @@
 		<KeyWord name="DBRewrite" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Execute perl compatible regular expression and substitution out of a MySQL Database.
 				
 				[Description]
-				Execute perl compatible regular expression and substitution out of a MySQL Database.
 				
 				[Asterisk Version]
 				
@@ -6410,15 +6413,45 @@
 		<KeyWord name="DeadAGI" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Executes AGI on a hungup channel.
 				
 				[Description]
+				Executes an Asterisk Gateway Interface compliant program on a channel. AGI allows Asterisk to launch external
+				programs written in any language to control a telephony channel, play audio, read DTMF digits, etc. by 
+				communicating with the AGI protocol on stdin and stdout. As of 1.6.0, this channel will not stop dialplan
+				execution on hangup inside of this application. Dialplan execution will continue normally, even upon hangup
+				until the AGI application signals a desire to stop (either by exiting or, in the case of a net script, by
+				closing the connection). A locally executed AGI script will receive SIGHUP on hangup from the channel except
+				when using DeadAGI. A fast AGI server will correspondingly receive a HANGUP inline with the command dialog.
+				Both of theses signals may be disabled by setting the AGISIGHUP channel variable to no before executing the AGI
+				application. Alternatively, if you would like the AGI application to exit immediately after a channel hangup is 
+				detected, set the AGIEXITONHANGUP variable to yes.
+				
+				Use the CLI command agi show commands to list available agi commands.
+				
+				This application sets the following channel variable upon completion:
+				
+				  &#x2022; AGISTATUS - The status of the attempt to the run the AGI script text string, one of: 
+				    &#x2022; SUCCESS
+				    &#x2022; FAILURE
+				    &#x2022; NOTFOUND
+				    &#x2022; HANGUP
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				DeadAGI(command,arg1,[arg2[,...]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; command
+				  &#x2022; args
+				    &#x2022; arg1
+				    &#x2022; arg2">
+				<Param name="STRING command" />
+				<Param name="[STRING arg1" />
+				<Param name="[STRING arg2" />
+				<Param name="[..." />
+				<Param name="[STRING argn]]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Devstate" func="yes">
@@ -6433,11 +6466,27 @@
 				Attempt to connect to another device or endpoint and bridge the call.
 				
 				[Description]
-				This application will place calls to one or more specified channels.
-				As soon as one of the requested channels answers, the originating channel 
-				will be answered, if it has not already been answered. These two channels 
-				will then be active in a bridged call. All other channels that were 
-				requested will then be hung up.
+				This application will place calls to one or more specified channels. As soon as one of the requested
+				channels answers, the originating channel will be answered, if it has not already been answered. 
+				These two channels will then be active in a bridged call. All other channels that were requested will
+				then be hung up.
+				
+				This application sets the following channel variables:
+				
+				  &#x2022; DIALEDTIME - This is the time from dialing a channel until when it is disconnected.
+				  &#x2022; ANSWEREDTIME - This is the amount of time for actual call.
+				  &#x2022; DIALSTATUS - This is the status of the call
+				    &#x2022; CHANUNAVAIL
+				    &#x2022; CONGESTION
+				    &#x2022; NOANSWER
+				    &#x2022; BUSY
+				    &#x2022; ANSWER
+				    &#x2022; CANCEL
+				    &#x2022; DONTCALL - For the Privacy and Screening Modes. Will be set if the called party chooses to send
+				      the calling party to the 'Go Away' script.
+				    &#x2022; TORTURE - For the Privacy and Screening Modes. Will be set if the called party chooses to send 
+				      the calling party to the 'torture' script.
+				    &#x2022; INVALIDARGS
 				
 				[Asterisk Version]
 				(1.0+)
@@ -6449,11 +6498,16 @@
 				exten => _NXXXXXX,5,Dial(DAHDI/g0/${EXTEN},30)
 				exten => _3XXXXXXXXX,5,Dial(SIP/${EXTEN},30)
 				
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Application_Dial
+				
 				[Arguments]
-				 &#x2022; Technology/Resource
-				 &#x2022; timeout
-				 &#x2022; options (A,a,B,b,C,c,D,d,e,F,f,g,G,H,h,I,i,K,k,L,M,m,N,n,O,o,P,p,R,r,S,s,T,t,U,u,W,w,X,x,z)
-				 &#x2022; URL">
+				  &#x2022; Technology/Resource
+				  &#x2022; timeout
+				  &#x2022; options (A,a,B,b,C,c,D,d,e,F,f,g,G,H,h,I,i,K,k,L,M,m,N,n,O,o,P,p,R,r,S,s,T,t,U,u,W,w,X,x,z)
+				  &#x2022; URL
+				
+				    See help for full details">
 				<Param name="STRING Technology/Resource" />
 				<Param name="[INTEGER timeout" />
 				<Param name="[STRING options" />
@@ -6463,68 +6517,157 @@
 		<KeyWord name="Dictate" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Virtual Dictation Machine.
 				
 				[Description]
+				Start dictation machine using optional base_dir for files.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Dictate([base_dir,[filename]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; base_dir
+				  &#x2022; filename">
+				<Param name="STRING base_dir" />
+				<Param name="STRING filename" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DigitTimeout" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Set maximum timeout between digits
 				
 				[Description]
+				Once a user begins typing an extension, the user has a maximum of DigitTimeout seconds to type additional digits
+				before Asterisk considers the extension to be complete. If not specified in the dialplan, the default is 5
+				seconds.
+				
+				Deprecated in Asterisk v1.2 - use 'Set(TIMEOUT(digit)=timeout)' instead
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				DigitTimeout(seconds)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; seconds">
+				<Param name="INTEGER seconds" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Directory" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Provide directory of voicemail extensions.
 				
 				[Description]
+				This application will present the calling channel with a directory of extensions from which they can search by
+				name. The list of names and corresponding extensions is retrieved from the voicemail configuration file, 
+				voicemail.conf.
+				
+				This application will immediately exit if one of the following DTMF digits are received and the extension to 
+				jump to exists:
+				
+				0 - Jump to the 'o' extension, if it exists.
+				
+				  &#x2022; Jump to the 'a' extension, if it exists.
+				
+				This application will set the following channel variable before completion:
+				  &#x2022; DIRECTORY_RESULT - Reason Directory application exited. 
+				    &#x2022; OPERATOR - User requested operator
+				    &#x2022; ASSISTANT - User requested assistant
+				    &#x2022; TIMEOUT - User allowed DTMF wait duration to pass without sending DTMF
+				    &#x2022; HANGUP - The channel hung up before the application finished
+				    &#x2022; SELECTED - User selected a user to call from the directory
+				    &#x2022; USEREXIT - User exited with '#' during selection
+				    &#x2022; FAILED - The application failed
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Directory([vm-context,[dial-context,[options]]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Application_Directory
+				
+				[Arguments]
+				  &#x2022; vm-context - This is the context within voicemail.conf to use for the Directory. If not specified and
+				    searchcontexts=no in voicemail.conf, then default will be assumed.
+				  &#x2022; dial-context - This is the dialplan context to use when looking for an extension that the user has selected,
+				    or when jumping to the o or a extension. If not specified, the current context will be used.
+				  &#x2022; options
+				    &#x2022; ( e, f, l, b, a, m, n, p )
+				
+				    See help for full details">
+				<Param name="STRING vm-context" />
+				<Param name="[STRING dial-context" />
+				<Param name="[STRING options]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DISA" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Direct Inward System Access. Be aware that using this may compromise the security of your PBX.
 				
 				[Description]
+				The DISA, Direct Inward System Access, application allows someone from outside the telephone switch (PBX) to
+				obtain an internal system dialtone and to place calls from it as if they were placing a call from within the
+				switch. DISA plays a dialtone. The user enters their numeric passcode, followed by the pound sign #. If the
+				passcode is correct, the user is then given system dialtone within context on which a call may be placed. If
+				the user enters an invalid extension and extension i exists in the specified context, it will be used.
+				
+				The arguments to this application (in extensions.conf) allow either specification of a single global passcode
+				(that everyone uses), or individual passcodes contained in a file (filename).
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				DISA(passcode|filename,[context,[cid,mailbox@[context],[options]]]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Application_DISA
+				
+				[Arguments]
+				  &#x2022; passcode|filename - If you need to present a DISA dialtone without entering a password, simply
+				    set passcode to no-password.
+				  &#x2022; context - Specifies the dialplan context in which the user-entered extension will be matched.
+				  &#x2022; cid - Specifies a new (different) callerid to be used for this call.
+				  &#x2022; mailbox - Will cause a stutter-dialtone (indication dialrecall) to be used, if the specified
+				    mailbox contains any new messages. 
+				    &#x2022; mailbox
+				    &#x2022; context
+				  &#x2022; options
+				    &#x2022; n - The DISA application will not answer initially.
+				    &#x2022; p - The extension entered will be considered complete when a # is entered
+				
+				    See hepl for full details">
+				<Param name="STRING [passcode|filename]" />
+				<Param name="[STRING context" />
+				<Param name="[STRING cid" />
+				<Param name="[STRING mailbox@context" />
+				<Param name="[STRING options]]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DTMFToText" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Assigns a string entered by someone, using DTMF.
+				
+				This application is not part of Asterisk - it's a thrid party contribution located at:
+				http://www.soft-switch.org
 				
 				[Description]
+				
+				This provides functionality somewhat like text entry on a cellphone, but works for any DTMF phone. It does
+				not depend on the timing of the key taps, as cellphones do. This would cause serious problems when the sending
+				phone generates DTMF, with timing completely isolated from the user's tapping of the keys (PBXs with digital
+				phones, cell phones to land lines, and other situations are generally like this.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				DTMFToText(variable=initial digits|max chars|max time)
 				
 				[Arguments]">
 				<Param name="" />
@@ -6533,15 +6676,20 @@
 		<KeyWord name="DumpChan" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Dump Info About The Calling Channel.
 				
 				[Description]
+				Displays information on channel and listing of all channel variables. If level is specified, output is only
+				displayed when the verbose level is currently set to that number or greater.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				DumpChan([level])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; level - Minimum verbose level">
+				<Param name="[STRING level]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="DUNDiLookup" func="yes">
@@ -6553,7 +6701,7 @@
 		<KeyWord name="DynExtenDB" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
-				
+				Store extensions in database
 				[Description]
 				
 				[Asterisk Version]
@@ -6567,26 +6715,65 @@
 		<KeyWord name="EAGI" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Executes an EAGI compliant application.
 				
 				[Description]
+				Using 'EAGI' provides enhanced AGI, with incoming audio available out of band on file descriptor 3.
+				
+				Executes an Asterisk Gateway Interface compliant program on a channel. AGI allows Asterisk to launch external
+				programs written in any language to control a telephony channel, play audio, read DTMF digits, etc. by 
+				communicating with the AGI protocol on stdin and stdout. As of 1.6.0, this channel will not stop dialplan 
+				execution on hangup inside of this application. Dialplan execution will continue normally, even upon hangup 
+				until the AGI application signals a desire to stop (either by exiting or, in the case of a net script, by 
+				closing the connection). A locally executed AGI script will receive SIGHUP on hangup from the channel except 
+				when using DeadAGI. A fast AGI server will correspondingly receive a HANGUP inline with the command dialog. 
+				Both of theses signals may be disabled by setting the AGISIGHUP channel variable to no before executing the 
+				AGI application. Alternatively, if you would like the AGI application to exit immediately after a channel 
+				hangup is detected, set the AGIEXITONHANGUP variable to yes.
+				
+				Use the CLI command agi show commands to list available agi commands.
+				
+				This application sets the following channel variable upon completion:
+				
+				  &#x2022; AGISTATUS - The status of the attempt to the run the AGI script text string, one of:
+				    &#x2022; SUCCESS
+				    &#x2022; FAILURE
+				    &#x2022; NOTFOUND
+				    &#x2022; HANGUP
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				EAGI(command,arg1,[arg2[,...]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; command
+				  &#x2022; args
+				    &#x2022; arg1
+				    &#x2022; arg2">
+				<Param name="STRING command" />
+				<Param name="[STRING arg1" />
+				<Param name="[STRING arg2" />
+				<Param name="[..." />
+				<Param name="[STRING argn]]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Echo" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Echo media, DTMF back to the calling party
 				
 				[Description]
+				Echos back any media or DTMF frames read from the calling channel back to itself. This will not echo
+				CONTROL, MODEM, or NULL frames. Note: If '#' detected application exits.
+				
+				This application does not automatically answer and should be preceeded by an application such as 
+				Answer() or Progress().
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Echo()
 				
 				[Arguments]">
 				<Param name="" />
@@ -6595,12 +6782,15 @@
 		<KeyWord name="EndWhile" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				End a while loop.
 				
 				[Description]
+				Return to the previous called While().
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				EndWhile()
 				
 				[Arguments]">
 				<Param name="" />
@@ -6621,54 +6811,94 @@
 		<KeyWord name="Exec" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Executes dialplan application.
 				
 				[Description]
+				Allows an arbitrary application to be invoked even when not hard coded into the dialplan. If the underlying
+				application terminates the dialplan, or if the application cannot be found, Exec will terminate the dialplan.
+				
+				To invoke external applications, see the application System. If you would like to catch any error instead,
+				see TryExec.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Exec(appname(arguments))
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; appname - Application name and arguments of the dialplan application to execute.
+				    &#x2022; arguments">
+				<Param name="STRING appname(arguments)" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ExecIf" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Executes dialplan application, conditionally.
 				
 				[Description]
+				If expr is true, execute and return the result of appiftrue(args).
+				
+				If expr is true, but appiftrue is not found, then the application will return a non-zero value.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ExecIf(expression?appiftrue:[appiffalse])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; expression
+				  &#x2022; execapp
+				    &#x2022; appiftrue
+				      &#x2022; args
+				    &#x2022; appiffalse
+				      &#x2022; args">
+				<Param name="STRING expression" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ExecIfTime" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Conditional application execution based on the current time.
 				
 				[Description]
+				This application will execute the specified dialplan application, with optional arguments, if the current
+				time matches the given time specification.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ExecIfTime(times,weekdays,mdays,months,[timezone]?appname[(appargs]))
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; day_condition
+				    &#x2022; times
+				    &#x2022; weekdays
+				    &#x2022; mdays
+				    &#x2022; months
+				    &#x2022; timezone
+				  &#x2022; appname
+				    &#x2022; appargs">
+				<Param name="STRING times" />
+				<Param name="STRING weekdays" />
+				<Param name="STRING mdays" />
+				<Param name="STRING months" />
+				<Param name="[STRING timezone" />
+				<Param name="[STRING appname[(appargs])]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ExitWhile" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				End a While loop.
 				
 				[Description]
+				Exits a While() loop, whether or not the conditional has been satisfied.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ExitWhile()
 				
 				[Arguments]">
 				<Param name="" />
@@ -6677,40 +6907,82 @@
 		<KeyWord name="ExtenSpy" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Listen to a channel, and optionally whisper into it.
 				
 				[Description]
+				This application is used to listen to the audio from an Asterisk channel. This includes the audio coming in and
+				out of the channel being spied on. Only channels created by outgoing calls for the specified extension will be
+				selected for spying. If the optional context is not supplied, the current channel's context will be used.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ExtenSpy(exten@[context],[options])
 				
-				[Arguments]">
-				<Param name="" />
+				While spying, the following actions may be performed:
+				  &#x2022; Dialing # cycles the volume level.
+				  &#x2022; Dialing * will stop spying and look for another channel to spy on.
+				
+				[Help]
+				See: https://wiki.asterisk.org/wiki/display/AST/Asterisk+13+Application_ExtenSpy
+				
+				[Arguments]
+				  &#x2022; exten
+				    &#x2022; exten - Specify extension.
+				    &#x2022; context - Optionally specify a context, defaults to default.
+				  &#x2022; options
+				    &#x2022; b, B, c, d, e, E, g, n, o, q, r, s, S, v, w, W, x, X
+				
+				    See help for more complete information">
+					<Param name="STRING exten@[context]" />
+					<Param name="[STRING options]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ExternalIVR" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Interfaces with an external IVR application.
 				
 				[Description]
+				Either forks a process to run given command or makes a socket to connect to given host and starts a generator
+				on the channel. The generator's play list is controlled by the external application, which can add and clear
+				entries via simple commands issued over its stdout. The external application will receive all DTMF events
+				received on the channel, and notification if the channel is hung up. The received on the channel, and
+				notification if the channel is hung up. The application will not be forcibly terminated when the channel is
+				hung up. For more information see doc/AST.pdf.
 				
 				[Asterisk Version]
+				1.6+
 				
 				[Syntax]
+				ExternalIVR(command|ivr://host([arg1,[arg2[,...]]]),[options])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; command|ivr://host
+				    &#x2022; arg1
+				    &#x2022; arg2
+				  &#x2022; options
+				    &#x2022; n - Tells ExternalIVR() not to answer the channel.
+				    &#x2022; i - Tells ExternalIVR() not to send a hangup and exit when the channel receives a hangup, instead it
+				      sends an I informative message meaning that the external application MUST hang up the call with an H command.
+				    &#x2022; d - Tells ExternalIVR() to run on a channel that has been hung up and will not look for hangups.
+				      The external application must exit with an E command.">
+				<Param name="STRING command|ivr://host([arg1,[arg2[,...]]])" />
+				<Param name="[STRING options]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ExternIVR" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Interfaces with an external IVR application
 				
 				[Description]
 				
 				[Asterisk Version]
+				1.2, 1.4
 				
 				[Syntax]
+				ExternalIVR(command[,arg[,arg...]])
 				
 				[Arguments]">
 				<Param name="" />
@@ -6782,6 +7054,10 @@
 				exten => 1234,n,ReadFile(MYTEXT=/path/myfile,200)
 				exten => 1234,n,Flite(&#x0022;${MYTEXT}&#x0022;,any)
 				exten => 1234,n,Hangup()
+				
+				[Help]
+				See: https://github.com/zaf/Asterisk-Flite
+				See: http://zaf.github.io/Asterisk-Flite/
 				
 				[Arguments]
 				 &#x2022; text
@@ -8341,7 +8617,7 @@
 				
 				[Help]
 				See: https://wiki.asterisk.org/wiki/display/AST/Application_ReceiveFax
-				or https://wiki.asterisk.org/wiki/display/AST/Application_ReceiveFAX_res_fax
+				See: https://wiki.asterisk.org/wiki/display/AST/Application_ReceiveFAX_res_fax
 				
 				[Arguments]
 				  &#x2022; filename
@@ -8723,8 +8999,7 @@
 				
 				[Help]
 				See: https://wiki.asterisk.org/wiki/display/AST/Application_SendFax
-				or https://wiki.asterisk.org/wiki/display/AST/Application_SendFAX_res_fax
-				
+				See: https://wiki.asterisk.org/wiki/display/AST/Application_SendFAX_res_fax
 				
 				[Arguments]
 				  &#x2022; filename
@@ -9829,9 +10104,9 @@
 				exten => s,n,Hangup()
 				
 				[Help]
-				https://wiki.i6net.org/doku.php/vxi_installation_guide:start
-				https://wiki.i6net.org/doku.php/vxi_developer_guide:start
-				http://www.voip-info.org/wiki/view/Asterisk+cmd+Vxml
+				See: https://wiki.i6net.org/doku.php/vxi_installation_guide:start
+				See: https://wiki.i6net.org/doku.php/vxi_developer_guide:start
+				See: http://www.voip-info.org/wiki/view/Asterisk+cmd+Vxml
 				
 				[Arguments]
 				  &#x2022; url">
@@ -10461,207 +10736,209 @@
 		<KeyWord name="ZAPATELLERSTATUS" />
 		<KeyWord name="_CALLERHOLDID" />
 		<!-- CONSTANTS AND SYSTEM EVENTS -->
-		<KeyWord name="3K1AUDIOD" />
-		<KeyWord name="3WAY_ENDD" />
-		<KeyWord name="3WAY_STARTD" />
-		<KeyWord name="ABORTD" />
-		<KeyWord name="ABSOLUTETIMEOUTD" />
-		<KeyWord name="ADDEDD" />
-		<KeyWord name="ALREADY_LOGGED_IND" />
-		<KeyWord name="ANSWERD" />
-		<KeyWord name="ANSWEREDD" />
-		<KeyWord name="APPERRORD" />
-		<KeyWord name="APP_ENDD" />
-		<KeyWord name="APP_STARTD" />
-		<KeyWord name="ASSISTANTD" />
-		<KeyWord name="ASTERISK_VERSION_NUMD" />
-		<KeyWord name="ASTJSON_ADD_FAILEDD" />
-		<KeyWord name="ASTJSON_ARG_NEEDEDD" />
-		<KeyWord name="ASTJSON_DELETE_FAILEDD" />
-		<KeyWord name="ASTJSON_INVALID_TYPED" />
-		<KeyWord name="ASTJSON_NOTFOUNDD" />
-		<KeyWord name="ASTJSON_OKD" />
-		<KeyWord name="ASTJSON_PARSE_ERRORD" />
-		<KeyWord name="ASTJSON_SET_FAILEDD" />
-		<KeyWord name="ASTJSON_UNDECIDEDD" />
-		<KeyWord name="AST_AGI_DIRD" />
-		<KeyWord name="AST_CONFIG_DIRD" />
-		<KeyWord name="AST_CONFIG_FILED" />
-		<KeyWord name="AST_DATA_DIRD" />
-		<KeyWord name="AST_DEVICE_BUSYD" />
-		<KeyWord name="AST_DEVICE_INUSED" />
-		<KeyWord name="AST_DEVICE_INVALIDD" />
-		<KeyWord name="AST_DEVICE_NOT_INUSED" />
-		<KeyWord name="AST_DEVICE_ONHOLDD" />
-		<KeyWord name="AST_DEVICE_RINGINGD" />
-		<KeyWord name="AST_DEVICE_RINGINUSED" />
-		<KeyWord name="AST_DEVICE_UNAVAILABLED" />
-		<KeyWord name="AST_DEVICE_UNKNOWND" />
-		<KeyWord name="AST_KEY_DIRD" />
-		<KeyWord name="AST_LOG_DIRD" />
-		<KeyWord name="AST_MODULE_DIRD" />
-		<KeyWord name="AST_MONITOR_DIRD" />
-		<KeyWord name="AST_RUN_DIRD" />
-		<KeyWord name="AST_SPOOL_DIRD" />
-		<KeyWord name="AST_VAR_DIRD" />
-		<KeyWord name="ATTENDEDTRANSFERD" />
-		<KeyWord name="BILLINGD" />
-		<KeyWord name="BRIDGE_ENDD" />
-		<KeyWord name="BRIDGE_ENTERD" />
-		<KeyWord name="BRIDGE_EXITD" />
-		<KeyWord name="BRIDGE_STARTD" />
-		<KeyWord name="BRIDGE_UPDATED" />
-		<KeyWord name="BUILD_DATED" />
-		<KeyWord name="BUILD_HOSTNAMED" />
-		<KeyWord name="BUILD_KERNELD" />
-		<KeyWord name="BUILD_MACHINED" />
-		<KeyWord name="BUILD_OSD" />
-		<KeyWord name="BUILD_USERD" />
-		<KeyWord name="BUSYD" />
-		<KeyWord name="CANCELD" />
-		<KeyWord name="CHANNEL_ENDD" />
-		<KeyWord name="CHANNEL_STARTD" />
-		<KeyWord name="CHANUNAVAILD" />
-		<KeyWord name="CHAN_ENDD" />
-		<KeyWord name="CHAN_STARTD" />
-		<KeyWord name="CNGD" />
-		<KeyWord name="CONF_ENDD" />
-		<KeyWord name="CONF_ENTERD" />
-		<KeyWord name="CONF_EXITD" />
-		<KeyWord name="CONF_STARTD" />
-		<KeyWord name="CONGESTIOND" />
-		<KeyWord name="CONTINUED" />
-		<KeyWord name="CONTROLD" />
-		<KeyWord name="DBGM_ALLD" />
-		<KeyWord name="DBGM_APPLD" />
-		<KeyWord name="DBGM_BCD" />
-		<KeyWord name="DBGM_BCDATAD" />
-		<KeyWord name="DBGM_CDATAD" />
-		<KeyWord name="DBGM_CONND" />
-		<KeyWord name="DBGM_DDATAD" />
-		<KeyWord name="DBGM_FSMD" />
-		<KeyWord name="DBGM_ISDND" />
-		<KeyWord name="DBGM_L2D" />
-		<KeyWord name="DBGM_L3D" />
-		<KeyWord name="DBGM_L3DATAD" />
-		<KeyWord name="DBGM_MAND" />
-		<KeyWord name="DBGM_MSGD" />
-		<KeyWord name="DBGM_NETD" />
-		<KeyWord name="DBGM_SDATAD" />
-		<KeyWord name="DBGM_SOCKD" />
-		<KeyWord name="DBGM_SOUNDD" />
-		<KeyWord name="DBGM_TEID" />
-		<KeyWord name="DBGM_TONED" />
-		<KeyWord name="DBGM_TOPLEVELD" />
-		<KeyWord name="DIGITALD" />
-		<KeyWord name="DIGITAL_W_TONESD" />
-		<KeyWord name="DISABLEDD" />
-		<KeyWord name="DOCUMENTATIOND" />
-		<KeyWord name="DONTCALLD" />
-		<KeyWord name="DTMFD" />
-		<KeyWord name="DTMF_BEGIND" />
-		<KeyWord name="DTMF_ENDD" />
-		<KeyWord name="ENABLEDD" />
-		<KeyWord name="ENDMARKEDD" />
-		<KeyWord name="ERRORD" />
-		<KeyWord name="FAILD" />
-		<KeyWord name="FAILEDD" />
-		<KeyWord name="FAILURED" />
-		<KeyWord name="FORWARDD" />
-		<KeyWord name="FREED" />
-		<KeyWord name="FULLD" />
-		<KeyWord name="HANGUPD" />
-		<KeyWord name="HOLDINUSED" />
-		<KeyWord name="HOOKFLASHD" />
-		<KeyWord name="HTMLD" />
-		<KeyWord name="HUMAND" />
-		<KeyWord name="IMAGED" />
-		<KeyWord name="INCOMPATIBLED" />
-		<KeyWord name="INITIALSILENCED" />
-		<KeyWord name="INUSED" />
-		<KeyWord name="INVALIDD" />
-		<KeyWord name="INVALIDARGSD" />
-		<KeyWord name="INVALID_PROTOCOLD" />
-		<KeyWord name="INVALID_URID" />
-		<KeyWord name="JOINEMPTYD" />
-		<KeyWord name="JOINUNAVAILD" />
-		<KeyWord name="KICKEDD" />
-		<KeyWord name="LEAVEEMPTYD" />
-		<KeyWord name="LEAVEUNAVAILD" />
-		<KeyWord name="LINKEDID_ENDD" />
-		<KeyWord name="LOCAL_OPTIMIZED" />
-		<KeyWord name="LOCAL_REINVITED" />
-		<KeyWord name="LOGGEDIND" />
-		<KeyWord name="LOGGEDOUTD" />
-		<KeyWord name="LONGGREETINGD" />
-		<KeyWord name="LOOPD" />
-		<KeyWord name="MACHINED" />
-		<KeyWord name="MAXWORDLENGTHD" />
-		<KeyWord name="MAXWORDSD" />
-		<KeyWord name="MEMBERALREADYD" />
-		<KeyWord name="MODEMD" />
-		<KeyWord name="NOANSWERD" />
-		<KeyWord name="NOAPPD" />
-		<KeyWord name="NOCHANNELD" />
-		<KeyWord name="NOLOADD" />
-		<KeyWord name="NONEXISTENTD" />
-		<KeyWord name="NOPARSED" />
-		<KeyWord name="NOSUCHQUEUED" />
-		<KeyWord name="NOTDYNAMICD" />
-		<KeyWord name="NOTFOUNDD" />
-		<KeyWord name="NOTHINGD" />
-		<KeyWord name="NOTINQUEUED" />
-		<KeyWord name="NOTSURED" />
-		<KeyWord name="NOT_CONNECTEDD" />
-		<KeyWord name="NOT_GENERICD" />
-		<KeyWord name="NOT_INUSED" />
-		<KeyWord name="NOT_LOGGED_IND" />
-		<KeyWord name="NO_CORE_INSTANCED" />
-		<KeyWord name="NULLD" />
-		<KeyWord name="OKD" />
-		<KeyWord name="OMITD" />
-		<KeyWord name="ONHOLDD" />
-		<KeyWord name="OPERATORD" />
-		<KeyWord name="PARKEDLOTD" />
-		<KeyWord name="PARKERD" />
-		<KeyWord name="PARKER_FLATD" />
-		<KeyWord name="PARKINGSLOTD" />
-		<KeyWord name="PARKING_SPACED" />
-		<KeyWord name="PARK_ENDD" />
-		<KeyWord name="PARK_STARTD" />
-		<KeyWord name="PASTD" />
-		<KeyWord name="PAUSEDD" />
-		<KeyWord name="PICKUPD" />
-		<KeyWord name="REJECTEDD" />
-		<KeyWord name="REMOTESTOPPEDD" />
-		<KeyWord name="REMOTE_REINVITED" />
-		<KeyWord name="REMOVEDD" />
-		<KeyWord name="RESPONSETIMEOUTD" />
-		<KeyWord name="RESTRICTED_DIGITALD" />
-		<KeyWord name="RINGINGD" />
-		<KeyWord name="RINGINUSED" />
-		<KeyWord name="RINGTIMEOUTD" />
-		<KeyWord name="SELECTEDD" />
-		<KeyWord name="SILENCED" />
-		<KeyWord name="SKIPD" />
-		<KeyWord name="SUCCESSD" />
-		<KeyWord name="TENTATIVED" />
-		<KeyWord name="TEXTD" />
-		<KeyWord name="TOOLONGD" />
-		<KeyWord name="TOO_MANY_REQUESTSD" />
-		<KeyWord name="TORTURED" />
-		<KeyWord name="TRANSFERD" />
-		<KeyWord name="UNANSWEREDD" />
-		<KeyWord name="UNAVAILABLED" />
-		<KeyWord name="UNKNOWND" />
-		<KeyWord name="UNPAUSEDD" />
-		<KeyWord name="UNSPECIFIEDD" />
-		<KeyWord name="UNSUPPORTEDD" />
-		<KeyWord name="USEREXITD" />
-		<KeyWord name="USERSTOPPEDD" />
-		<KeyWord name="USER_DEFINEDD" />
-		<KeyWord name="VIDEOD" />
-		<KeyWord name="VOICED" />
+		<KeyWord name="3K1AUDIO" />
+		<KeyWord name="3WAY_END" />
+		<KeyWord name="3WAY_START" />
+		<KeyWord name="ABORT" />
+		<KeyWord name="ABSOLUTETIMEOUT" />
+		<KeyWord name="ADDED" />
+		<KeyWord name="ALREADY_LOGGED_IN" />
+		<KeyWord name="ANSWER" />
+		<KeyWord name="ANSWER_FAILED" />
+		<KeyWord name="ANSWERED" />
+		<KeyWord name="APPERROR" />
+		<KeyWord name="APP_END" />
+		<KeyWord name="APP_START" />
+		<KeyWord name="ASSISTANT" />
+		<KeyWord name="ASTERISK_VERSION_NUM" />
+		<KeyWord name="ASTJSON_ADD_FAILED" />
+		<KeyWord name="ASTJSON_ARG_NEEDED" />
+		<KeyWord name="ASTJSON_DELETE_FAILED" />
+		<KeyWord name="ASTJSON_INVALID_TYPE" />
+		<KeyWord name="ASTJSON_NOTFOUND" />
+		<KeyWord name="ASTJSON_OK" />
+		<KeyWord name="ASTJSON_PARSE_ERROR" />
+		<KeyWord name="ASTJSON_SET_FAILED" />
+		<KeyWord name="ASTJSON_UNDECIDED" />
+		<KeyWord name="AST_AGI_DIR" />
+		<KeyWord name="AST_CONFIG_DIR" />
+		<KeyWord name="AST_CONFIG_FILE" />
+		<KeyWord name="AST_DATA_DIR" />
+		<KeyWord name="AST_DEVICE_BUSY" />
+		<KeyWord name="AST_DEVICE_INUSE" />
+		<KeyWord name="AST_DEVICE_INVALID" />
+		<KeyWord name="AST_DEVICE_NOT_INUSE" />
+		<KeyWord name="AST_DEVICE_ONHOLD" />
+		<KeyWord name="AST_DEVICE_RINGING" />
+		<KeyWord name="AST_DEVICE_RINGINUSE" />
+		<KeyWord name="AST_DEVICE_UNAVAILABLE" />
+		<KeyWord name="AST_DEVICE_UNKNOWN" />
+		<KeyWord name="AST_KEY_DIR" />
+		<KeyWord name="AST_LOG_DIR" />
+		<KeyWord name="AST_MODULE_DIR" />
+		<KeyWord name="AST_MONITOR_DIR" />
+		<KeyWord name="AST_RUN_DIR" />
+		<KeyWord name="AST_SPOOL_DIR" />
+		<KeyWord name="AST_VAR_DIR" />
+		<KeyWord name="ATTENDEDTRANSFER" />
+		<KeyWord name="BILLING" />
+		<KeyWord name="BRIDGE_END" />
+		<KeyWord name="BRIDGE_ENTER" />
+		<KeyWord name="BRIDGE_EXIT" />
+		<KeyWord name="BRIDGE_START" />
+		<KeyWord name="BRIDGE_UPDATE" />
+		<KeyWord name="BUILD_DATE" />
+		<KeyWord name="BUILD_HOSTNAME" />
+		<KeyWord name="BUILD_KERNEL" />
+		<KeyWord name="BUILD_MACHINE" />
+		<KeyWord name="BUILD_OS" />
+		<KeyWord name="BUILD_USER" />
+		<KeyWord name="BUSY" />
+		<KeyWord name="CANCEL" />
+		<KeyWord name="CHANNEL_END" />
+		<KeyWord name="CHANNEL_START" />
+		<KeyWord name="CHANUNAVAIL" />
+		<KeyWord name="CHAN_END" />
+		<KeyWord name="CHAN_START" />
+		<KeyWord name="CNG" />
+		<KeyWord name="CONF_END" />
+		<KeyWord name="CONF_ENTER" />
+		<KeyWord name="CONF_EXIT" />
+		<KeyWord name="CONF_START" />
+		<KeyWord name="CONGESTION" />
+		<KeyWord name="CONTINUE" />
+		<KeyWord name="CONTROL" />
+		<KeyWord name="DBGM_ALL" />
+		<KeyWord name="DBGM_APPL" />
+		<KeyWord name="DBGM_BC" />
+		<KeyWord name="DBGM_BCDATA" />
+		<KeyWord name="DBGM_CDATA" />
+		<KeyWord name="DBGM_CONN" />
+		<KeyWord name="DBGM_DDATA" />
+		<KeyWord name="DBGM_FSM" />
+		<KeyWord name="DBGM_ISDN" />
+		<KeyWord name="DBGM_L2" />
+		<KeyWord name="DBGM_L3" />
+		<KeyWord name="DBGM_L3DATA" />
+		<KeyWord name="DBGM_MAN" />
+		<KeyWord name="DBGM_MSG" />
+		<KeyWord name="DBGM_NET" />
+		<KeyWord name="DBGM_SDATA" />
+		<KeyWord name="DBGM_SOCK" />
+		<KeyWord name="DBGM_SOUND" />
+		<KeyWord name="DBGM_TEI" />
+		<KeyWord name="DBGM_TONE" />
+		<KeyWord name="DBGM_TOPLEVEL" />
+		<KeyWord name="DIGITAL" />
+		<KeyWord name="DIGITAL_W_TONES" />
+		<KeyWord name="DISABLED" />
+		<KeyWord name="DOCUMENTATION" />
+		<KeyWord name="DONTCALL" />
+		<KeyWord name="DTMF" />
+		<KeyWord name="DTMF_BEGIN" />
+		<KeyWord name="DTMF_END" />
+		<KeyWord name="ENABLED" />
+		<KeyWord name="ENDMARKED" />
+		<KeyWord name="ERROR" />
+		<KeyWord name="FAIL" />
+		<KeyWord name="FAILED" />
+		<KeyWord name="FAILURE" />
+		<KeyWord name="FORWARD" />
+		<KeyWord name="FREE" />
+		<KeyWord name="FULL" />
+		<KeyWord name="GENERATOR_FAILED" />
+		<KeyWord name="HANGUP" />
+		<KeyWord name="HOLDINUSE" />
+		<KeyWord name="HOOKFLASH" />
+		<KeyWord name="HTML" />
+		<KeyWord name="HUMAN" />
+		<KeyWord name="IMAGE" />
+		<KeyWord name="INCOMPATIBLE" />
+		<KeyWord name="INITIALSILENCE" />
+		<KeyWord name="INUSE" />
+		<KeyWord name="INVALID" />
+		<KeyWord name="INVALIDARGS" />
+		<KeyWord name="INVALID_PROTOCOL" />
+		<KeyWord name="INVALID_URI" />
+		<KeyWord name="JOINEMPTY" />
+		<KeyWord name="JOINUNAVAIL" />
+		<KeyWord name="KICKED" />
+		<KeyWord name="LEAVEEMPTY" />
+		<KeyWord name="LEAVEUNAVAIL" />
+		<KeyWord name="LINKEDID_END" />
+		<KeyWord name="LOCAL_OPTIMIZE" />
+		<KeyWord name="LOCAL_REINVITE" />
+		<KeyWord name="LOGGEDIN" />
+		<KeyWord name="LOGGEDOUT" />
+		<KeyWord name="LONGGREETING" />
+		<KeyWord name="LOOP" />
+		<KeyWord name="MACHINE" />
+		<KeyWord name="MAXWORDLENGTH" />
+		<KeyWord name="MAXWORDS" />
+		<KeyWord name="MEMBERALREADY" />
+		<KeyWord name="MODEM" />
+		<KeyWord name="NOANSWER" />
+		<KeyWord name="NOAPP" />
+		<KeyWord name="NOCHANNEL" />
+		<KeyWord name="NOLOAD" />
+		<KeyWord name="NONEXISTENT" />
+		<KeyWord name="NOPARSE" />
+		<KeyWord name="NOSUCHQUEUE" />
+		<KeyWord name="NOTDYNAMIC" />
+		<KeyWord name="NOTFOUND" />
+		<KeyWord name="NOTHING" />
+		<KeyWord name="NOTINQUEUE" />
+		<KeyWord name="NOTSURE" />
+		<KeyWord name="NOT_CONNECTED" />
+		<KeyWord name="NOT_GENERIC" />
+		<KeyWord name="NOT_INUSE" />
+		<KeyWord name="NOT_LOGGED_IN" />
+		<KeyWord name="NO_CORE_INSTANCE" />
+		<KeyWord name="NULL" />
+		<KeyWord name="OK" />
+		<KeyWord name="OMIT" />
+		<KeyWord name="ONHOLD" />
+		<KeyWord name="OPERATOR" />
+		<KeyWord name="PARKEDLOT" />
+		<KeyWord name="PARKER" />
+		<KeyWord name="PARKER_FLAT" />
+		<KeyWord name="PARKINGSLOT" />
+		<KeyWord name="PARKING_SPACE" />
+		<KeyWord name="PARK_END" />
+		<KeyWord name="PARK_START" />
+		<KeyWord name="PAST" />
+		<KeyWord name="PAUSED" />
+		<KeyWord name="PICKUP" />
+		<KeyWord name="REJECTED" />
+		<KeyWord name="REMOTESTOPPED" />
+		<KeyWord name="REMOTE_REINVITE" />
+		<KeyWord name="REMOVED" />
+		<KeyWord name="RESPONSETIMEOUT" />
+		<KeyWord name="RESTRICTED_DIGITAL" />
+		<KeyWord name="RINGING" />
+		<KeyWord name="RINGINUSE" />
+		<KeyWord name="RINGTIMEOUT" />
+		<KeyWord name="SELECTED" />
+		<KeyWord name="SILENCE" />
+		<KeyWord name="SKIP" />
+		<KeyWord name="SUCCESS" />
+		<KeyWord name="TENTATIVE" />
+		<KeyWord name="TEXT" />
+		<KeyWord name="TOOLONG" />
+		<KeyWord name="TOO_MANY_REQUESTS" />
+		<KeyWord name="TORTURE" />
+		<KeyWord name="TRANSFER" />
+		<KeyWord name="UNANSWERED" />
+		<KeyWord name="UNAVAILABLE" />
+		<KeyWord name="UNKNOWN" />
+		<KeyWord name="UNPAUSED" />
+		<KeyWord name="UNSPECIFIED" />
+		<KeyWord name="UNSUPPORTED" />
+		<KeyWord name="USEREXIT" />
+		<KeyWord name="USERSTOPPED" />
+		<KeyWord name="USER_DEFINED" />
+		<KeyWord name="VIDEO" />
+		<KeyWord name="VOICE" />
 		<KeyWord name="ZAPPED" />
 		<!-- CHANNEL DRIVERS, CHANNEL TYPES AND TECHNOLOGIES -->
 		<KeyWord name="Agent" />
