@@ -1,5 +1,5 @@
 # Asterisk Dialplan Syntax Highlighting
-Asterisk Dialplan Syntax Highlighting for Notepad++. Works with UDL 2.1
+Traditional Asterisk Dialplan Syntax Highlighting for Notepad++. Works with UDL 2.1
 
 ## Install
 <ul>
