@@ -29,3 +29,10 @@ Traditional Asterisk Dialplan Syntax Highlighting for Notepad++. Works with UDL 
 ![Highlighting for Mono Industrial  Theme](http://i703.photobucket.com/albums/ww40/xilitium/asterisk-syntax-highlighting-notepad-dark-mono-industrial-1.png)
 <br><br>
 ![Highlighting for Mono Industrial  Theme](http://i703.photobucket.com/albums/ww40/xilitium/asterisk-syntax-highlighting-notepad-dark-mono-industrial-2.png)
+<br><br>
+<p>Highlighting for Obsidian Theme</p>
+![Highlighting for Obsidian Theme](http://i703.photobucket.com/albums/ww40/xilitium/asterisk-syntax-highlighting-notepad-dark-obsidian-1.png)
+<br><br>
+![](http://i703.photobucket.com/albums/ww40/xilitium/asterisk-syntax-highlighting-notepad-dark-obsidian-2.png)
+<br><br>
+![](http://i703.photobucket.com/albums/ww40/xilitium/asterisk-syntax-highlighting-notepad-dark-obsidian-3.png)
