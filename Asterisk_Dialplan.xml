@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252" ?>
 <!--
-@author www.xilitium.com
+@author: Javier Torres
+@website: www.xilitium.com
 @version 3.0
 -->
 <NotepadPlus>
@@ -105,8 +106,8 @@
 				Checks attributes of manager accounts
 				
 				[Description]
-				Currently, the only supported parameter is 'sessions' which will return the current number of active
-				sessions for this AMI account.
+				Currently, the only supported parameter is 'sessions' which will return the current number 
+				of active sessions for this AMI account.
 				
 				[Asterisk Version]
 				11
@@ -484,7 +485,7 @@
 				[Asterisk Version]
 				
 				[Syntax]
-				CALLERID(datatype,CID)
+				CALLERID(datatype[,CID])
 				
 				[Arguments]
 				  &#x2022; datatype - The allowable datatypes are:
@@ -544,8 +545,8 @@
 				
 				[Description]
 				All of the CDR field names are read-only, except for accountcode, userfield, and amaflags. 
-				You may, however, supply a name not on the above list, and create your own variable, whose value can be changed 
-				with this function, and this variable will be stored on the CDR.
+				You may, however, supply a name not on the above list, and create your own variable, whose 
+				value can be changed with this function, and this variable will be stored on the CDR.
 				
 				Note:
 				CDRs can only be modified before the bridge between two channels is torn down. For example, 
@@ -569,25 +570,25 @@
 				      &#x2022; 4 - BUSY
 				      &#x2022; 8 - ANSWERED
 				      &#x2022; 16 - CONGESTION
-				  &#x2022; src - Source.
-				  &#x2022; start - Time the call started.
-				  &#x2022; amaflags
-				    &#x2022; 1 - OMIT
-				    &#x2022; 2 - BILLING
-				    &#x2022; 3 - DOCUMENTATION 
-				 &#x2022; dst - Destination.
-				  &#x2022; answer - Time the call was answered.
-				  &#x2022; accountcode - The channel's account code.
-				  &#x2022; dcontext - Destination context.
-				  &#x2022; end - Time the call ended.
-				  &#x2022; uniqueid - The channel's unique id.
-				  &#x2022; dstchannel - Destination channel.
-				  &#x2022; duration - Duration of the call.
-				  &#x2022; userfield - The channel's user specified field.
-				  &#x2022; lastapp - Last application.
-				  &#x2022; billsec - Duration of the call once it was answered.
-				  &#x2022; channel - Channel name.
-				  &#x2022; sequence - CDR sequence number.
+				    &#x2022; src - Source.
+				    &#x2022; start - Time the call started.
+				    &#x2022; amaflags
+				      &#x2022; 1 - OMIT
+				      &#x2022; 2 - BILLING
+				      &#x2022; 3 - DOCUMENTATION 
+				    &#x2022; dst - Destination.
+				    &#x2022; answer - Time the call was answered.
+				    &#x2022; accountcode - The channel's account code.
+				    &#x2022; dcontext - Destination context.
+				    &#x2022; end - Time the call ended.
+				    &#x2022; uniqueid - The channel's unique id.
+				    &#x2022; dstchannel - Destination channel.
+				    &#x2022; duration - Duration of the call.
+				    &#x2022; userfield - The channel's user specified field.
+				    &#x2022; lastapp - Last application.
+				    &#x2022; billsec - Duration of the call once it was answered.
+				    &#x2022; channel - Channel name.
+				    &#x2022; sequence - CDR sequence number.
 				  &#x2022; options
 				    &#x2022; f - Returns billsec or duration fields as floating point values.
 				    &#x2022; u - Retrieves the raw, unprocessed value.">
@@ -746,7 +747,7 @@
 				Get information about a ConfBridge conference.
 				
 				[Description]
-				This function returns a non-negative integer for valid conference identifiers (0 or 1 for locked) and &#x22;&#x22; 
+				This function returns a non-negative integer for valid conference identifiers (0 or 1 for locked) and &#x22;&#x22;
 				for invalid conference identifiers.
 				
 				[Asterisk Version]
@@ -877,7 +878,7 @@
 				      indicates a 401 status code.
 				    &#x2022; ssl_verifypeer - Whether to verify the server certificate against a list of known root certificate 
 				      authorities (boolean).
-				    &#x2022; hashcompat - Assuming the responses will be in key1=value1&key2=value2 format, reformat the response 
+				    &#x2022; hashcompat - Assuming the responses will be in key1=value1&#x26;key2=value2 format, reformat the response 
 				      such that it can be used by the HASH function. 
 				      &#x2022; yes
 				      &#x2022; no
@@ -1377,12 +1378,15 @@
 				Get an extension's state.
 				
 				[Description]
-				The EXTENSION_STATE function can be used to retrieve the state from any hinted extension. For example:
+				The EXTENSION_STATE function can be used to retrieve the state from any hinted 
+				extension. For example:
+				
 				NoOp(1234@default has state ${EXTENSION_STATE(1234)})
 				NoOp(4567@home has state ${EXTENSION_STATE(4567@home)})
 				
 				The possible values returned by this function are:
-				UNKNOWN | NOT_INUSE | INUSE | BUSY | INVALID | UNAVAILABLE | RINGING | RINGINUSE | HOLDINUSE | ONHOLD
+				UNKNOWN | NOT_INUSE | INUSE | BUSY | INVALID | UNAVAILABLE | RINGING |
+				RINGINUSE | HOLDINUSE | ONHOLD
 				
 				[Asterisk Version]
 				
@@ -1392,8 +1396,7 @@
 				[Arguments]
 				  &#x2022; extension
 				  &#x2022; context - If it is not specified defaults to default.">
-				<Param name="STRING data" />
-				<Param name="STRING context" />
+				<Param name="STRING data@context" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="FAXOPT" func="yes">
@@ -1951,6 +1954,28 @@
 				<Param name="STRING options" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="HOLD_INTERCEPT" func="yes">
+			<Overload retVal="Function" descr="
+				[Synopsis]
+				Intercepts hold frames on a channel and raises an event instead of passing the frame on
+				
+				[Description]
+				
+				[Asterisk Version]
+				14
+				
+				[Syntax]
+				HOLD_INTERCEPT(action)
+				
+				[Arguments]
+				  &#x2022; action
+				    &#x2022; remove - W/O. Removes the hold interception function.
+				    &#x2022; set - W/O. Enable hold interception on the channel. When enabled, the channel will 
+				      intercept any hold action that is signalled from the device, and instead simply raise 
+				      an event (AMI/ARI) indicating that the channel wanted to put other parties on hold.">
+				<Param name="STRING action" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="IAXPEER" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
@@ -2325,8 +2350,8 @@
 				
 				[Arguments]
 				  &#x2022; doc - The name (not the contents!) of a variable that contains the json struct
-				  &#x2022; path -  path to the element we're looking for (like /path/to/element, or /path/to/element/3 to identify the 
-				    element with index 3 in an array)">
+				  &#x2022; path -  path to the element we're looking for (like /path/to/element, or /path/to/element/3
+				    to identify the element with index 3 in an array)">
 				<Param name="STRING doc" />
 				<Param name="STRING path" />
 			</Overload>
@@ -2792,7 +2817,8 @@
 				Controls ODBC transaction properties.
 				
 				[Description]
-				The ODBC() function allows setting several properties to influence how a connected database processes transactions.
+				The ODBC() function allows setting several properties to influence how a connected database processes 
+				transactions.
 				
 				[Asterisk Version]
 				
@@ -2801,11 +2827,15 @@
 				
 				[Arguments]
 				  &#x2022; property
-				    &#x2022; transaction - Gets or sets the active transaction ID. If set, and the transaction ID does not exist 
-				      and a database name is specified as an argument, it will be created.
+				    &#x2022; transaction - Gets or sets the active transaction ID. If set, and the transaction ID does 
+				      not exist and a database name is specified as an argument, it will be created.
 				    &#x2022; forcecommit - Controls whether a transaction will be automatically committed when the channel hangs up. 
 				      Defaults to false. If a transaction ID is specified in the optional argument, the property will be applied to 
 				      that ID, otherwise to the current active ID.
+				    &#x2022; isolation - Controls the data isolation on uncommitted transactions. May be one of the following: 
+				      read_committed, read_uncommitted, repeatable_read, or serializable. Defaults to the database setting in 
+				      res_odbc.conf or read_committed if not specified. If a transaction ID is specified as an optional argument, 
+				      it will be applied to that ID, otherwise the current active ID.
 				  &#x2022; argument">
 				<Param name="STRING property" />
 				<Param name="[STRING argument]" />
@@ -3187,6 +3217,35 @@
 				<Param name="STRING media" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="PJSIP_SEND_SESSION_REFRESH" func="yes">
+			<Overload retVal="Function" descr="
+				[Synopsis]
+				W/O: Initiate a session refresh via an UPDATE or re-INVITE on an established media session
+				
+				[Description]
+				This function will cause the PJSIP stack to immediately refresh the media session for the channel.
+				This will be done using either a re-INVITE (default) or an UPDATE request.
+				
+				This is most useful when combined with the PJSIP_MEDIA_OFFER dialplan function, as it allows the 
+				formats in use on a channel to be re-negotiated after call setup.
+				
+				Warning:
+				The formats the endpoint supports are not checked or enforced by this function. Using this function 
+				to offer formats not supported by the endpoint may result in a loss of media.
+				
+				[Asterisk Version]
+				14
+				
+				[Syntax]
+				PJSIP_SEND_SESSION_REFRESH([update_type])
+				
+				[Arguments]
+				  &#x2022; update_type - The type of update to send. Default is invite. 
+				    &#x2022; invite - Send the session refresh as a re-INVITE.
+				    &#x2022; update - Send the session refresh as an UPDATE.">
+				<Param name="[STRING update_type]" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="POP" func="yes">
 			<Overload retVal="Function" descr="
 				[Synopsis]
@@ -3362,6 +3421,29 @@
 				[Arguments]
 				  &#x2022; queuename">
 				<Param name="STRING queuename" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="QUEUE_GET_CHANNEL" func="yes">
+			<Overload retVal="Function" descr="
+				[Synopsis]
+				Return caller at the specified position in a queue.
+				
+				[Description]
+				Returns the caller channel at position in the specified queuename.
+				
+				If position is unspecified the first channel is returned.
+				
+				[Asterisk Version]
+				14
+				
+				[Syntax]
+				QUEUE_GET_CHANNEL(queuename,position)
+				
+				[Arguments]
+				  &#x2022; queuename
+				  &#x2022; position">
+				<Param name="STRING queuename" />
+				<Param name="STRING position" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="QUEUE_MEMBER" func="yes">
@@ -4967,8 +5049,8 @@
 				
 				[Arguments]
 				  &#x2022; mailbox
-				    &#x2022; 
-				    &#x2022; 
+				    &#x2022; mailbox
+				    &#x2022; context
 				  &#x2022; attribute
 				    &#x2022; count - Count of messages in specified folder. If folder is not specified, defaults to INBOX.
 				    &#x2022; email - E-mail address associated with the mailbox.
@@ -4980,8 +5062,8 @@
 				    &#x2022; password - Mailbox access password.
 				    &#x2022; tz - Mailbox timezone if overridden, otherwise global timezone
 				  &#x2022; folder - If not specified, INBOX is assumed.">
-				<Param name="STRING mailbox" />
-				<Param name="STRING info" />
+				<Param name="STRING mailbox@context" />
+				<Param name="STRING attribute" />
 				<Param name="[STRING folder]" />
 			</Overload>
 		</KeyWord>
@@ -5660,7 +5742,27 @@
 				        one-touch recording in features.conf.
 				      &#x2022; x - Cause the called party to be hung up after the bridge, instead of being restarted in the dialplan.">
 				<Param name="STRING channel" />
-				<Param name="STRING options" />
+				<Param name="[STRING options]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="BridgeAdd" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Join a bridge that contains the specified channel.
+				
+				[Description]
+				This application places the incoming channel into the bridge containing the specified channel.
+				The specified channel only needs to be the prefix of a full channel name IE. 'SIP/cisco0001'.
+				
+				[Asterisk Version]
+				
+				
+				[Syntax]
+				BridgeAdd([name])
+				
+				[Arguments]
+				  &#x2022; name - Name of the channel in an existing bridge">
+				<Param name="STRING name" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="BridgeWait" func="yes">
@@ -6052,6 +6154,7 @@
 				    &#x2022; KICKED - The channel was kicked from the conference.
 				    &#x2022; ENDMARKED - The channel left the conference as a result of the last marked user leaving.
 				    &#x2022; DTMF - The channel pressed a DTMF sequence to exit the conference.
+				    &#x2022; TIMEOUT - The channel reached its configured timeout.
 				
 				[Asterisk Version]
 				
@@ -6144,7 +6247,7 @@
 				  &#x2022; pause - Pause playback when this DTMF digit is received.
 				  &#x2022; restart - Restart playback when this DTMF digit is received.
 				  &#x2022; options
-				    &#x2022; o
+				    &#x2022; o ( time )
 				      &#x2022; time - Start at time ms from the beginning of the file.">
 				<Param name="STRING filename" />
 				<Param name="[STRING skipms" />
@@ -6520,7 +6623,7 @@
 				Virtual Dictation Machine.
 				
 				[Description]
-				Start dictation machine using optional base_dir for files.
+				Start dictation machine using optional <base_dir> for files.
 				
 				[Asterisk Version]
 				
@@ -6540,9 +6643,9 @@
 				Set maximum timeout between digits
 				
 				[Description]
-				Once a user begins typing an extension, the user has a maximum of DigitTimeout seconds to type additional digits
-				before Asterisk considers the extension to be complete. If not specified in the dialplan, the default is 5
-				seconds.
+				Once a user begins typing an extension, the user has a maximum of DigitTimeout seconds to type
+				additional digits before Asterisk considers the extension to be complete. If not specified in 
+				the dialplan, the default is 5 seconds.
 				
 				Deprecated in Asterisk v1.2 - use 'Set(TIMEOUT(digit)=timeout)' instead
 				
@@ -6649,6 +6752,49 @@
 				<Param name="[STRING options]]]]" />
 			</Overload>
 		</KeyWord>
+		<KeyWord name="DongleSendSMS" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				DongleSendSMS(device,dest,message,validity,report)
+				
+				[Arguments]
+				  &#x2022; device - Id of device from dongle.conf
+				  &#x2022; dest - destination
+				  &#x2022; message - text of the message
+				  &#x2022; validity - Validity period in minutes
+				  &#x2022; report - Boolean flag for report reques">
+				<Param name="STRING device" />
+				<Param name="STRING dest" />
+				<Param name="STRING message" />
+				<Param name="STRING validity" />
+				<Param name="STRING report" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="DongleStatus" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				DongleStatus(resource,variable)
+				
+				[Arguments]
+				  &#x2022; resource - Resource string as for Dial()
+				  &#x2022; variable - 
+				    Connected & Busy.">
+				<Param name="STRING resource" />
+				<Param name="STRING variable" />
+			</Overload>
+		</KeyWord>
 		<KeyWord name="DTMFToText" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
@@ -6702,6 +6848,7 @@
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				Store extensions in database
+				
 				[Description]
 				
 				[Asterisk Version]
@@ -6767,7 +6914,7 @@
 				Echos back any media or DTMF frames read from the calling channel back to itself. This will not echo
 				CONTROL, MODEM, or NULL frames. Note: If '#' detected application exits.
 				
-				This application does not automatically answer and should be preceeded by an application such as 
+				This application does not automatically answer and should be preceded by an application such as 
 				Answer() or Progress().
 				
 				[Asterisk Version]
@@ -6799,6 +6946,20 @@
 		<KeyWord name="EnumLookup" func="yes">
 			<Overload retVal="Application" descr="
 				Deprecated. Use ENUMLOOKUP function instead">
+				<Param name="" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="Espeak" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				
+				[Description]
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				
+				[Arguments]">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
@@ -6944,15 +7105,16 @@
 				Interfaces with an external IVR application.
 				
 				[Description]
-				Either forks a process to run given command or makes a socket to connect to given host and starts a generator
-				on the channel. The generator's play list is controlled by the external application, which can add and clear
-				entries via simple commands issued over its stdout. The external application will receive all DTMF events
-				received on the channel, and notification if the channel is hung up. The received on the channel, and
-				notification if the channel is hung up. The application will not be forcibly terminated when the channel is
-				hung up. For more information see doc/AST.pdf.
+				Either forks a process to run given command or makes a socket to connect to given host and
+				starts a generator on the channel. The generator's play list is controlled by the external
+				application, which can add and clear entries via simple commands issued over its stdout.
+				The external application will receive all DTMF events received on the channel, and notification
+				if the channel is hung up. The received on the channel, and notification if the channel 
+				is hung up. The application will not be forcibly terminated when the channel is hung up.
+				
+				For more information see doc/AST.pdf.
 				
 				[Asterisk Version]
-				1.6+
 				
 				[Syntax]
 				ExternalIVR(command|ivr://host([arg1,[arg2[,...]]]),[options])
@@ -6963,29 +7125,15 @@
 				    &#x2022; arg2
 				  &#x2022; options
 				    &#x2022; n - Tells ExternalIVR() not to answer the channel.
-				    &#x2022; i - Tells ExternalIVR() not to send a hangup and exit when the channel receives a hangup, instead it
-				      sends an I informative message meaning that the external application MUST hang up the call with an H command.
-				    &#x2022; d - Tells ExternalIVR() to run on a channel that has been hung up and will not look for hangups.
+				    &#x2022; i - Tells ExternalIVR() not to send a hangup and exit when the channel receives
+				      a hangup, instead it sends an I informative message meaning that the external application
+				      MUST hang up the call with an H command.
+				    &#x2022; d - Tells ExternalIVR() to run on a channel that has been hung up and will not look
+				      for hangups.
+				      
 				      The external application must exit with an E command.">
 				<Param name="STRING command|ivr://host([arg1,[arg2[,...]]])" />
 				<Param name="[STRING options]" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="ExternIVR" func="yes">
-			<Overload retVal="Application" descr="
-				[Synopsis]
-				Interfaces with an external IVR application
-				
-				[Description]
-				
-				[Asterisk Version]
-				1.2, 1.4
-				
-				[Syntax]
-				ExternalIVR(command[,arg[,arg...]])
-				
-				[Arguments]">
-				<Param name="" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="FastAGI" func="yes">
@@ -7005,26 +7153,39 @@
 		<KeyWord name="Festival" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Say text to the user.
 				
 				[Description]
+				Connect to Festival, send the argument, get back the waveform, play it to the user,
+				allowing any given interrupt keys to immediately terminate and return the value, or
+				any to allow any number back (useful in dialplan).
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Festival(text,[intkeys])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; text
+				  &#x2022; intkeys">
+				<Param name="STRING text" />
+				<Param name="[STRING intkeys]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Flash" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Flashes a DAHDI Trunk.
 				
 				[Description]
+				Performs a flash on a DAHDI trunk. This can be used to access features provided
+				on an incoming analogue circuit such as conference and call waiting. Use with
+				SendDTMF() to perform external transfers.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Flash()
 				
 				[Arguments]">
 				<Param name="" />
@@ -7060,49 +7221,109 @@
 				See: http://zaf.github.io/Asterisk-Flite/
 				
 				[Arguments]
-				 &#x2022; text
-				 &#x2022; intkeys">
+				  &#x2022; text
+				  &#x2022; intkeys">
 				<Param name="STRING text"/>
-				<Param name="STRING intkeys"/>
+				<Param name="[STRING intkeys]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="FollowMe" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Find-Me/Follow-Me application.
 				
 				[Description]
+				This application performs Find-Me/Follow-Me functionality for the caller as 
+				defined in the profile matching the followmeid parameter in followme.conf.
+				If the specified followmeid profile doesn't exist in followme.conf, 
+				execution will be returned to the dialplan and call execution will continue 
+				at the next priority.
+				
+				Returns -1 on hangup.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				FollowMe(followmeid,[options])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; followmeid
+				  &#x2022; options
+				    &#x2022; a - Record the caller's name so it can be announced to the callee 
+				        on each step.
+				    &#x2022; B - Before initiating the outgoing call(s), Gosub to the specified
+				        location using the current channel. 
+				          &#x2022; context
+				          &#x2022; exten
+				          &#x2022; priority
+				    &#x2022; b - Before initiating an outgoing call, Gosub to the specified 
+				        location using the newly created channel. The Gosub will be executed for 
+				        each destination channel.
+				          &#x2022; context
+				          &#x2022; exten
+				          &#x2022; priority
+				    &#x2022; d - Disable the 'Please hold while we try to connect your call' 
+				        announcement.
+				    &#x2022; I -  Asterisk will ignore any connected line update requests it 
+				        may receive on this dial attempt.
+				    &#x2022; l - Disable local call optimization so that applications with audio
+				        hooks between the local bridge don't get dropped when the calls get joined
+				        directly.
+				    &#x2022; N - Don't answer the incoming call until we're ready to connect the
+				        caller or give up.
+				    &#x2022; n - Playback the unreachable status message if we've run out of
+				        steps or the callee has elected not to be reachable.
+				    &#x2022; s -  Playback the incoming status message prior to starting the
+				        follow-me step(s)">
+				<Param name="STRING followmeid"/>
+				<Param name="STRING options"/>
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ForkCDR" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Forks the current Call Data Record for this channel.
 				
 				[Description]
+				Causes the Call Data Record engine to fork a new CDR starting from the time the application
+				is executed. The forked CDR will be linked to the end of the CDRs associated with the channel.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ForkCDR([options])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; options
+				    &#x2022; a - If the channel is answered, set the answer time on the forked CDR to the
+				        current time. If this option is not used, the answer time on the forked CDR will be 
+				        the answer time on the original CDR. If the channel is not answered, this option has
+				        no effect.
+				        
+				        Note that this option is implicitly assumed if the r option is used.
+				    &#x2022; e - End (finalize) the original CDR.
+				    &#x2022; r - Reset the start and answer times on the forked CDR. This will set the start
+				        and answer times (if the channel is answered) to be set to the current time.
+				        
+				        Note that this option implicitly assumes the a option.
+				    &#x2022; v - Do not copy CDR variables and attributes from the original CDR to the
+				        forked CDR.">
+				<Param name="[STRING options]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="GetCPEID" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Get ADSI CPE ID.
 				
 				[Description]
+				Obtains and displays ADSI CPE ID and other information in order to properly setup dahdi.conf
+				for on-hook operations.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				GetCPEID()
 				
 				[Arguments]">
 				<Param name="" />
@@ -7131,92 +7352,199 @@
 		<KeyWord name="Gosub" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Jump to label, saving return address.
 				
 				[Description]
+				Jumps to the label specified, saving the return address.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Gosub([context,[exten,]]priority[(arg1,[...][argN]]))
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; context
+				  &#x2022; exten
+				  &#x2022; priority
+				    &#x2022; arg1
+				    &#x2022; argN">
+				<Param name="[STRING context" />
+				<Param name="[STRING exten]]" />
+				<Param name="STRING priority" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="GosubIf" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Conditionally jump to label, saving return address.
 				
 				[Description]
+				If the condition is true, then jump to labeliftrue.  If false, jumps to
+				labeliffalse, if specified.  In either case, a jump saves the return point in
+				the dialplan, to be returned to with a Return.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				GosubIf(condition?[labeliftrue[(arg1[,...][,argN])]][:labeliffalse[(arg1[,...][,argN])]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; condition
+				  &#x2022; destination
+				    &#x2022; labeliftrue - Continue at labeliftrue if the condition is true. Takes the 
+				        form similar to Goto() of [[context,]extension,]priority.
+				          &#x2022; arg1
+				          &#x2022; argN
+				    &#x2022; labeliffalse - Continue at labeliffalse if the condition is false. Takes
+				        the form similar to Goto() of [[context,]extension,]priority.
+				          &#x2022; arg1
+				          &#x2022; argN">
+				<Param name="STRING condition" />
+				<Param name="[STRING destination]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Goto" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Jump to a particular priority, extension, or context.
 				
 				[Description]
+				This application will set the current context, extension, and priority in the
+				channel structure. After it completes, the pbx engine will continue dialplan
+				execution at the specified location. If no specific <extension>, or <extension>
+				and <context>, are specified, then this application will just set the specified
+				<priority> of the current extension.
+				
+				At least a <priority> is required as an argument, or the goto will return a
+				'-1',   and the channel and call will be terminated.
+				
+				If the location that is put into the channel information is bogus, and asterisk
+				cannot find that location in the dialplan, then the execution engine will try
+				to find and execute the code in the 'i' (invalid) extension in the current
+				context. If that does not exist, it will try to execute the 'h' extension. If
+				neither the 'h' nor 'i' extensions have been defined, the channel is hung up,
+				and the execution of instructions on the channel is terminated. What this means
+				is that, for example, you specify a context that does not exist, then it will
+				not be possible to find the 'h' or 'i' extensions, and the call will terminate!
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Goto([[context,]extensions,]priority)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; context
+				  &#x2022; extensions
+				  &#x2022; priority">
+				<Param name="[STRING context" />
+				<Param name="[STRING extensions]]" />
+				<Param name="STRING priority" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="GotoIf" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Conditional goto.
 				
 				[Description]
+				This application will set the current context, extension, and priority in the
+				channel structure based on the evaluation of the given condition. After this
+				application completes, the pbx engine will continue dialplan execution at the
+				specified location in the dialplan. The labels are specified with the same
+				syntax as used within the Goto application. If the label chosen by the
+				condition is omitted, no jump is performed, and the execution passes to the
+				next instruction. If the target location is bogus, and does not exist, the
+				execution engine will try to find and execute the code in the 'i' (invalid)
+				extension in the current context. If that does not exist, it will try to
+				execute the 'h' extension. If neither the 'h' nor 'i' extensions have been
+				defined, the channel is hung up, and the execution of instructions on the
+				channel is terminated. Remember that this command can set the current context,
+				and if the context specified does not exist, then it will not be able to find
+				any 'h' or 'i' extensions there, and the channel and call will both be
+				terminated!.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				GotoIf(condition?[labeliftrue][:labeliffalse])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; condition
+				  &#x2022; destination
+				    &#x2022; labeliftrue - Continue at labeliftrue if the condition is true. Takes
+				        the form similar to Goto() of [[context,]extension,]priority.
+				    &#x2022; labeliffalse - Continue at labeliffalse if the condition is false.
+				        Takes the form similar to Goto() of [[context,]extension,]priority.">
+				<Param name="STRING condition" />
+				<Param name="[STRING destination]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="GotoIfTime" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Conditional Goto based on the current time.
 				
 				[Description]
+				This application will set the context, extension, and priority in the channel
+				structure based on the evaluation of the given time specification. After this
+				application completes, the pbx engine will continue dialplan execution at the
+				specified location in the dialplan. If the current time is within the given
+				time specification, the channel will continue at <labeliftrue>. Otherwise the
+				channel will continue at <labeliffalse>. If the label chosen by the condition
+				is omitted, no jump is performed, and execution passes to the next instruction.
+				If the target jump location is bogus, the same actions would be taken as for
+				'Goto'. Further information on the time specification can be found in examples
+				illustrating how to do time-based context includes in the dialplan.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				GotoIfTime(times,weekdays,mdays,months[,timezone]?[labeliftrue][:labeliffalse])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; condition
+				    &#x2022; times
+				    &#x2022; weekdays
+				    &#x2022; mdays
+				    &#x2022; months
+				    &#x2022; timezone
+				  &#x2022; destination
+				    &#x2022; labeliftrue - Continue at labeliftrue if the condition is true. Takes
+				        the form similar to Goto() of [[context,]extension,]priority.
+				    &#x2022; labeliffalse - Continue at labeliffalse if the condition is false.
+				        Takes the form similar to Goto() of [[context,]extension,]priority.">
+				<Param name="STRING condition" />
+				<Param name="[STRING destination]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Hangup" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Hang up the calling channel.
 				
 				[Description]
+				This application will hang up the calling channel.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Hangup([causecode])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; causecode - If a causecode is given the channel's hangup cause 
+				    will be set to the given value.">
+				<Param name="[STRING causecode]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="HangupCauseClear" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Clears hangup cause information from the channel that is available through
+				HANGUPCAUSE.
 				
 				[Description]
+				Clears all channel-specific hangup cause information from the channel.
+				This is never done automatically (i.e. for new Dial()s).
 				
 				[Asterisk Version]
 				
@@ -7271,28 +7599,41 @@
 		<KeyWord name="IAX2Provision" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Provision a calling IAXy with a given template.
 				
 				[Description]
+				Provisions the calling IAXy (assuming the calling entity is in fact an IAXy)
+				with the given <template>. Returns '-1' on error or '0' on success.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				IAX2Provision([template])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; template - If not specified, defaults to default.">
+				<Param name="[STRING template]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="ICES" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Encode and stream using 'ices'.
 				
 				[Description]
+				Streams to an icecast server using ices (available separately). A configuration
+				file must be supplied for ices (see contrib/asterisk-ices.xml).
+				
+				NOTE:
+				ICES version 2 client and server required.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ICES(config)
 				
-				[Arguments]">
+				[Arguments]
+				  &#x2022; config - ICES configuration file.">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
@@ -7305,127 +7646,232 @@
 		<KeyWord name="ImportVar" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Import a variable from a channel into a new variable.
 				
 				[Description]
+				This application imports a <variable> from the specified <channel> (as opposed
+				to the current one) and stores it as a variable (<newvar>) in the current
+				channel (the channel that is calling this application). Variables created by
+				this application have the same inheritance properties as those created with the
+				'Set' application.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				ImportVar(newvar=channelname,variable)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; newvar
+				  &#x2022; vardata
+				    &#x2022; channelname
+				    &#x2022; variable">
+				<Param name="STRING newvar=channelname" />
+				<Param name="STRING variable" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Incomplete" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Returns AST_PBX_INCOMPLETE value.
 				
 				[Description]
+				Signals the PBX routines that the previous matched extension is incomplete and that further
+				input should be allowed before matching can be considered to be complete. Can be used within
+				a pattern match when certain criteria warrants a longer match.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Incomplete([n])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; n - If specified, then Incomplete will not attempt to answer the channel first.
+				
+				      Note:
+				      Most channel types need to be in Answer state in order to receive DTMF.">
+				<Param name="[STRING n]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="IVRDemo" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				IVR Demo Application.
 				
 				[Description]
+				This is a skeleton application that shows you the basic structure to create your own asterisk
+				applications and demonstrates the IVR demo.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				IVRDemo(filename)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; filename">
+				<Param name="STRING filename" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="JabberJoin" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Join a chat room. [res_xmpp]
 				
 				[Description]
+				Allows Asterisk to join a chat room.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				JabberJoin(Jabber,RoomJID,[Nickname])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; Jabber - Client or transport Asterisk uses to connect to Jabber.
+				  &#x2022; RoomJID - XMPP/Jabber JID (Name) of chat room.
+				  &#x2022; Nickname - The nickname Asterisk will use in the chat room. 
+				
+				      Note:
+				      If a different nickname is supplied to an already joined room, the old nick will 
+				      be changed to the new one.">
+				<Param name="STRING Jabber" />
+				<Param name="STRING RoomJID" />
+				<Param name="[STRING Nickname]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="JabberLeave" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Leave a chat room. [res_xmpp]
 				
 				[Description]
+				Allows Asterisk to leave a chat room.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				JabberLeave(Jabber,RoomJID,[Nickname])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; Jabber - Client or transport Asterisk uses to connect to Jabber.
+				  &#x2022; RoomJID - XMPP/Jabber JID (Name) of chat room.
+				  &#x2022; Nickname - The nickname Asterisk will use in the chat room.">
+				<Param name="STRING Jabber" />
+				<Param name="STRING RoomJID" />
+				<Param name="[STRING Nickname]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="JabberSend" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Sends an XMPP message to a buddy. [res_xmpp]
 				
 				[Description]
+				Sends the content of message as text message from the given account to the buddy identified by jid
+				
+				Example: JabberSend(asterisk,bob@domain.com,Hello world) sends &#x22;Hello world&#x22; to bob@domain.com
+				as an XMPP message from the account asterisk, configured in xmpp.conf.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				JabberSend(account,jid,message)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; account - The local named account to listen on (specified in xmpp.conf)
+				  &#x2022; jid - Jabber ID of the buddy to send the message to. It can be a bare JID (username@domain)
+				    or a full JID (username@domain/resource).
+				  &#x2022; message - The message to send.">
+				<Param name="STRING account" />
+				<Param name="STRING jid" />
+				<Param name="STRING message" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="JabberSendGroup" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Send a Jabber Message to a specified chat room. [res_xmpp]
 				
 				[Description]
+				Allows user to send a message to a chat room via XMPP.
 				
+				Note:
+				To be able to send messages to a chat room, a user must have previously joined it. Use the 
+				JabberJoin function to do so.
 				[Asterisk Version]
 				
 				[Syntax]
+				JabberSendGroup(Jabber,RoomJID,Message,[Nickname])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; Jabber - Client or transport Asterisk uses to connect to Jabber.
+				  &#x2022; RoomJID - XMPP/Jabber JID (Name) of chat room.
+				  &#x2022; Message - Message to be sent to the chat room.
+				  &#x2022; Nickname - The nickname Asterisk uses in the chat room.">
+				<Param name="STRING Jabber" />
+				<Param name="STRING RoomJID" />
+				<Param name="STRING Message" />
+				<Param name="[STRING Nickname]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="JabberStatus" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Retrieve the status of a jabber list member. [res_xmpp]
 				
 				[Description]
+				This application is deprecated. Please use the JABBER_STATUS() function instead.
 				
+				Retrieves the numeric status associated with the specified buddy JID.
+				The return value in the Variable will be one of the following.
+				
+				  &#x2022; 1 - Online.
+				  &#x2022; 2 - Chatty.
+				  &#x2022; 3 - Away.
+				  &#x2022; 4 - Extended Away.
+				  &#x2022; 5 - Do Not Disturb.
+				  &#x2022; 6 - Offline.
+				  &#x2022; 7 - Not In Roster.
+									
 				[Asterisk Version]
 				
 				[Syntax]
+				JabberStatus(Jabber,JID,Variable)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; Jabber - Client or transport Asterisk uses to connect to Jabber.
+				  &#x2022; JID - XMPP/Jabber JID (Name) of recipient.
+				  &#x2022; Variable - Variable to store the status of requested user.">
+				<Param name="STRING Jabber" />
+				<Param name="STRING JID" />
+				<Param name="STRING Variable" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="JACK" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Jack Audio Connection Kit
 				
 				[Description]
+				When executing this application, two jack ports will be created; one input and one output.
+				Other applications can be hooked up to these ports to access audio coming from, or being 
+				send to the channel.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				JACK([options])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; options
+				    &#x2022; s( name )
+				      &#x2022; name - Connect to the specified jack server name
+				    &#x2022; i( name )
+				      &#x2022; name - Connect the output port that gets created to the specified jack input port
+				    &#x2022; o( name )
+				      &#x2022; name - Connect the input port that gets created to the specified jack output port
+				    &#x2022; c( name )
+				      &#x2022; name - By default, Asterisk will use the channel name for the jack client name.
+				        Use this option to specify a custom client name.">
+				<Param name="STRING options" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="jsonadd" func="yes">
@@ -7578,15 +8024,21 @@
 		<KeyWord name="Log" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Send arbitrary text to a selected log level.
 				
 				[Description]
+				Sends an arbitrary text message to a selected log level.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Log(level,message)
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; level - Level must be one of ERROR, WARNING, NOTICE, DEBUG, VERBOSE or DTMF.
+				  &#x2022; message - Output text message.">
+				<Param name="STRING level" />
+				<Param name="STRING message" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="LookupBlacklist" func="yes">
@@ -7620,40 +8072,96 @@
 		<KeyWord name="Macro" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Macro Implementation.
 				
 				[Description]
+				Executes a macro using the context macro- name, jumping to the s extension of that context
+				and executing each step, then returning when the steps end.
+				
+				The calling extension, context, and priority are stored in MACRO_EXTEN, MACRO_CONTEXT 
+				and MACRO_PRIORITY respectively. Arguments become ARG1, ARG2, etc in the macro context.
+				
+				If you Goto out of the Macro context, the Macro will terminate and control will be 
+				returned at the location of the Goto.
+				
+				If MACRO_OFFSET is set at termination, Macro will attempt to continue at priority 
+				MACRO_OFFSET + N + 1 if such a step exists, and N + 1 otherwise.
+				
+				Warning:
+				Because of the way Macro is implemented (it executes the priorities contained within it 
+				via sub-engine), and a fixed per-thread memory stack allowance, macros are limited to 7 
+				levels of nesting (macro calling macro calling macro, etc.); It may be possible that 
+				stack-intensive applications in deeply nested macros could cause asterisk to crash earlier 
+				than this limit. It is advised that if you need to deeply nest macro calls, that you use 
+				the Gosub application (now allows arguments like a Macro) with explict Return() calls instead.
+				
+				Use of the application WaitExten within a macro will not function as expected. Please use the 
+				Read application in order to read DTMF from a channel currently executing a macro.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Macro(name,arg1,[arg2[,...]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; name - The name of the macro
+				  &#x2022; arg1
+				  &#x2022; arg2
+				  &#x2022; ...
+				  &#x2022; argn">					
+				<Param name="STRING name" />
+				<Param name="STRING arg1" />
+				<Param name="[STRING arg2" />
+				<Param name="[..." />
+				<Param name="[STRING argn]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MacroExclusive" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Exclusive Macro Implementation.
 				
 				[Description]
+				Executes macro defined in the context macro- name. Only one call at a time may run the macro.
+				(we'll wait if another call is busy executing in the Macro)
+				
+				Arguments and return values as in application Macro()
+				
+				Warning:
+				Use of the application WaitExten within a macro will not function as expected. Please use 
+				the Read application in order to read DTMF from a channel currently executing a macro.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				MacroExclusive(name,[arg1,[arg2[,...]]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; name - The name of the macro
+				  &#x2022; arg1
+				  &#x2022; arg2
+				  &#x2022; ...
+				  &#x2022; argn">					
+				<Param name="STRING name" />
+				<Param name="STRING arg1" />
+				<Param name="[STRING arg2" />
+				<Param name="[..." />
+				<Param name="[STRING argn]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MacroExit" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Exit from Macro.
 				
 				[Description]
+				Causes the currently running macro to exit as if it had ended normally by running out of 
+				priorities to execute. If used outside a macro, will likely cause unexpected behavior.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				MacroExit()
 				
 				[Arguments]">
 				<Param name="" />
@@ -7662,6 +8170,70 @@
 		<KeyWord name="MacroIf" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Conditional Macro implementation.
+				
+				[Description]
+				Executes macro defined in macroiftrue if expr is true (otherwise macroiffalse if provided)
+				
+				Arguments and return values as in application Macro()
+				
+				Warning:
+				Use of the application WaitExten within a macro will not function as expected. Please use 
+				the Read application in order to read DTMF from a channel currently executing a macro.
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				MacroIf(expr?macroiftrue:[macroiffalse])
+				
+				[Arguments]
+				  &#x2022; expr
+				  &#x2022; destination
+				    &#x2022; macroiftrue
+				      &#x2022; macroiftrue
+				      &#x2022; arg1[arg1...]
+				    &#x2022; macroiffalse
+				      &#x2022; macroiffalse
+				      &#x2022; arg1[arg1...]">
+				<Param name="STRING expr" />
+				<Param name="STRING destination" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="MailboxExists" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Check to see if Voicemail mailbox exists.
+				
+				[Description]
+				DEPRECATED. Use VM_INFO(mailbox[@context],exists) instead.
+				
+				Check to see if the specified mailbox exists. If no voicemail context is specified, the 
+				default context will be used.
+				
+				This application will set the following channel variable upon completion:
+				
+				  &#x2022; VMBOXEXISTSSTATUS - This will contain the status of the execution of the MailboxExists
+				    application. Possible values include:
+				    &#x2022; SUCCESS
+				    &#x2022; FAILED
+				
+				[Asterisk Version]
+				
+				[Syntax]
+				MailboxExists(mailbox@[context],[options])
+				
+				[Arguments]
+				  &#x2022; mailbox
+				    &#x2022; mailbox
+				    &#x2022; context
+				  &#x2022; options - None options.">
+				<Param name="STRING mailbox" />
+				<Param name="[STRING options]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ManagerRedirect" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
 				
 				[Description]
 				
@@ -7670,12 +8242,6 @@
 				[Syntax]
 				
 				[Arguments]">
-				<Param name="" />
-			</Overload>
-		</KeyWord>
-		<KeyWord name="MailboxExists" func="yes">
-			<Overload retVal="Application" descr="
-				Deprecated. Use MAILBOX_EXISTS function instead">
 				<Param name="" />
 			</Overload>
 		</KeyWord>
@@ -7694,29 +8260,127 @@
 		<KeyWord name="MeetMe" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				MeetMe conference bridge.
 				
 				[Description]
+				Enters the user into a specified MeetMe conference. If the confno is omitted, the user will 
+				be prompted to enter one. User can exit the conference by hangup, or if the p option is 
+				specified, by pressing #.
+				
+				Note:
+				The DAHDI kernel modules and a functional DAHDI timing source (see dahdi_test) must be 
+				present for conferencing to operate properly. In addition, the chan_dahdi channel driver 
+				must be loaded for the i and r options to operate at all.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				MeetMe([confno,[options,[pin]]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; confno - The conference number
+				    &#x2022; a - Set admin mode.
+				    &#x2022; A - Set marked mode.
+				    &#x2022; b - Run AGI script specified in MEETME_AGI_BACKGROUND Default: conf-background.agi.
+				    &#x2022; c - Announce user(s) count on joining a conference.
+				    &#x2022; C - Continue in dialplan when kicked out of conference.
+				    &#x2022; d - Dynamically add conference.
+				    &#x2022; D - Dynamically add conference, prompting for a PIN.
+				    &#x2022; e - Select an empty conference.
+				    &#x2022; E - Select an empty pinless conference.
+				    &#x2022; F - Pass DTMF through the conference.
+				    &#x2022; G( x ) - Play an intro announcement in conference. x - The file to playback.
+				    &#x2022; i - Announce user join/leave with review.
+				    &#x2022; I - Announce user join/leave without review.
+				    &#x2022; k - Close the conference if there's only one active participant left at exit.
+				    &#x2022; l - Set listen only mode (Listen only, no talking).
+				    &#x2022; m - Set initially muted.
+				    &#x2022; M( class ) - Enable music on hold when the conference has a single caller. Optionally, specify a
+				      musiconhold class to use. If one is not provided, it will use the channel's currently set music class, 
+				      or default. 
+				    &#x2022; n - Disable the denoiser.
+				    &#x2022; o - Set talker optimization - treats talkers who aren't speaking as being muted, meaning (a) No 
+				      encode is done on transmission and (b) Received audio that is not registered as talking is omitted 
+				      causing no buildup in background noise.
+				    &#x2022; p( keys ) - Allow user to exit the conference by pressing # (default) or any of the defined keys.
+				      Dial plan execution will continue at the next priority following MeetMe. The key used is set to channel 
+				      variable MEETME_EXIT_KEY.
+				    &#x2022; P - Always prompt for the pin even if it is specified.
+				    &#x2022; q - Quiet mode (don't play enter/leave sounds).
+				    &#x2022; r - Record conference (records as MEETME_RECORDINGFILE using format MEETME_RECORDINGFORMAT.
+				    &#x2022; s - Present menu (user or admin) when * is received (send to menu).
+				    &#x2022; t - Set talk only mode. (Talk only, no listening).
+				    &#x2022; T - Set talker detection (sent to manager interface and meetme list).
+				    &#x2022; v( mailbox@context ) - Announce when a user is joining or leaving the conference.
+				    &#x2022; w( secs ) - Wait until the marked user enters the conference. 
+				    &#x2022; x - Leave the conference when the last marked user leaves.
+				    &#x2022; X - Allow user to exit the conference by entering a valid single digit extension MEETME_EXIT_CONTEXT
+				      or the current context if that variable is not defined.
+				    &#x2022; 1 - Do not play message when first person enters
+				    &#x2022; S( x ) - Kick the user x seconds after he entered into the conference. 
+				    &#x2022; L( x:y:z ) - Limit the conference to x ms.  Play a warning when y ms are left. Repeat the warning 
+				      every z ms. The following special variables can be used with this option: 
+				      &#x2022; CONF_LIMIT_TIMEOUT_FILE - File to play when time is up.
+				      &#x2022; CONF_LIMIT_WARNING_FILE - File to play as warning if y is defined. The default is to say the 
+				        time remaining.
+				      &#x2022; x, y, z
+				  &#x2022; options
+				  &#x2022; pin
+				
+				  See help for more complete information">
+				<Param name="[NUMBER confno" />
+				<Param name="[STRING options" />
+				<Param name="[STRING pin]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MeetMeAdmin" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				MeetMe conference administration.
 				
 				[Description]
+				Run admin command for conference confno.
+				
+				Will additionally set the variable MEETMEADMINSTATUS with one of the following values:
+				
+				    &#x2022; MEETMEADMINSTATUS
+				      &#x2022; NOPARSE - Invalid arguments.
+				      &#x2022; NOTFOUND - User specified was not found.
+				      &#x2022; FAILED - Another failure occurred.
+				      &#x2022; OK - The operation was completed successfully.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				MeetMeAdmin(confno,command,[user])
 				
-				[Arguments]">
-				<Param name="" />
+				Arguments]
+				  &#x2022; confno
+				  &#x2022; command
+				    &#x2022; e - Eject last user that joined.
+				    &#x2022; E - Extend conference end time, if scheduled.
+				    &#x2022; k - Kick one user out of conference.
+				    &#x2022; K - Kick all users out of conference.
+				    &#x2022; l - Unlock conference.
+				    &#x2022; L - Lock conference.
+				    &#x2022; m - Unmute one user.
+				    &#x2022; M - Mute one user.
+				    &#x2022; n - Unmute all users in the conference.
+				    &#x2022; N - Mute all non-admin users in the conference.
+				    &#x2022; r - Reset one user's volume settings.
+				    &#x2022; R - Reset all users volume settings.
+				    &#x2022; s - Lower entire conference speaking volume.
+				    &#x2022; S - Raise entire conference speaking volume.
+				    &#x2022; t - Lower one user's talk volume.
+				    &#x2022; T - Raise one user's talk volume.
+				    &#x2022; u - Lower one user's listen volume.
+				    &#x2022; U - Raise one user's listen volume.
+				    &#x2022; v - Lower entire conference listening volume.
+				    &#x2022; V - Raise entire conference listening volume.
+				  &#x2022; user">
+				<Param name="NUMBER confno" />
+				<Param name="NUMBER command" />
+				<Param name="[NUMBER user]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="MeetMeChannelAdmin" func="yes">
@@ -7978,7 +8642,10 @@
 				exten => _X.,7,AGI(${AGIScript},${EXTEN})
 				exten => _X.,8,MYSQL(Clear ${resultid})
 				exten => _X.,9,MYSQL(Disconnect ${connid})
-				exten => _X.,10,Hangup">
+				exten => _X.,10,Hangup
+				
+				[Arguments]
+				  &#x2022; params">
 				<Param name="COMMAND params" />
 			</Overload>
 		</KeyWord>
@@ -8443,15 +9110,63 @@
 		<KeyWord name="Queue" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Queue a call for a call queue.
 				
 				[Description]
+				In addition to transferring the call, a call may be parked and then picked up by another user.
+				
+				This application will return to the dialplan if the queue does not exist, or any of the join options 
+				cause the caller to not enter the queue.
+				
+				This application does not automatically answer and should be preceeded by an application such as 
+				Answer(), Progress(), or Ringing().
+				
+				This application sets the following channel variable upon completion:
+				
+				  &#x2022; QUEUESTATUS - The status of the call as a text string. 
+				    &#x2022; TIMEOUT
+				    &#x2022; FULL
+				    &#x2022; JOINEMPTY
+				    &#x2022; LEAVEEMPTY
+				    &#x2022; JOINUNAVAIL
+				    &#x2022; LEAVEUNAVAIL
+				    &#x2022; CONTINUE
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				Queue(queuename,[options,[URL,[announceoverride,[timeout,[AGI,[macro,[gosub,[rule,[position]]]]]]]]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; queuename
+				  &#x2022; options
+				    &#x2022; C, c, d, F, h, H, n, i, I, r, R, t, T, w, W, k, K, x, X
+				  &#x2022; URL - URL will be sent to the called party if the channel supports it.
+				  &#x2022; announceoverride
+				  &#x2022; timeout - Will cause the queue to fail out after a specified number of seconds, 
+				    checked between each queues.conf timeout and retry cycle.
+				  &#x2022; AGI - Will setup an AGI script to be executed on the calling party's channel once 
+				    they are connected to a queue member.
+				  &#x2022; macro - Will run a macro on the called party's channel (the queue member) once the
+				    parties are connected.
+				  &#x2022; gosub - Will run a gosub on the called party's channel (the queue member) once the
+				    parties are connected.
+				  &#x2022; rule - Will cause the queue's defaultrule to be overridden by the rule specified.
+				  &#x2022; position -     Attempt to enter the caller into the queue at the numerical position 
+				    specified. 1 would attempt to enter the caller at the head of the queue, and 3 would attempt
+				    to place the caller third in the queue.
+				
+				  See help for more complete information">
+				<Param name="STRING queuename" />
+				<Param name="[STRING options" />
+				<Param name="[STRING URL" />
+				<Param name="[STRING announceoverride" />
+				<Param name="[STRING timeout" />
+				<Param name="[STRING AGI" />
+				<Param name="[STRING macro" />
+				<Param name="[STRING gosub" />
+				<Param name="[STRING rule" />
+				<Param name="[STRING position]]]]]]]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="QueueLog" func="yes">
@@ -8485,6 +9200,9 @@
 		<KeyWord name="Random" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Deprecated. Use RAND function instead. For example:
+				
+				GotoIf($[${RAND(1,100)} > <number>]?<label>)
 				
 				[Description]
 				
@@ -8597,7 +9315,7 @@
 		<KeyWord name="ReceiveFax" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
-				Receive a FAX and save as a TIFF/F file. ( ReceiveFAX() - [res_fax] )
+				Receive a FAX and save as a TIFF/F file. ( ReceiveFax() - [res_fax] )
 				
 				NOTE:
 				Called &#x22;ReceiveFax&#x22; to avoid confusion with the Application ReceiveFAX
@@ -9439,15 +10157,45 @@
 		<KeyWord name="SMS" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
+				Communicates with SMS service centres and SMS capable analogue phones.
 				
 				[Description]
+				SMS handles exchange of SMS data with a call to/from SMS capable phone or SMS PSTN service
+				center. Can send and/or receive SMS messages. Works to ETSI ES 201 912; compatible with BT
+				SMS PSTN service in UK and Telecom Italia in Italy.
+				
+				Typical usage is to use to handle calls from the SMS service centre CLI, or to set up a call
+				using outgoing or manager interface to connect service centre to SMS().
+				
+				Messages are processed as per text file message queues. smsq (a separate software) is a
+				command to generate message queues and send messages.
+				
+				Note:
+				The protocol has tight delay bounds. Please use short frames and disable/keep short the 
+				jitter buffer on the ATA to make sure that respones (ACK etc.) are received in time.
 				
 				[Asterisk Version]
 				
 				[Syntax]
+				SMS(name,[options,[addr,[body]]])
 				
-				[Arguments]">
-				<Param name="" />
+				[Arguments]
+				  &#x2022; name - The name of the queue used in /var/spool/asterisk/sms
+				  &#x2022; options
+				    &#x2022; a - Answer, i.e. send initial FSK packet.
+				    &#x2022; s - Act as service centre talking to a phone.
+				    &#x2022; t - Use protocol 2 (default used is protocol 1).
+				    &#x2022; p - Set the initial delay to N ms (default is 300). addr and body are a 
+				      deprecated format to send messages out.
+				    &#x2022; r - Set the Status Report Request (SRR) bit.
+				    &#x2022; o - The body should be coded as octets not 7-bit symbols.
+				    &#x2022; n - Do not log any SMS content to log file (privacy).
+				  &#x2022; addr
+				  &#x2022; body">
+				<Param name="STRING name" />
+				<Param name="[STRING options" />
+				<Param name="[STRING addr" />
+				<Param name="[STRING body]]]" />
 			</Overload>
 		</KeyWord>
 		<KeyWord name="SoftHangup" func="yes">
@@ -9667,6 +10415,33 @@
 			</Overload>
 		</KeyWord>
 		<KeyWord name="Stasis" func="yes">
+			<Overload retVal="Application" descr="
+				[Synopsis]
+				Invoke an external Stasis application.
+				
+				[Description]
+				Invoke a Stasis application.
+
+				This application will set the following channel variable upon completion:
+				  &#x2022; STASISSTATUS - This indicates the status of the execution of the Stasis application.
+				    &#x2022; SUCCESS - The channel has exited Stasis without any failures in Stasis.
+				    &#x2022; FAILED - A failure occurred when executing the Stasis The app registry is not instantiated;
+				    The app application. Some (not all) possible reasons for this: requested is not registered;
+				    The app requested is not active; Stasis couldn't send a start message.
+				[Asterisk Version]
+				14
+				
+				[Syntax]
+				Stasis(app_name,[args])
+				
+				[Arguments]
+				  &#x2022; app_name - Name of the application to invoke.
+				  &#x2022; args - Optional comma-delimited arguments for the application invocation.">
+				<Param name="STRING app_name" />
+				<Param name="[STRING args]" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="StatsD" func="yes">
 			<Overload retVal="Application" descr="
 				[Synopsis]
 				
@@ -10369,6 +11144,404 @@
 				<Param name="STRING digits" />
 			</Overload>
 		</KeyWord>
+		<!-- Expr2 Built-in Functions -->
+		<KeyWord name="ACOS" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				ACOS(x) x should be a value between -1 and 1.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				ACOS(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ASIN" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				ASIN(x) x should be a value between -1 and 1.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				ASIN(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ATAN" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				ATAN(x) returns the arc tangent in radians; between -PI/2 and PI/2.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				ATAN(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ATAN2" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				ATAN2(x,y) returns a result resembling y/x, except that the signs of both args are used to
+				determine the quadrant of the result. Its result is in radians, between -PI and PI.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				ATAN2(x,y)
+				
+				[Arguments]
+				  &#x2022; x
+				  &#x2022; y">
+				<Param name="NUMERIC x" />
+				<Param name="NUMERIC y" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="CEIL" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				CEIL(x) rounds x up to the nearest integer.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				CEIL(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="COS" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				COS(x) x is in radians. Results vary from -1 to 1.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				COS(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="EXP" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				EXP(x) returns e to the x power.
+				 
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				EXP(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="EXP2" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				EXP2(x) returns 2 to the x power.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				EXP2(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="FLOOR" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				FLOOR(x) rounds x down to the nearest integer.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				FLOOR(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="LOG" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				LOG(x) returns the natural logarithm of x.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				LOG(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="LOG10" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				LOG10(x) returns the base 10 log of x.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				LOG10(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="LOG2" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				LOG2(x) returns the base 2 log of x.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				LOG2(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="POW" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				POW(x,y) returns the value of x raised to the power of y.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				POW(x,y)
+				
+				[Arguments]
+				  &#x2022; x
+				  &#x2022; y">
+				<Param name="NUMERIC x" />
+				<Param name="NUMERIC y" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="REMAINDER" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				REMAINDER(x,y) computes the remainder of dividing x by y. The return value is x - n*y, where n
+				is the value x/y, rounded to the nearest integer. If this quotient is 1/2, it is rounded to 
+				the nearest even number.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				REMAINDER(x,y)
+				
+				[Arguments]
+				  &#x2022; x
+				  &#x2022; y">
+				<Param name="NUMERIC x" />
+				<Param name="NUMERIC y" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="RINT" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				RINT(x) rounds x to the nearest integer, rounding halfway cases to the nearest even
+				integer.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				RINT(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="ROUND" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				ROUND(x) rounds x to the nearest integer, but round halfway cases away from zero.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				ROUND(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SIN" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				SIN(x) x is in radians. Results vary from -1 to 1.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				SIN(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="SQRT" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				SQRT(x) returns the square root of x.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				SQRT(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TAN" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				TAN(x) x is in radians.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				TAN(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<KeyWord name="TRUNC" func="yes">
+			<Overload retVal="Expr2 Built-in Funtion" descr="
+				[Synopsis]
+				
+				[Description]
+				TRUNC(x) rounds x to the nearest integer not larger in absolute value.
+				
+				[Asterisk Version]
+				1.6+
+				
+				[Syntax]
+				TRUNC(x)
+				
+				[Arguments]
+				  &#x2022; x">
+				<Param name="NUMERIC x" />
+			</Overload>
+		</KeyWord>
+		<!-- AEL KEYWORDS -->
+		<KeyWord name="abstract" />
+		<KeyWord name="context" />
+		<KeyWord name="macro" />
+		<KeyWord name="globals" />
+		<KeyWord name="ignorepat" />
+		<KeyWord name="switch" />
+		<KeyWord name="if" />
+		<KeyWord name="ifTime" />
+		<KeyWord name="else" />
+		<KeyWord name="random" />
+		<KeyWord name="goto" />
+		<KeyWord name="jump" />
+		<KeyWord name="return" />
+		<KeyWord name="break" />
+		<KeyWord name="continue" />
+		<KeyWord name="regexten" />
+		<KeyWord name="hint" />
+		<KeyWord name="for" />
+		<KeyWord name="while" />
+		<KeyWord name="case" />
+		<KeyWord name="pattern" />
+		<KeyWord name="default" />
+		<KeyWord name="catch" />
+		<KeyWord name="switches" />
+		<KeyWord name="eswitches" />
+		<KeyWord name="includes" />
 		<!-- SYSTEM VARIABLES -->
 		<KeyWord name="ACCOUNTCODE" />
 		<KeyWord name="AGENTACCEPTDTMF" />
@@ -10401,8 +11574,10 @@
 		<KeyWord name="ASTERISKETCDIR" />
 		<KeyWord name="ASTERISKINCDIR" />
 		<KeyWord name="ASTERISKMODDIR" />
+		<KeyWord name="ATTENDEDTRANSFER" />
 		<KeyWord name="ATTENDED_TRANSFER_COMPLETE_SOUND" />
 		<KeyWord name="AUTH_CONTEXT" />
+		<KeyWord name="AUTH_ID" />
 		<KeyWord name="AUTH_MAILBOX" />
 		<KeyWord name="AVAILCAUSECODE" />
 		<KeyWord name="AVAILCHAN" />
@@ -10437,6 +11612,7 @@
 		<KeyWord name="CC_REQUEST_REASON" />
 		<KeyWord name="CC_REQUEST_RESULT" />
 		<KeyWord name="CHANNELREDIRECT_STATUS" />
+		<KeyWord name="CHANNEL_TRACE" />
 		<KeyWord name="CHECKGROUPSTATUS" />
 		<KeyWord name="CHECKMD5STATUS" />
 		<KeyWord name="CONFBRIDGE_RESULT" />
@@ -10475,6 +11651,7 @@
 		<KeyWord name="DYNAMIC_FEATURENAME" />
 		<KeyWord name="DYNAMIC_FEATURES" />
 		<KeyWord name="DYNAMIC_PEERNAME" />
+		<KeyWord name="ENDPOINT_ID" />
 		<KeyWord name="ENTITYID" />
 		<KeyWord name="ENUM" />
 		<KeyWord name="ENUMSTATUS" />
@@ -10485,19 +11662,21 @@
 		<KeyWord name="EXITCONTEXT" />
 		<KeyWord name="EXTEN" />
 		<KeyWord name="EXTENSION_LENGTH" />
+		<KeyWord name="EXTENSTATUS" />
 		<KeyWord name="FAXBITRATE" />
 		<KeyWord name="FAXERROR" />
 		<KeyWord name="FAXEXTEN" />
 		<KeyWord name="FAXFORMAT" />
 		<KeyWord name="FAXID" />
+		<KeyWord name="FAXPAGES" />
 		<KeyWord name="FAXRATE" />
 		<KeyWord name="FAXREASON" />
 		<KeyWord name="FAXREASONTEXT" />
-		<KeyWord name="FAXPAGES" />
 		<KeyWord name="FAXRESOLUTION" />
 		<KeyWord name="FAXSTATUS" />
 		<KeyWord name="FORWARD_CONTEXT" />
 		<KeyWord name="GOSUB_RESULT" />
+		<KeyWord name="GOSUB_RETVAL" />
 		<KeyWord name="GOTO_ON_BLINDXFR" />
 		<KeyWord name="HASVMSTATUS" />
 		<KeyWord name="HINTNAME" />
@@ -10540,6 +11719,12 @@
 		<KeyWord name="MEMBERPENALTY" />
 		<KeyWord name="MEMBERREALTIME" />
 		<KeyWord name="MESSAGE_SEND_STATUS" />
+		<KeyWord name="MINIVM_APPMESS_STATUS" />
+		<KeyWord name="MINIVM_DELETE_STATUS" />
+		<KeyWord name="MINIVM_GREET_STATUS" />
+		<KeyWord name="MINIVM_NOTIFY_STATUS" />
+		<KeyWord name="MINIVM_RECORD_STATUS" />
+		<KeyWord name="MISDN_ADDRESS_COMPLETE" />
 		<KeyWord name="MIXMONITOR_FILENAME" />
 		<KeyWord name="MONITOR" />
 		<KeyWord name="MONITOR_EXEC" />
@@ -10565,6 +11750,10 @@
 		<KeyWord name="NUMBER" />
 		<KeyWord name="ODBC_FETCH_STATUS" />
 		<KeyWord name="ORIGINATE_STATUS" />
+		<KeyWord name="ORIG_VM_CALLERID" />
+		<KeyWord name="ORIG_VM_CIDNAME" />
+		<KeyWord name="ORIG_VM_CIDNUM" />
+		<KeyWord name="ORIG_VM_DATE" />
 		<KeyWord name="OSPAUTHSTATUS" />
 		<KeyWord name="OSPCALLING" />
 		<KeyWord name="OSPDEST" />
@@ -10576,7 +11765,6 @@
 		<KeyWord name="OSPINALTSPN" />
 		<KeyWord name="OSPINAUDIOQOS" />
 		<KeyWord name="OSPINCUSTOMINFON" />
-		<KeyWord name="OSPINCUSTOMINFOn" />
 		<KeyWord name="OSPINDIVHOST" />
 		<KeyWord name="OSPINDIVUSER" />
 		<KeyWord name="OSPINHANDLE" />
@@ -10623,6 +11811,10 @@
 		<KeyWord name="OUTBOUND_GROUP" />
 		<KeyWord name="OUTBOUND_GROUP_ONCE" />
 		<KeyWord name="PARKEDAT" />
+		<KeyWord name="PARKINGDYNAMIC" />
+		<KeyWord name="PARKINGDYNCONTEXT" />
+		<KeyWord name="PARKINGDYNEXTEN" />
+		<KeyWord name="PARKINGDYNPOS" />
 		<KeyWord name="PARKINGEXTEN" />
 		<KeyWord name="PARKINGLOT" />
 		<KeyWord name="PICKUPMARK" />
@@ -10632,6 +11824,7 @@
 		<KeyWord name="PRIREDIRECTREASON" />
 		<KeyWord name="PRIVACYMGRSTATUS" />
 		<KeyWord name="PRI_CAUSE" />
+		<KeyWord name="PROFILE" />
 		<KeyWord name="QEHOLDTIME" />
 		<KeyWord name="QEORIGINALPOS" />
 		<KeyWord name="QUEUEABANDONED" />
@@ -10649,6 +11842,7 @@
 		<KeyWord name="QUEUE_MIN_PENALTY" />
 		<KeyWord name="QUEUE_PRIO" />
 		<KeyWord name="READEXTENSTATUS" />
+		<KeyWord name="READSTATUS" />
 		<KeyWord name="REASON" />
 		<KeyWord name="RECORDED_FILE" />
 		<KeyWord name="RECORD_STATUS" />
@@ -10691,6 +11885,7 @@
 		<KeyWord name="SPYGROUP" />
 		<KeyWord name="SPY_CHANNEL" />
 		<KeyWord name="SPY_EXIT_CONTEXT" />
+		<KeyWord name="STASISSTATUS" />
 		<KeyWord name="SYSTEMNAME" />
 		<KeyWord name="SYSTEMSTATUS" />
 		<KeyWord name="TALK_DETECTED" />
@@ -10707,8 +11902,10 @@
 		<KeyWord name="TOUCH_MONITOR_PREF" />
 		<KeyWord name="TOUCH_MONITOR_PREFIX" />
 		<KeyWord name="TRANSFERCAPABILITY" />
+		<KeyWord name="TRANSFERED_BY" />
 		<KeyWord name="TRANSFERSTATUS" />
 		<KeyWord name="TRANSFER_CONTEXT" />
+		<KeyWord name="TRANSPORT_ID" />
 		<KeyWord name="TRYSTATUS" />
 		<KeyWord name="TXTCIDNAMESTATUS" />
 		<KeyWord name="TZOFFSET" />
@@ -10744,8 +11941,8 @@
 		<KeyWord name="ADDED" />
 		<KeyWord name="ALREADY_LOGGED_IN" />
 		<KeyWord name="ANSWER" />
-		<KeyWord name="ANSWER_FAILED" />
 		<KeyWord name="ANSWERED" />
+		<KeyWord name="ANSWER_FAILED" />
 		<KeyWord name="APPERROR" />
 		<KeyWord name="APP_END" />
 		<KeyWord name="APP_START" />
@@ -10780,7 +11977,6 @@
 		<KeyWord name="AST_RUN_DIR" />
 		<KeyWord name="AST_SPOOL_DIR" />
 		<KeyWord name="AST_VAR_DIR" />
-		<KeyWord name="ATTENDEDTRANSFER" />
 		<KeyWord name="BILLING" />
 		<KeyWord name="BRIDGE_END" />
 		<KeyWord name="BRIDGE_ENTER" />
@@ -10829,6 +12025,7 @@
 		<KeyWord name="DBGM_TEI" />
 		<KeyWord name="DBGM_TONE" />
 		<KeyWord name="DBGM_TOPLEVEL" />
+		<KeyWord name="DEBUG" />
 		<KeyWord name="DIGITAL" />
 		<KeyWord name="DIGITAL_W_TONES" />
 		<KeyWord name="DISABLED" />
@@ -10840,6 +12037,7 @@
 		<KeyWord name="ENABLED" />
 		<KeyWord name="ENDMARKED" />
 		<KeyWord name="ERROR" />
+		<KeyWord name="EXIT" />
 		<KeyWord name="FAIL" />
 		<KeyWord name="FAILED" />
 		<KeyWord name="FAILURE" />
@@ -10887,6 +12085,7 @@
 		<KeyWord name="NOTDYNAMIC" />
 		<KeyWord name="NOTFOUND" />
 		<KeyWord name="NOTHING" />
+		<KeyWord name="NOTICE" />
 		<KeyWord name="NOTINQUEUE" />
 		<KeyWord name="NOTSURE" />
 		<KeyWord name="NOT_CONNECTED" />
@@ -10937,15 +12136,21 @@
 		<KeyWord name="USEREXIT" />
 		<KeyWord name="USERSTOPPED" />
 		<KeyWord name="USER_DEFINED" />
+		<KeyWord name="VERBOSE" />
 		<KeyWord name="VIDEO" />
 		<KeyWord name="VOICE" />
+		<KeyWord name="WARNING" />
 		<KeyWord name="ZAPPED" />
 		<!-- CHANNEL DRIVERS, CHANNEL TYPES AND TECHNOLOGIES -->
 		<KeyWord name="Agent" />
 		<KeyWord name="ALSA" />
+		<KeyWord name="Announcer" />
 		<KeyWord name="CAPI" />
+		<KeyWord name="CBAnn" />
+		<KeyWord name="CBRec" />
 		<KeyWord name="Console" />
 		<KeyWord name="DAHDI" />
+		<KeyWord name="Dongle" />
 		<KeyWord name="DUNDi" />
 		<KeyWord name="GTalk" />
 		<KeyWord name="H323" />
@@ -10964,10 +12169,13 @@
 		<KeyWord name="OSS" />
 		<KeyWord name="Phone" />
 		<KeyWord name="PJSIP" />
+		<KeyWord name="Recorder" />
 		<KeyWord name="SCCP" />
 		<KeyWord name="SIP" />
 		<KeyWord name="Skinny" />
 		<KeyWord name="SS7" />
+		<KeyWord name="Surrogate" />
+		<KeyWord name="UnicastRTP" />
 		<KeyWord name="Unistim" />
 		<KeyWord name="VPB" />
 		<KeyWord name="XMPP" />
